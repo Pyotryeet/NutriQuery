@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriQuery | Advanced Food & Health Database</title>
+    <meta name="description"
+        content="NutriQuery — Next-gen food and nutrition intelligence platform with ML-powered Nutri-Score predictions.">
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="background-glass"></div>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <header>
+        <div class="logo-container">
+            <h1>Nutri<span>Query</span></h1>
+            <p class="subtitle">Next-Gen Food and Nutrition Intelligence</p>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#search" data-section="search" class="nav-link active">Registry</a></li>
+                <li><a href="#analytics" data-section="analytics" class="nav-link">Analytics</a></li>
+                <li><a href="#ml-engine" data-section="ml-engine" class="nav-link glow-text">ML Engine</a></li>
+                <li><a href="#brands" data-section="brands" class="nav-link">Brands</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- ═══ SECTION: REGISTRY / SEARCH ═══ -->
+        <section id="search" class="glass-panel main-section">
+            <div class="section-header">
+                <h2>🔍 Product Registry</h2>
+            </div>
+
+            <!-- Search by ID -->
+            <div class="controls-row">
+                <div class="input-group">
+                    <label for="fdc-search">Lookup by FDC ID</label>
+                    <div class="input-action">
+                        <input type="number" id="fdc-search" placeholder="e.g. 167782">
+                        <button class="btn-primary" onclick="searchFoodById()">Retrieve</button>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="name-search">Search by Name</label>
+                    <div class="input-action">
+                        <input type="text" id="name-search" placeholder="e.g. Apple, Chicken...">
+                        <button class="btn-primary" onclick="searchFoodByName()">Search</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="results-container" id="search-result">
+                <div class="empty-state">Enter a product ID or name to query the database.</div>
+            </div>
+        </section>
+
+        <!-- ═══ SECTION: ANALYTICS ═══ -->
+        <section id="analytics" class="glass-panel main-section">
+            <h2>📊 Nutrition Analytics & Filters</h2>
+
+            <!-- Range Query Panel -->
+            <div class="sub-panel">
+                <h3>Range Query (Req 4)</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Min Health Score</label>
+                        <input type="range" id="min-health" min="0" max="100" value="50"
+                            oninput="this.nextElementSibling.value = this.value">
+                        <output>50</output>
+                    </div>
+                    <div class="form-group">
+                        <label>Max Sodium (mg)</label>
+                        <input type="number" id="max-sodium" value="200">
+                    </div>
+                    <div class="form-group">
+                        <label>Max Carbs (g)</label>
+                        <input type="number" id="max-carbs" value="30">
+                    </div>
+                </div>
+                <button class="btn-secondary" onclick="runRangeQuery()">Execute Range Query</button>
+                <div class="results-container mt-15" id="range-result"></div>
+            </div>
+
+            <!-- Dietary Filtering Panel -->
+            <div class="sub-panel">
+                <h3>Dietary Filtering (Req 5)</h3>
+                <div class="dietary-toggles">
+                    <label class="toggle">
+                        <input type="checkbox" id="no-gluten">
+                        <span class="slider"></span>
+                        <span class="label-text">Gluten-Free</span>
+                    </label>
+                    <label class="toggle">
+                        <input type="checkbox" id="no-dairy">
+                        <span class="slider"></span>
+                        <span class="label-text">Dairy-Free</span>
+                    </label>
+                </div>
+                <button class="btn-secondary" onclick="runDietaryFilter()">Filter Foods</button>
+                <div class="results-container mt-15" id="dietary-result"></div>
+            </div>
+
+            <!-- Category Aggregation Panel -->
+            <div class="sub-panel">
+                <h3>Category Aggregation (Req 6)</h3>
+                <div class="controls-row">
+                    <div class="input-group">
+                        <label for="category-select">Food Category</label>
+                        <select id="category-select">
+                            <option value="">Loading categories...</option>
+                        </select>
+                    </div>
+                    <button class="btn-secondary" onclick="runAggregation()"
+                        style="align-self:flex-end;">Aggregate</button>
+                </div>
+                <div class="results-container mt-15" id="agg-result"></div>
+            </div>
+
+            <!-- Gap Identification Panel -->
+            <div class="sub-panel">
+                <h3>Gap Identification (Req 7)</h3>
+                <p class="text-muted">Find food records with incomplete nutritional data.</p>
+                <button class="btn-secondary" onclick="loadGaps()">Identify Gaps</button>
+                <div class="results-container mt-15" id="gaps-result"></div>
+            </div>
+        </section>
+
+        <!-- ═══ SECTION: ML ENGINE ═══ -->
+        <section id="ml-engine" class="glass-panel ml-section main-section">
+            <div class="ml-header">
+                <h2>🧠 Neural Nutrition Scoring</h2>
+                <span class="badge mps-supported" id="device-badge">Detecting device...</span>
+            </div>
+            <p>Run a PyTorch classifier on food data to predict unrated Nutri-Score grades and NOVA classifications. The
+                model trains on labelled data before running inference.</p>
+            <div class="action-buttons">
+                <button class="btn-glow" onclick="runInference()"><span class="icon">🚀</span> Train & Predict</button>
+                <button class="btn-danger" onclick="clearPredictions()"><span class="icon">🗑️</span> Flush
+                    Predictions</button>
+                <button class="btn-secondary" onclick="loadPredictions()"><span class="icon">📋</span> View
+                    Predictions</button>
+            </div>
+            <div class="results-container mt-15" id="ml-result"></div>
+        </section>
+
+        <!-- ═══ SECTION: BRANDS ═══ -->
+        <section id="brands" class="glass-panel main-section">
+            <h2>🏷️ Brand Management (Req 8)</h2>
+
+            <div class="sub-panel">
+                <h3>Create Brand</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Brand Name *</label>
+                        <input type="text" id="brand-name" placeholder="e.g. Nature's Best">
+                    </div>
+                    <div class="form-group">
+                        <label>Brand Owner</label>
+                        <input type="text" id="brand-owner" placeholder="e.g. HealthFoods Inc.">
+                    </div>
+                    <div class="form-group">
+                        <label>Ecoscore Grade</label>
+                        <input type="text" id="brand-ecoscore" placeholder="e.g. A">
+                    </div>
+                </div>
+                <button class="btn-primary" onclick="createBrand()">Add Brand</button>
+            </div>
+
+            <div class="sub-panel">
+                <h3>Existing Brands</h3>
+                <button class="btn-secondary mb-10" onclick="loadBrands()">Refresh List</button>
+                <div class="results-container" id="brands-result">
+                    <div class="empty-state">Click "Refresh List" to load brands.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ SECTION: DATA IMPORT ═══ -->
+        <section id="data-import" class="glass-panel main-section">
+            <h2>📥 Data Import (Req 1)</h2>
+            <p class="text-muted">Import food data from CSV files into the MSSQL database. This will process ~40,000
+                records from USDA and OpenFoodFacts datasets.</p>
+            <button class="btn-glow" onclick="importData()"><span class="icon">⚡</span> Run Full Import</button>
+            <div class="results-container mt-15" id="import-result"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>NutriQuery — ISE305 Database Systems Project &nbsp;|&nbsp; Built with FastAPI, PyTorch, and MSSQL</p>
+    </footer>
+
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
