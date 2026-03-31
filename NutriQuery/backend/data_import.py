@@ -1,14 +1,12 @@
 """
 data_import.py — Imports data from the 5 real CSV files in data/raw/
 into the MSSQL database using raw SQL INSERT statements via pymssql.
-No ORM is used.
 """
 import pandas as pd
 import os
 from database import get_connection
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "..", "data", "raw")
-
 
 def import_all_data():
     """

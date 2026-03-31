@@ -50,7 +50,7 @@ CREATE TABLE Health_and_Allergens (
 );
 GO
 
--- 5. Prediction Models Table for Machine Learning Pipeline (Requirement 9 & 10)
+-- 5. Prediction Models Table for Machine Learning Pipeline
 CREATE TABLE ML_Predictions (
     prediction_id INT IDENTITY(1,1) PRIMARY KEY,
     fdc_id INT NOT NULL,

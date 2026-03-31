@@ -1,0 +1,13 @@
+[project]
+name = "project"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi[standard]>=0.135.2",
+    "numpy>=2.4.4",
+    "pandas>=3.0.2",
+    "pymssql>=2.3.13",
+    "scikit-learn>=1.8.0",
+    "torch>=2.11.0",
+]

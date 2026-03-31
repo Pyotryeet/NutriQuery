@@ -4,8 +4,8 @@ import pymssql
 DB_CONFIG = {
     "server": "127.0.0.1",
     "port": "1433",
-    "user": "sa",
-    "password": "SqlRoot#2026",
+    "user": "SA",
+    "password": "MbLp6hezU8@",
     "database": "NutriQuery",
 }
 

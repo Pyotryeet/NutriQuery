@@ -1,9 +1,3 @@
-"""
-crud.py — All database operations use raw SQL with parameterized queries (pymssql).
-No ORM is used anywhere in this project.
-"""
-
-
 # ── Requirement 2: Record Retrieval ────────────────────
 def get_food(conn, cursor, fdc_id: int):
     """
