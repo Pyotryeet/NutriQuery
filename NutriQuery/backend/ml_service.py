@@ -1,6 +1,6 @@
 """
 ml_service.py — PyTorch-based ML inference for Nutri-Score and NOVA prediction.
-Uses raw SQL via pymssql — no ORM.
+Uses raw SQL via pymssql
 """
 import torch
 import torch.nn as nn
