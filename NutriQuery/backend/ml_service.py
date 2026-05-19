@@ -57,11 +57,11 @@ def _train_model(cursor):
     """
     cursor.execute("""
         SELECT n.calories, n.protein_g, n.fat_g, n.carbs_g, n.sodium_mg,
-               h.nutriscore_grade
+               hs.nutriscore_grade
         FROM Nutrition_Metrics n
-        JOIN Health_and_Allergens h ON n.fdc_id = h.fdc_id
-        WHERE h.nutriscore_grade IS NOT NULL
-          AND h.nutriscore_grade IN ('A', 'B', 'C', 'D', 'E')
+        JOIN HEALTH_SCORE hs ON n.fdc_id = hs.fdc_id
+        WHERE hs.nutriscore_grade IS NOT NULL
+          AND hs.nutriscore_grade IN ('A', 'B', 'C', 'D', 'E')
           AND n.calories IS NOT NULL
           AND n.protein_g IS NOT NULL
           AND n.fat_g IS NOT NULL

@@ -1,6 +1,6 @@
 """
 data_import.py — Imports data from the 5 real CSV files in data/raw/
-into the MSSQL database using raw SQL INSERT statements via pymssql.
+into the MSSQL 8-table 3NF schema using raw SQL INSERT statements via pymssql.
 """
 import pandas as pd
 import os
@@ -11,26 +11,30 @@ DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "..", "data", "raw")
 def import_all_data():
     """
     Master import function: loads the CSV files and populates
-    Brands, Foods, Nutrition_Metrics, and Health_and_Allergens tables.
+    Brands, FOOD_CATEGORY, DATA_TYPE, Foods, Nutrition_Metrics,
+    HEALTH_SCORE, and ALLERGEN_PROFILE tables.
     Returns a summary dict.
     """
     conn = get_connection()
     cursor = conn.cursor(as_dict=True)
 
-    stats = {"brands": 0, "foods": 0, "nutrition": 0, "health": 0, "errors": []}
+    stats = {
+        "brands": 0, "categories": 0, "data_types": 0,
+        "foods": 0, "nutrition": 0, "health": 0, "allergens": 0,
+        "errors": [],
+    }
 
     try:
         # ---------- 1. comprehensive_foods_usda.csv ----------
-        # Columns: fdc_id, food_name, data_type, food_category, brand_owner,
-        #          brand_name, calories, carbs_g, fat_g, protein_g, sodium_mg,
-        #          health_score, food_type, etc.
         usda_path = os.path.join(DATA_DIR, "comprehensive_foods_usda.csv")
         if os.path.exists(usda_path):
             print(f"Loading {usda_path}...")
             df = pd.read_csv(usda_path)
             df = df.where(pd.notnull(df), None)
 
-            brand_cache = {}   # brand_name → brand_id
+            brand_cache = {}     # brand_name → brand_id
+            category_cache = {}  # category_name → category_id
+            type_cache = {}      # type_name → type_id
 
             for idx, row in df.iterrows():
                 try:
@@ -60,19 +64,69 @@ def import_all_data():
                                 stats["brands"] += 1
                             brand_cache[bname] = brand_id
 
+                    # — Food Category (lookup-or-create) —
+                    category_id = None
+                    cat_name = row.get("food_category")
+                    if cat_name and str(cat_name).strip():
+                        cat_name = str(cat_name).strip()[:255]
+                        if cat_name in category_cache:
+                            category_id = category_cache[cat_name]
+                        else:
+                            cursor.execute(
+                                "SELECT category_id FROM FOOD_CATEGORY WHERE category_name = %s",
+                                (cat_name,),
+                            )
+                            existing = cursor.fetchone()
+                            if existing:
+                                category_id = existing["category_id"]
+                            else:
+                                cursor.execute(
+                                    "INSERT INTO FOOD_CATEGORY (category_name) VALUES (%s)",
+                                    (cat_name,),
+                                )
+                                cursor.execute("SELECT @@IDENTITY AS cid")
+                                category_id = int(cursor.fetchone()["cid"])
+                                stats["categories"] += 1
+                            category_cache[cat_name] = category_id
+
+                    # — Data Type (lookup-or-create) —
+                    type_id = None
+                    dt_name = row.get("data_type")
+                    if dt_name and str(dt_name).strip():
+                        dt_name = str(dt_name).strip()[:100]
+                        if dt_name in type_cache:
+                            type_id = type_cache[dt_name]
+                        else:
+                            cursor.execute(
+                                "SELECT type_id FROM DATA_TYPE WHERE type_name = %s",
+                                (dt_name,),
+                            )
+                            existing = cursor.fetchone()
+                            if existing:
+                                type_id = existing["type_id"]
+                            else:
+                                cursor.execute(
+                                    "INSERT INTO DATA_TYPE (type_name) VALUES (%s)",
+                                    (dt_name,),
+                                )
+                                cursor.execute("SELECT @@IDENTITY AS tid")
+                                type_id = int(cursor.fetchone()["tid"])
+                                stats["data_types"] += 1
+                            type_cache[dt_name] = type_id
+
                     # — Food —
                     fdc_id = int(row["fdc_id"])
                     cursor.execute("SELECT fdc_id FROM Foods WHERE fdc_id = %s", (fdc_id,))
                     if cursor.fetchone() is None:
                         cursor.execute(
-                            """INSERT INTO Foods (fdc_id, brand_id, food_name, data_type, food_category)
+                            """INSERT INTO Foods (fdc_id, brand_id, category_id, type_id, food_name)
                                VALUES (%s, %s, %s, %s, %s)""",
                             (
                                 fdc_id,
                                 brand_id,
+                                category_id,
+                                type_id,
                                 str(row["food_name"])[:500],
-                                str(row.get("data_type") or "")[:100] or None,
-                                str(row.get("food_category") or "")[:255] or None,
                             ),
                         )
                         stats["foods"] += 1
@@ -98,24 +152,36 @@ def import_all_data():
                         )
                         stats["nutrition"] += 1
 
-                    # — Health & Allergens (basic from USDA) —
+                    # — Health Score —
                     cursor.execute(
-                        "SELECT profile_id FROM Health_and_Allergens WHERE fdc_id = %s",
+                        "SELECT score_id FROM HEALTH_SCORE WHERE fdc_id = %s",
                         (fdc_id,),
                     )
                     if cursor.fetchone() is None:
                         cursor.execute(
-                            """INSERT INTO Health_and_Allergens
-                               (fdc_id, contains_gluten, contains_dairy, health_score)
-                               VALUES (%s, %s, %s, %s)""",
+                            """INSERT INTO HEALTH_SCORE
+                               (fdc_id, health_score)
+                               VALUES (%s, %s)""",
                             (
                                 fdc_id,
-                                0,
-                                0,
                                 _safe_float(row.get("health_score")),
                             ),
                         )
                         stats["health"] += 1
+
+                    # — Allergen Profile —
+                    cursor.execute(
+                        "SELECT allergen_id FROM ALLERGEN_PROFILE WHERE fdc_id = %s",
+                        (fdc_id,),
+                    )
+                    if cursor.fetchone() is None:
+                        cursor.execute(
+                            """INSERT INTO ALLERGEN_PROFILE
+                               (fdc_id, contains_gluten, contains_dairy)
+                               VALUES (%s, 0, 0)""",
+                            (fdc_id,),
+                        )
+                        stats["allergens"] += 1
 
                 except Exception as row_err:
                     stats["errors"].append(f"Row {idx}: {str(row_err)[:120]}")
@@ -125,18 +191,19 @@ def import_all_data():
                     print(f"  USDA: {idx} rows processed...")
 
             conn.commit()
-            print(f"  USDA import done: {stats['foods']} foods, {stats['brands']} brands")
+            print(f"  USDA import done: {stats['foods']} foods, "
+                  f"{stats['brands']} brands, {stats['categories']} categories, "
+                  f"{stats['data_types']} data types")
 
         # ---------- 2. foods_health_scores_allergens.csv ----------
-        # Columns: product_name, brands, nutriscore_grade, nova_group,
-        #          ecoscore_grade, contains_gluten, contains_dairy, energy_kcal, etc.
         health_path = os.path.join(DATA_DIR, "foods_health_scores_allergens.csv")
         if os.path.exists(health_path):
             print(f"Loading {health_path}...")
             df_h = pd.read_csv(health_path)
             df_h = df_h.where(pd.notnull(df_h), None)
 
-            updated = 0
+            health_updated = 0
+            allergen_updated = 0
             for idx, row in df_h.iterrows():
                 try:
                     pname = row.get("product_name")
@@ -150,6 +217,7 @@ def import_all_data():
                     )
                     match = cursor.fetchone()
                     if match:
+                        # Update HEALTH_SCORE
                         ns_grade = row.get("nutriscore_grade")
                         if ns_grade and str(ns_grade).upper() in ("A", "B", "C", "D", "E"):
                             ns_grade = str(ns_grade).upper()
@@ -157,17 +225,28 @@ def import_all_data():
                             ns_grade = None
 
                         nova = _safe_int(row.get("nova_group"))
+
+                        cursor.execute(
+                            """UPDATE HEALTH_SCORE
+                               SET nutriscore_grade = %s, nova_group = %s
+                               WHERE fdc_id = %s""",
+                            (ns_grade, nova, match["fdc_id"]),
+                        )
+                        if cursor.rowcount > 0:
+                            health_updated += 1
+
+                        # Update ALLERGEN_PROFILE
                         gluten = 1 if str(row.get("contains_gluten", "")).lower() == "true" else 0
                         dairy = 1 if str(row.get("contains_dairy", "")).lower() == "true" else 0
 
                         cursor.execute(
-                            """UPDATE Health_and_Allergens
-                               SET nutriscore_grade = %s, nova_group = %s,
-                                   contains_gluten = %s, contains_dairy = %s
+                            """UPDATE ALLERGEN_PROFILE
+                               SET contains_gluten = %s, contains_dairy = %s
                                WHERE fdc_id = %s""",
-                            (ns_grade, nova, gluten, dairy, match["fdc_id"]),
+                            (gluten, dairy, match["fdc_id"]),
                         )
-                        updated += 1
+                        if cursor.rowcount > 0:
+                            allergen_updated += 1
 
                 except Exception:
                     pass
@@ -176,7 +255,8 @@ def import_all_data():
                     conn.commit()
 
             conn.commit()
-            print(f"  Health scores enrichment done: {updated} records updated")
+            print(f"  Health scores enrichment done: {health_updated} records updated")
+            print(f"  Allergen profile enrichment done: {allergen_updated} records updated")
 
         conn.commit()
         print("All imports complete!")
@@ -192,7 +272,9 @@ def import_all_data():
 
     return {
         "message": f"Import complete: {stats['foods']} foods, {stats['brands']} brands, "
-                   f"{stats['nutrition']} nutrition, {stats['health']} health records",
+                   f"{stats['categories']} categories, {stats['data_types']} data types, "
+                   f"{stats['nutrition']} nutrition, {stats['health']} health scores, "
+                   f"{stats['allergens']} allergen profiles",
         "stats": stats,
     }
 

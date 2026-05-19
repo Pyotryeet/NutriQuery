@@ -1,0 +1,297 @@
+\subsection{3rd Normal Form (3NF) Entity-Relationship Diagram}
+
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[font=\small, node distance=3cm and 4cm, >=Stealth]
+
+%% ── Styles (Chen's Notation) ────────────────────────────────────────────────
+\tikzset{
+  % Entity: Rectangle
+  entity/.style={draw=teal!80!black, thick, fill=teal!12,
+                 minimum width=3cm, minimum height=1cm, align=center,
+                 font=\small\bfseries},
+  % Weak entity: Double rectangle
+  weak entity/.style={draw=teal!80!black, thick, fill=teal!8,
+                      minimum width=3cm, minimum height=1cm, align=center,
+                      font=\small\bfseries, double, double distance=2pt},
+  % Attribute: Ellipse
+  attr/.style={draw=teal!60!black, thin, fill=white,
+               ellipse, minimum width=1.6cm, minimum height=0.7cm,
+               align=center, font=\scriptsize, inner sep=2pt},
+  % Key attribute: Ellipse with underline
+  keyattr/.style={draw=teal!60!black, thin, fill=yellow!10,
+                  ellipse, minimum width=1.6cm, minimum height=0.7cm,
+                  align=center, font=\scriptsize\bfseries, inner sep=2pt},
+  % Derived attribute: Dashed ellipse
+  derivedattr/.style={draw=teal!60!black, thin, dashed, fill=gray!5,
+                      ellipse, minimum width=1.6cm, minimum height=0.7cm,
+                      align=center, font=\scriptsize, inner sep=2pt},
+  % Relationship: Diamond
+  rel/.style={draw=red!70!black, thick, fill=red!10,
+              diamond, minimum width=2cm, minimum height=1.2cm,
+              align=center, font=\scriptsize\bfseries, inner sep=2pt,
+              aspect=2},
+  % Connection lines (Chen's constraint notation)
+  %   thin line = no constraint (partial, many)
+  %   arrow     = at most one
+  %   double    = total participation
+  rl/.style={thick, teal!60!black},
+  arl/.style={thick, teal!60!black, -{Stealth[length=10pt, width=8pt]}},
+  % Cardinality label
+  card/.style={font=\scriptsize\bfseries, fill=white, inner sep=2pt},
+  % Participation (total) line
+  trl/.style={ultra thick, teal!60!black, double, double distance=1.5pt},
+  tarl/.style={ultra thick, teal!60!black, double, double distance=1.5pt, -{Stealth[length=12pt, width=10pt]}},
+}
+
+%% ═══════════════════════════════════════════════════════════════════════════
+%%  ENTITIES
+%% ═══════════════════════════════════════════════════════════════════════════
+
+% ── BRAND ──
+\node[entity] (brand) at (0, 0) {BRAND};
+
+% ── FOOD_CATEGORY ──
+\node[entity] (fcat) at (8, 0) {FOOD\\CATEGORY};
+
+% ── DATA_TYPE ──
+\node[entity] (dtype) at (16, 0) {DATA\\TYPE};
+
+% ── FOOD ──
+\node[entity] (food) at (8, -8) {FOOD};
+
+% ── NUTRITION_METRICS ──
+\node[entity] (nutr) at (0, -15) {NUTRITION\\METRICS};
+
+% ── HEALTH_SCORE ──
+\node[entity] (health) at (8, -15) {HEALTH\\SCORE};
+
+% ── ALLERGEN_PROFILE ──
+\node[entity] (allerg) at (16, -15) {ALLERGEN\\PROFILE};
+
+% ── ML_PREDICTION ──
+\node[entity] (mlpred) at (16, -8) {ML\\PREDICTION};
+
+
+%% ═══════════════════════════════════════════════════════════════════════════
+%%  ATTRIBUTES
+%% ═══════════════════════════════════════════════════════════════════════════
+
+% === BRAND attrs ===
+\node[keyattr] (brand_id) at (-3.5, 1.8) {\underline{brand\_id}};
+\node[attr] (brand_name) at (-1, 2.4) {brand\_name};
+\node[attr] (brand_owner) at (1.5, 1.8) {brand\_owner};
+
+\draw[rl] (brand) -- (brand_id);
+\draw[rl] (brand) -- (brand_name);
+\draw[rl] (brand) -- (brand_owner);
+
+% === FOOD_CATEGORY attrs ===
+\node[keyattr] (cat_id) at (5.5, 2.2) {\underline{category\_id}};
+\node[attr] (cat_name) at (9.5, 2.2) {category\_name};
+
+\draw[rl] (fcat) -- (cat_id);
+\draw[rl] (fcat) -- (cat_name);
+
+% === DATA_TYPE attrs ===
+\node[keyattr] (dt_id) at (13.5, 2.2) {\underline{type\_id}};
+\node[attr] (dt_name) at (17.5, 2.2) {type\_name};
+
+\draw[rl] (dtype) -- (dt_id);
+\draw[rl] (dtype) -- (dt_name);
+
+% === FOOD attrs ===
+\node[keyattr] (fdc_id) at (4.0, -6.0) {\underline{fdc\_id}};
+\node[attr] (food_name) at (5.5, -5.0) {food\_name};
+
+\draw[rl] (food) -- (fdc_id);
+\draw[rl] (food) -- (food_name);
+
+% === NUTRITION_METRICS attrs ===
+\node[keyattr] (nutr_id) at (-4.0, -12.5) {\underline{nutrition\_id}};
+\node[attr] (cal) at (-4.0, -14.2) {calories};
+\node[attr] (prot) at (-4.0, -16.0) {protein\_g};
+\node[attr] (fat) at (-2.0, -18.0) {fat\_g};
+\node[attr] (carbs) at (0.5, -18.0) {carbs\_g};
+\node[attr] (sod) at (3.0, -18.0) {sodium\_mg};
+
+\draw[rl] (nutr) -- (nutr_id);
+\draw[rl] (nutr) -- (cal);
+\draw[rl] (nutr) -- (prot);
+\draw[rl] (nutr) -- (fat);
+\draw[rl] (nutr) -- (carbs);
+\draw[rl] (nutr) -- (sod);
+
+% === HEALTH_SCORE attrs ===
+\node[keyattr] (hs_id) at (5.0, -18.0) {\underline{score\_id}};
+\node[attr] (hscore) at (7.5, -18.0) {health\_score};
+\node[attr] (nsgrade) at (11.0, -18.0) {nutriscore\_grade};
+\node[attr] (nova) at (8.0, -19.5) {nova\_group};
+
+\draw[rl] (health) -- (hs_id);
+\draw[rl] (health) -- (hscore);
+\draw[rl] (health) -- (nsgrade);
+\draw[rl] (health) -- (nova);
+
+% === ALLERGEN_PROFILE attrs ===
+\node[keyattr] (ap_id) at (13.5, -18.0) {\underline{allergen\_id}};
+\node[attr] (gluten) at (16.5, -18.0) {contains\_gluten};
+\node[attr] (dairy) at (19.5, -17.5) {contains\_dairy};
+
+\draw[rl] (allerg) -- (ap_id);
+\draw[rl] (allerg) -- (gluten);
+\draw[rl] (allerg) -- (dairy);
+
+% === ML_PREDICTION attrs ===
+\node[keyattr] (pred_id) at (20.5, -5.5) {\underline{prediction\_id}};
+\node[attr] (pred_ns) at (20.5, -7.0) {predicted\_nutriscore};
+\node[attr] (pred_nova) at (20.5, -8.5) {predicted\_nova};
+\node[attr] (pred_conf) at (20.5, -10.0) {confidence\_score};
+\node[attr] (pred_date) at (18.0, -11.5) {prediction\_date};
+
+\draw[rl] (mlpred) -- (pred_id);
+\draw[rl] (mlpred) -- (pred_ns);
+\draw[rl] (mlpred) -- (pred_nova);
+\draw[rl] (mlpred) -- (pred_conf);
+\draw[rl] (mlpred) -- (pred_date);
+
+
+%% ═══════════════════════════════════════════════════════════════════════════
+%%  RELATIONSHIPS
+%% ═══════════════════════════════════════════════════════════════════════════
+
+% ── BRAND ──< Produces >── FOOD  (1:N, partial–partial)
+%   BRAND side: thin line (partial, no constraint → many)
+%   FOOD side:  thin arrow toward diamond (partial, at most one brand)
+\node[rel] (r_produces) at (2.5, -4) {Produces};
+\draw[rl]  (brand) -- (r_produces);
+\draw[arl] (food)  -- (r_produces);
+
+% ── FOOD_CATEGORY ──< Classifies >── FOOD  (1:N, total–total)
+%   CATEGORY side: double line (total, many)
+%   FOOD side:     double arrow (total, at most one category)
+\node[rel] (r_classif) at (8, -4) {Classifies};
+\draw[trl]  (fcat) -- (r_classif);
+\draw[tarl] (food) -- (r_classif);
+
+% ── DATA_TYPE ──< Categorizes >── FOOD  (1:N, partial–partial)
+\node[rel] (r_categ) at (13.5, -4) {Categorizes};
+\draw[rl]  (dtype) -- (r_categ);
+\draw[arl] (food)  -- (r_categ);
+
+% ── FOOD ──< Has Nutrition >── NUTRITION_METRICS  (1:1, total–total)
+%   Both sides: double arrow (total, at most one)
+\node[rel] (r_hasntr) at (2.5, -11.5) {Has\\Nutrition};
+\draw[tarl] (food) -- (r_hasntr);
+\draw[tarl] (nutr) -- (r_hasntr);
+
+% ── FOOD ──< Has Score >── HEALTH_SCORE  (1:1, total–total)
+\node[rel] (r_hassco) at (8, -11.5) {Has\\Score};
+\draw[tarl] (food)   -- (r_hassco);
+\draw[tarl] (health) -- (r_hassco);
+
+% ── FOOD ──< Has Allergens >── ALLERGEN_PROFILE  (1:1, total–total)
+\node[rel] (r_hasalg) at (13.5, -11.5) {Has\\Allergens};
+\draw[tarl] (food)   -- (r_hasalg);
+\draw[tarl] (allerg) -- (r_hasalg);
+
+% ── FOOD ──< Predicted By >── ML_PREDICTION  (1:N, partial–partial)
+%   FOOD side: thin line (partial, many predictions)
+%   ML side:   thin arrow (partial, at most one food)
+\node[rel] (r_pred) at (12.5, -8) {Predicted\\By};
+\draw[rl]  (food)   -- (r_pred);
+\draw[arl] (mlpred) -- (r_pred);
+
+% ── LEGEND ──
+\node[draw, fill=white, rounded corners=3pt, inner sep=8pt,
+      font=\scriptsize, align=left, anchor=south east] at (20, -19.5) {
+  \textbf{Notation Legend}\\[3pt]
+  \tikz\draw[thick, teal!60!black, -{Stealth[length=8pt, width=6pt]}] (0,0) -- (1.2,0); \; Arrow $=$ at most one\\[2pt]
+  \tikz\draw[ultra thick, teal!60!black, double, double distance=1.5pt] (0,0) -- (1.2,0); \; Bold/double $=$ total participation\\[2pt]
+  \tikz\draw[thick, teal!60!black] (0,0) -- (1.2,0); \; Thin line $=$ no constraint
+};
+
+\end{tikzpicture}%
+}
+\caption{3NF Entity-Relationship Diagram (Chen's Notation)}
+\label{fig:er-diagram}
+\end{figure}
+
+\subsection{Data Dictionary}
+
+\begin{table}[H]
+\centering
+\caption{Data Dictionary (Key Entities and Attributes)}
+\label{tab:data-dict}
+\scriptsize
+\begin{tabularx}{\textwidth}{|l|l|l|l|X|}
+\hline
+\rowcolor{gray!20} \textbf{Entity} & \textbf{Attribute} & \textbf{Type} & \textbf{Constraints} & \textbf{Description} \\ \hline
+BRAND & brand\_id & INT & PK, IDENTITY & Auto-generated unique brand identifier \\ \hline
+BRAND & brand\_name & VARCHAR(255) & NOT NULL & Brand display name \\ \hline
+BRAND & brand\_owner & VARCHAR(255) & NULL & Parent company or brand owner \\ \hline
+FOOD\_CATEGORY & category\_id & INT & PK, IDENTITY & Auto-generated category identifier \\ \hline
+FOOD\_CATEGORY & category\_name & VARCHAR(255) & NOT NULL, UNIQUE & Distinct food category name (e.g., Snacks, Dairy) \\ \hline
+DATA\_TYPE & type\_id & INT & PK, IDENTITY & Auto-generated data source type identifier \\ \hline
+DATA\_TYPE & type\_name & VARCHAR(100) & NOT NULL, UNIQUE & Data source classification (e.g., SR Legacy, Survey) \\ \hline
+FOOD & fdc\_id & INT & PK & USDA Food Data Central identifier \\ \hline
+FOOD & brand\_id & INT & FK $\rightarrow$ BRAND & Optional brand association (NULL for unbranded) \\ \hline
+FOOD & category\_id & INT & FK $\rightarrow$ FOOD\_CATEGORY & Food category reference \\ \hline
+FOOD & type\_id & INT & FK $\rightarrow$ DATA\_TYPE & Data source type reference \\ \hline
+FOOD & food\_name & VARCHAR(500) & NOT NULL & Descriptive food item name \\ \hline
+NUTRITION\_METRICS & nutrition\_id & INT & PK, IDENTITY & Auto-generated nutrition record identifier \\ \hline
+NUTRITION\_METRICS & fdc\_id & INT & FK $\rightarrow$ FOOD, UNIQUE & One-to-one link to parent food \\ \hline
+NUTRITION\_METRICS & calories & FLOAT & NULL & Energy content in kcal \\ \hline
+NUTRITION\_METRICS & protein\_g & FLOAT & NULL & Protein content in grams \\ \hline
+NUTRITION\_METRICS & fat\_g & FLOAT & NULL & Total fat content in grams \\ \hline
+NUTRITION\_METRICS & carbs\_g & FLOAT & NULL & Carbohydrate content in grams \\ \hline
+NUTRITION\_METRICS & sodium\_mg & FLOAT & NULL & Sodium content in milligrams \\ \hline
+HEALTH\_SCORE & score\_id & INT & PK, IDENTITY & Auto-generated health score identifier \\ \hline
+HEALTH\_SCORE & fdc\_id & INT & FK $\rightarrow$ FOOD, UNIQUE & One-to-one link to parent food \\ \hline
+HEALTH\_SCORE & health\_score & FLOAT & NULL & Computed health score (0--100) \\ \hline
+HEALTH\_SCORE & nutriscore\_grade & VARCHAR(50) & NULL & Nutri-Score grade (A--E) \\ \hline
+HEALTH\_SCORE & nova\_group & INT & NULL & NOVA food processing group (1--4) \\ \hline
+ALLERGEN\_PROFILE & allergen\_id & INT & PK, IDENTITY & Auto-generated allergen profile identifier \\ \hline
+ALLERGEN\_PROFILE & fdc\_id & INT & FK $\rightarrow$ FOOD, UNIQUE & One-to-one link to parent food \\ \hline
+ALLERGEN\_PROFILE & contains\_gluten & BIT & DEFAULT 0 & Gluten presence flag \\ \hline
+ALLERGEN\_PROFILE & contains\_dairy & BIT & DEFAULT 0 & Dairy presence flag \\ \hline
+ML\_PREDICTION & prediction\_id & INT & PK, IDENTITY & Auto-generated prediction identifier \\ \hline
+ML\_PREDICTION & fdc\_id & INT & FK $\rightarrow$ FOOD & Food item being predicted \\ \hline
+ML\_PREDICTION & predicted\_nutriscore & VARCHAR(50) & NULL & ML-predicted Nutri-Score grade \\ \hline
+ML\_PREDICTION & predicted\_nova & INT & NULL & ML-predicted NOVA group \\ \hline
+ML\_PREDICTION & confidence\_score & FLOAT & NULL & Model confidence (0--1) \\ \hline
+ML\_PREDICTION & prediction\_date & DATETIME & DEFAULT GETDATE() & Timestamp of prediction generation \\ \hline
+\end{tabularx}
+\end{table}
+
+\subsection{Normalization Logic}
+
+The database schema has been refined to strictly adhere to \textbf{Third Normal Form (3NF)} principles. The following changes were applied to the original design:
+
+\subsubsection{Changes Applied}
+
+\begin{enumerate}
+    \item \textbf{Extracted \texttt{FOOD\_CATEGORY} entity:} The \texttt{food\_category} column in \texttt{Foods} stored repeated VARCHAR strings (e.g., ``Snacks'', ``Dairy and Egg Products''), causing update anomalies. It is now a separate lookup table referenced by a foreign key \texttt{category\_id}.
+    \item \textbf{Extracted \texttt{DATA\_TYPE} entity:} The \texttt{data\_type} column in \texttt{Foods} stored repeating classification strings (e.g., ``SR Legacy'', ``Survey (FNDDS)''). It is now a separate lookup table referenced by a foreign key \texttt{type\_id}.
+    \item \textbf{Removed \texttt{ecoscore\_grade} from \texttt{Brands}:} Eco-score is a property of individual food products, not of a brand as a whole. Different products from the same brand can have different eco-scores. This was a \textbf{transitive dependency} (\texttt{brand\_id} $\rightarrow$ \texttt{brand\_name} $\rightarrow$ \texttt{ecoscore\_grade} is invalid since eco-score does not depend on the brand). If needed, eco-score should be stored at the food or health-score level.
+    \item \textbf{Decomposed \texttt{Health\_and\_Allergens} into two entities:}
+    \begin{itemize}
+        \item \texttt{HEALTH\_SCORE}: Contains \texttt{health\_score}, \texttt{nutriscore\_grade}, and \texttt{nova\_group} — attributes that are \textit{scoring metrics} derived from nutritional composition.
+        \item \texttt{ALLERGEN\_PROFILE}: Contains \texttt{contains\_gluten} and \texttt{contains\_dairy} — attributes that are \textit{intrinsic food properties} independent of scoring. This separation eliminates a mixed-concern violation where unrelated attributes were grouped in the same entity.
+    \end{itemize}
+\end{enumerate}
+
+\subsubsection{3NF Compliance Verification}
+
+\begin{itemize}
+    \item \textbf{1NF (Atomicity):} All attributes store single, atomic values. There are no multi-valued or composite attributes. Each column holds exactly one piece of data per row.
+    \item \textbf{2NF (Full Functional Dependency):} Every table uses a single-column primary key (either a natural key like \texttt{fdc\_id} or a surrogate \texttt{IDENTITY} key). Therefore, no partial dependencies can exist — all non-key attributes are fully dependent on the entire primary key.
+    \item \textbf{3NF (No Transitive Dependencies):} Transitive dependencies have been eliminated:
+    \begin{itemize}
+        \item \texttt{food\_category} no longer resides in \texttt{FOOD} as a raw string; it is referenced via \texttt{category\_id} $\rightarrow$ \texttt{FOOD\_CATEGORY}.
+        \item \texttt{data\_type} is similarly extracted to \texttt{DATA\_TYPE} and referenced via \texttt{type\_id}.
+        \item \texttt{ecoscore\_grade} was removed from \texttt{BRAND} because it does not functionally depend on \texttt{brand\_id}.
+        \item Allergen flags and health scores are separated into distinct entities because they represent independent functional domains.
+    \end{itemize}
+\end{itemize}

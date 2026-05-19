@@ -8,26 +8,41 @@ GO
 CREATE TABLE Brands (
     brand_id INT IDENTITY(1,1) PRIMARY KEY,
     brand_name VARCHAR(255) NOT NULL,
-    brand_owner VARCHAR(255),
-    ecoscore_grade VARCHAR(50)
+    brand_owner VARCHAR(255)
 );
 GO
 
--- 2. Foods Table
+-- 2. Food Categories Table
+CREATE TABLE FOOD_CATEGORY (
+    category_id INT IDENTITY(1,1) PRIMARY KEY,
+    category_name VARCHAR(255) NOT NULL UNIQUE
+);
+GO
+
+-- 3. Data Types Table
+CREATE TABLE DATA_TYPE (
+    type_id INT IDENTITY(1,1) PRIMARY KEY,
+    type_name VARCHAR(100) NOT NULL UNIQUE
+);
+GO
+
+-- 4. Foods Table
 CREATE TABLE Foods (
     fdc_id INT PRIMARY KEY, -- USDA identifier
     brand_id INT,
+    category_id INT,
+    type_id INT,
     food_name VARCHAR(500) NOT NULL,
-    data_type VARCHAR(100),
-    food_category VARCHAR(255),
-    CONSTRAINT fk_foods_brand FOREIGN KEY (brand_id) REFERENCES Brands(brand_id) ON DELETE SET NULL
+    CONSTRAINT fk_foods_brand FOREIGN KEY (brand_id) REFERENCES Brands(brand_id) ON DELETE SET NULL,
+    CONSTRAINT fk_foods_category FOREIGN KEY (category_id) REFERENCES FOOD_CATEGORY(category_id),
+    CONSTRAINT fk_foods_type FOREIGN KEY (type_id) REFERENCES DATA_TYPE(type_id)
 );
 GO
 
--- 3. Nutrition_Metrics Table
+-- 5. Nutrition_Metrics Table
 CREATE TABLE Nutrition_Metrics (
     nutrition_id INT IDENTITY(1,1) PRIMARY KEY,
-    fdc_id INT NOT NULL,
+    fdc_id INT NOT NULL UNIQUE,
     calories FLOAT,
     protein_g FLOAT,
     fat_g FLOAT,
@@ -37,20 +52,28 @@ CREATE TABLE Nutrition_Metrics (
 );
 GO
 
--- 4. Health_and_Allergens Table
-CREATE TABLE Health_and_Allergens (
-    profile_id INT IDENTITY(1,1) PRIMARY KEY,
-    fdc_id INT NOT NULL,
-    contains_gluten BIT DEFAULT 0,
-    contains_dairy BIT DEFAULT 0,
+-- 6. Health_Score Table
+CREATE TABLE HEALTH_SCORE (
+    score_id INT IDENTITY(1,1) PRIMARY KEY,
+    fdc_id INT NOT NULL UNIQUE,
     health_score FLOAT,
     nutriscore_grade VARCHAR(50),
     nova_group INT,
-    CONSTRAINT fk_health_foods FOREIGN KEY (fdc_id) REFERENCES Foods(fdc_id) ON DELETE CASCADE
+    CONSTRAINT fk_healthscore_foods FOREIGN KEY (fdc_id) REFERENCES Foods(fdc_id) ON DELETE CASCADE
 );
 GO
 
--- 5. Prediction Models Table for Machine Learning Pipeline
+-- 7. Allergen_Profile Table
+CREATE TABLE ALLERGEN_PROFILE (
+    allergen_id INT IDENTITY(1,1) PRIMARY KEY,
+    fdc_id INT NOT NULL UNIQUE,
+    contains_gluten BIT DEFAULT 0,
+    contains_dairy BIT DEFAULT 0,
+    CONSTRAINT fk_allergen_foods FOREIGN KEY (fdc_id) REFERENCES Foods(fdc_id) ON DELETE CASCADE
+);
+GO
+
+-- 8. Prediction Models Table for Machine Learning Pipeline
 CREATE TABLE ML_Predictions (
     prediction_id INT IDENTITY(1,1) PRIMARY KEY,
     fdc_id INT NOT NULL,

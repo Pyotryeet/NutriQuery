@@ -19,7 +19,6 @@ def test_brand_creation_and_retrieval(db_conn, db_cursor):
     brand_data = {
         "brand_name": "Test Brand Pytest",
         "brand_owner": "Test Owner",
-        "ecoscore_grade": "A"
     }
     new_brand = crud.create_brand(db_conn, db_cursor, brand_data)
     assert new_brand is not None

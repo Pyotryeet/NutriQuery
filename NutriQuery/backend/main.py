@@ -8,7 +8,7 @@ import ml_service
 from database import get_db
 
 # ── FastAPI Application ───────────────────────────────
-app = FastAPI(title="NutriQuery API", version="1.0.0")
+app = FastAPI(title="NutriQuery API", version="1.1.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -72,12 +72,21 @@ def update_food_nutrition(fdc_id: int, nutrition: schemas.NutritionBase, db: DbD
     return result
 
 
-@app.put("/foods/{fdc_id}/health", response_model=schemas.Health)
-def update_food_health(fdc_id: int, health: schemas.HealthBase, db: DbDep):
+@app.put("/foods/{fdc_id}/health", response_model=schemas.HealthScore)
+def update_food_health(fdc_id: int, health: schemas.HealthScoreBase, db: DbDep):
     conn, cursor = db
-    result = crud.update_health(conn, cursor, fdc_id, health.model_dump(exclude_unset=True))
+    result = crud.update_health_score(conn, cursor, fdc_id, health.model_dump(exclude_unset=True))
     if result is None:
-        raise HTTPException(status_code=404, detail="Health record not found")
+        raise HTTPException(status_code=404, detail="Health score record not found")
+    return result
+
+
+@app.put("/foods/{fdc_id}/allergen", response_model=schemas.AllergenProfile)
+def update_food_allergen(fdc_id: int, allergen: schemas.AllergenProfileBase, db: DbDep):
+    conn, cursor = db
+    result = crud.update_allergen(conn, cursor, fdc_id, allergen.model_dump(exclude_unset=True))
+    if result is None:
+        raise HTTPException(status_code=404, detail="Allergen profile not found")
     return result
 
 
@@ -133,9 +142,6 @@ def read_brands(
 ):
     conn, cursor = db
     return crud.get_brands(conn, cursor, skip=skip, limit=limit)
-
-
-
 
 
 # ── NEW: Categories Listing ─────────────────────────

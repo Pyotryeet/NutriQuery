@@ -7,7 +7,6 @@ from datetime import datetime
 class BrandBase(BaseModel):
     brand_name: str
     brand_owner: Optional[str] = None
-    ecoscore_grade: Optional[str] = None
 
 
 class BrandCreate(BrandBase):
@@ -32,17 +31,26 @@ class Nutrition(NutritionBase):
     fdc_id: int
 
 
-# ── Health & Allergens ─────────────────────────────────
-class HealthBase(BaseModel):
-    contains_gluten: bool = False
-    contains_dairy: bool = False
+# ── Health Score ──────────────────────────────────────
+class HealthScoreBase(BaseModel):
     health_score: Optional[float] = None
     nutriscore_grade: Optional[str] = None
     nova_group: Optional[int] = None
 
 
-class Health(HealthBase):
-    profile_id: int
+class HealthScore(HealthScoreBase):
+    score_id: int
+    fdc_id: int
+
+
+# ── Allergen Profile ──────────────────────────────────
+class AllergenProfileBase(BaseModel):
+    contains_gluten: bool = False
+    contains_dairy: bool = False
+
+
+class AllergenProfile(AllergenProfileBase):
+    allergen_id: int
     fdc_id: int
 
 
@@ -62,8 +70,8 @@ class MLPrediction(MLPredictionBase):
 # ── Food ───────────────────────────────────────────────
 class FoodBase(BaseModel):
     food_name: str
-    data_type: Optional[str] = None
     food_category: Optional[str] = None
+    data_type: Optional[str] = None
 
 
 class Food(FoodBase):
@@ -71,7 +79,8 @@ class Food(FoodBase):
     brand_id: Optional[int] = None
     brand: Optional[Brand] = None
     nutrition: Optional[Nutrition] = None
-    health: Optional[Health] = None
+    health_score: Optional[HealthScore] = None
+    allergen: Optional[AllergenProfile] = None
     predictions: List[MLPrediction] = []
 
 

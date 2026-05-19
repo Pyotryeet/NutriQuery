@@ -1,0 +1,20 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Part I: Database Schema}{1}{section.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.1}Schema Listing}{2}{subsection.1.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces NutriQuery database schema --- 8 tables in 3NF/BCNF. Primary keys are in \textbf  {bold}; foreign keys are annotated with their target relation. UNIQUE constraints on \texttt  {fdc\_id} in Nutrition\_Metrics, HEALTH\_SCORE, and ALLERGEN\_PROFILE enforce strict 1:1 relationships.}}{2}{table.1}\protected@file@percent }
+\newlabel{tab:schema}{{1}{2}{NutriQuery database schema --- 8 tables in 3NF/BCNF. Primary keys are in \textbf {bold}; foreign keys are annotated with their target relation. UNIQUE constraints on \texttt {fdc\_id} in Nutrition\_Metrics, HEALTH\_SCORE, and ALLERGEN\_PROFILE enforce strict 1:1 relationships}{table.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.2}Schema Design Summary}{3}{subsection.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2}Part II: Complex SQL Queries}{3}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Query 1: Full Food Profile Retrieval}{3}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Query 2: Multi-Constraint Range Query}{5}{subsection.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Query 3: Category Nutritional Aggregation}{6}{subsection.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Query 4: Dietary Restriction Filtering}{7}{subsection.2.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5}Query 5: Above-Category-Average Calorie Detection}{8}{subsection.2.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.6}Query 6: Nutritional Gap Identification}{9}{subsection.2.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Criteria Coverage Summary}{10}{section.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces All six queries join at least 3 tables. Each of the four complexity criteria is covered by at least two queries. Criterion~4 is demonstrated by Q5's correlated subquery that references the outer \texttt  {f.category\_id}. Queries Q1--Q4 and Q6 are currently implemented in the NutriQuery backend (\texttt  {crud.py}); Q5 is planned for the next release.}}{10}{table.2}\protected@file@percent }
+\newlabel{tab:coverage}{{2}{10}{All six queries join at least 3 tables. Each of the four complexity criteria is covered by at least two queries. Criterion~4 is demonstrated by Q5's correlated subquery that references the outer \texttt {f.category\_id}. Queries Q1--Q4 and Q6 are currently implemented in the NutriQuery backend (\texttt {crud.py}); Q5 is planned for the next release}{table.2}{}}
+\gdef \@abspage@last{10}
