@@ -69,6 +69,8 @@ class MLPrediction(MLPredictionBase):
 
 # ── Food ───────────────────────────────────────────────
 class FoodBase(BaseModel):
+    """Base food fields. food_category and data_type come from JOIN lookups,
+    not from columns on the Foods table."""
     food_name: str
     food_category: Optional[str] = None
     data_type: Optional[str] = None

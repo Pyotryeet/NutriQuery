@@ -193,12 +193,12 @@ export default function BrowseSection() {
                 </div>
             </div>
 
-            {isBrowsing && rowData.length > 0 && (
+            {rowData.length > 0 && (
                 <div className="pagination-row">
-                    <button className="btn-primary" onClick={() => loadPage(Math.max(0, page - 1), '')}
+                    <button className="btn-primary" onClick={() => loadPage(Math.max(0, page - 1), isBrowsing ? '' : searchName)}
                             disabled={page === 0}>Previous</button>
                     <span className="page-indicator">Page {page + 1}</span>
-                    <button className="btn-primary" onClick={() => loadPage(page + 1, '')}
+                    <button className="btn-primary" onClick={() => loadPage(page + 1, isBrowsing ? '' : searchName)}
                             disabled={rowData.length < PAGE_SIZE}>Next</button>
                 </div>
             )}

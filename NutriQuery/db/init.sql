@@ -83,6 +83,8 @@ CREATE TABLE ALLERGEN_PROFILE (
 GO
 
 -- 8. Prediction Models Table for Machine Learning Pipeline
+-- NOTE: predicted_nova is always NULL — NOVA cannot be predicted from nutrition data.
+-- The column is retained for backward compatibility; remove in a future migration.
 CREATE TABLE ML_Predictions (
     prediction_id INT IDENTITY(1,1) PRIMARY KEY,
     fdc_id INT NOT NULL,

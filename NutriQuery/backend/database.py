@@ -1,5 +1,6 @@
 import pymssql
 import logging
+import time
 
 logger = logging.getLogger(__name__)
 
@@ -25,6 +26,8 @@ def get_connection():
             logger.warning(
                 "DB connection attempt %d/3 failed: %s", attempt + 1, e,
             )
+            if attempt < 2:
+                time.sleep(0.5 * (attempt + 1))
     raise last_error
 
 

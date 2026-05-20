@@ -41,10 +41,11 @@ def get_food(conn, cursor, fdc_id: int):
 
 
 # ── Requirement 3: Data Correction ─────────────────────
-def update_nutrition(conn, cursor, fdc_id: int, data: dict):
+def _update_row(conn, cursor, table, columns, fdc_id, data):
+    """Generic UPDATE helper. Builds SET clauses, executes, commits, returns row."""
     set_clauses = []
     values = []
-    for col in ("calories", "protein_g", "fat_g", "carbs_g", "sodium_mg"):
+    for col in columns:
         if col in data and data[col] is not None:
             set_clauses.append(f"{col} = %s")
             values.append(data[col])
@@ -54,57 +55,30 @@ def update_nutrition(conn, cursor, fdc_id: int, data: dict):
 
     values.append(fdc_id)
     cursor.execute(
-        f"UPDATE Nutrition_Metrics SET {', '.join(set_clauses)} WHERE fdc_id = %s",
+        f"UPDATE {table} SET {', '.join(set_clauses)} WHERE fdc_id = %s",
         tuple(values),
     )
     conn.commit()
-
-    cursor.execute("SELECT * FROM Nutrition_Metrics WHERE fdc_id = %s", (fdc_id,))
+    cursor.execute(f"SELECT * FROM {table} WHERE fdc_id = %s", (fdc_id,))
     return cursor.fetchone()
+
+
+def update_nutrition(conn, cursor, fdc_id: int, data: dict):
+    return _update_row(conn, cursor, "Nutrition_Metrics",
+                       ("calories", "protein_g", "fat_g", "carbs_g", "sodium_mg"),
+                       fdc_id, data)
 
 
 def update_health_score(conn, cursor, fdc_id: int, data: dict):
-    set_clauses = []
-    values = []
-    for col in ("health_score", "nutriscore_grade", "nova_group"):
-        if col in data and data[col] is not None:
-            set_clauses.append(f"{col} = %s")
-            values.append(data[col])
-
-    if not set_clauses:
-        return None
-
-    values.append(fdc_id)
-    cursor.execute(
-        f"UPDATE HEALTH_SCORE SET {', '.join(set_clauses)} WHERE fdc_id = %s",
-        tuple(values),
-    )
-    conn.commit()
-
-    cursor.execute("SELECT * FROM HEALTH_SCORE WHERE fdc_id = %s", (fdc_id,))
-    return cursor.fetchone()
+    return _update_row(conn, cursor, "HEALTH_SCORE",
+                       ("health_score", "nutriscore_grade", "nova_group"),
+                       fdc_id, data)
 
 
 def update_allergen(conn, cursor, fdc_id: int, data: dict):
-    set_clauses = []
-    values = []
-    for col in ("contains_gluten", "contains_dairy"):
-        if col in data and data[col] is not None:
-            set_clauses.append(f"{col} = %s")
-            values.append(data[col])
-
-    if not set_clauses:
-        return None
-
-    values.append(fdc_id)
-    cursor.execute(
-        f"UPDATE ALLERGEN_PROFILE SET {', '.join(set_clauses)} WHERE fdc_id = %s",
-        tuple(values),
-    )
-    conn.commit()
-
-    cursor.execute("SELECT * FROM ALLERGEN_PROFILE WHERE fdc_id = %s", (fdc_id,))
-    return cursor.fetchone()
+    return _update_row(conn, cursor, "ALLERGEN_PROFILE",
+                       ("contains_gluten", "contains_dairy"),
+                       fdc_id, data)
 
 
 # ── Requirement 4: Range Querying ──────────────────────

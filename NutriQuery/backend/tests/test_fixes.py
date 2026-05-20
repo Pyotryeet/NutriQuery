@@ -78,14 +78,14 @@ def test_food_query_uses_left_joins(db_conn, db_cursor, seed_test_data):
     assert food["allergen"] is None
 
 
-def test_predictions_field_is_nullable(db_conn, db_cursor, seed_test_data):
+def test_predictions_field_removed(db_conn, db_cursor, seed_test_data):
     """
-    Issue #13 fix: the predictions field in Food schema should be None,
-    not an empty list, since predictions are not populated in the food query.
+    Issue #6 third-pass fix: the predictions field has been removed from the
+    Food schema since it was never populated. The key should not exist.
     """
     food = crud.get_food(db_conn, db_cursor, 1001)
-    assert food["predictions"] is None, (
-        "predictions should be None (not fetched), got: %s" % food["predictions"]
+    assert "predictions" not in food, (
+        "predictions key should not exist in food dict, got: %s" % food.get("predictions")
     )
 
 

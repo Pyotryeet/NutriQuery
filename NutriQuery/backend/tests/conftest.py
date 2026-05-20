@@ -16,25 +16,17 @@ from fastapi.testclient import TestClient
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-TEST_DB_NAME = "NutriQuery_Test"
+from database import DB_CONFIG
 
-BASE_CONFIG = {
-    "server": "127.0.0.1",
-    "port": "1433",
-    "user": "SA",
-    "password": "MbLp6hezU8@",
-    "autocommit": True,
-    "login_timeout": 10,
-    "timeout": 30,
-}
+TEST_DB_NAME = "NutriQuery_Test"
 
 
 def _get_master_connection():
-    return pymssql.connect(**{**BASE_CONFIG, "database": "master"})
+    return pymssql.connect(**{**DB_CONFIG, "database": "master", "autocommit": True})
 
 
 def _get_test_connection():
-    return pymssql.connect(**{**BASE_CONFIG, "database": TEST_DB_NAME})
+    return pymssql.connect(**{**DB_CONFIG, "database": TEST_DB_NAME})
 
 
 @pytest.fixture(scope="session")

@@ -110,12 +110,13 @@ def update_food_allergen(fdc_id: int, allergen: schemas.AllergenProfileBase, db:
 @app.get("/queries/range", response_model=List[schemas.Food])
 def query_by_range(
     db: DbDep,
-    min_health_score: Annotated[float, Query()] = 50.0,
-    max_sodium: Annotated[float, Query()] = 200.0,
-    max_carbs: Annotated[float, Query()] = 30.0,
+    min_health_score: Annotated[float, Query(description="Minimum health score (0-100)")] = 50.0,
+    max_sodium: Annotated[float, Query(description="Maximum sodium in mg")] = 200.0,
+    max_carbs: Annotated[float, Query(description="Maximum carbs in grams")] = 30.0,
+    limit: Annotated[int, Query(ge=1, le=500, description="Max results")] = 100,
 ):
     conn, cursor = db
-    return crud.get_foods_by_range(conn, cursor, min_health_score, max_sodium, max_carbs)
+    return crud.get_foods_by_range(conn, cursor, min_health_score, max_sodium, max_carbs, limit=limit)
 
 
 # ── Req 5: Dietary Filtering ────────────────────────
