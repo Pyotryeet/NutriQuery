@@ -167,6 +167,9 @@ def _train_model(cursor):
         loss.backward()
         optimizer.step()
         scheduler.step()
+        if torch.isnan(loss):
+            logger.warning("NaN loss at epoch %d — stopping training.", epoch)
+            break
 
     logger.info(
         "Training complete — final loss: %.4f  (%d samples, %d epochs)",

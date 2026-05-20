@@ -115,20 +115,21 @@ def get_foods_by_diet(conn, cursor, no_gluten=False, no_dairy=False, limit=100):
 
 # ── Requirement 6: Aggregation ─────────────────────────
 def get_category_aggregation(conn, cursor, category: str):
-    cursor.execute("""
-        SELECT
-            fc.category_name AS food_category,
-            AVG(n.calories)  AS avg_calories,
-            AVG(n.protein_g) AS avg_protein,
-            AVG(n.fat_g)     AS avg_fat,
-            AVG(n.carbs_g)   AS avg_carbs,
-            COUNT(f.fdc_id)  AS item_count
-        FROM Foods f
-        JOIN FOOD_CATEGORY fc     ON f.category_id = fc.category_id
-        JOIN Nutrition_Metrics n  ON f.fdc_id      = n.fdc_id
-        WHERE fc.category_name = %s
-        GROUP BY fc.category_name
-    """, (category,))
+    cursor.execute(
+        "SELECT "
+        "fc.category_name AS food_category, "
+        "AVG(n.calories) AS avg_calories, "
+        "AVG(n.protein_g) AS avg_protein, "
+        "AVG(n.fat_g) AS avg_fat, "
+        "AVG(n.carbs_g) AS avg_carbs, "
+        "COUNT(f.fdc_id) AS item_count "
+        "FROM Foods f "
+        "JOIN FOOD_CATEGORY fc ON f.category_id = fc.category_id "
+        "JOIN Nutrition_Metrics n ON f.fdc_id = n.fdc_id "
+        "WHERE fc.category_name = %s "
+        "GROUP BY fc.category_name",
+        (category,),
+    )
     row = cursor.fetchone()
     if not row:
         return {
@@ -175,27 +176,29 @@ def create_brand(conn, cursor, data: dict):
 
 
 def get_brands(conn, cursor, skip=0, limit=100):
-    cursor.execute("""
-        SELECT * FROM Brands
-        ORDER BY brand_id
-        OFFSET %s ROWS FETCH NEXT %s ROWS ONLY
-    """, (skip, limit))
+    cursor.execute(
+        "SELECT * FROM Brands "
+        "ORDER BY brand_id "
+        "OFFSET %s ROWS FETCH NEXT %s ROWS ONLY",
+        (skip, limit),
+    )
     return cursor.fetchall()
 
 
 # ── Search & Listing ──────────────────────────────────
 def search_foods(conn, cursor, name: str, limit=50):
-    cursor.execute("""
-        SELECT TOP %s
-            f.fdc_id, f.food_name,
-            fc.category_name AS food_category,
-            b.brand_name
-        FROM Foods f
-        LEFT JOIN FOOD_CATEGORY fc ON f.category_id = fc.category_id
-        LEFT JOIN Brands b         ON f.brand_id    = b.brand_id
-        WHERE f.food_name LIKE %s
-        ORDER BY f.food_name
-    """, (limit, f"%{name}%"))
+    cursor.execute(
+        "SELECT TOP %s "
+        "f.fdc_id, f.food_name, "
+        "fc.category_name AS food_category, "
+        "b.brand_name "
+        "FROM Foods f "
+        "LEFT JOIN FOOD_CATEGORY fc ON f.category_id = fc.category_id "
+        "LEFT JOIN Brands b ON f.brand_id = b.brand_id "
+        "WHERE f.food_name LIKE %s "
+        "ORDER BY f.food_name",
+        (limit, f"%{name}%"),
+    )
     return cursor.fetchall()
 
 
@@ -227,38 +230,38 @@ def get_foods_browse(conn, cursor, skip=0, limit=50, name=None):
 
 
 def get_all_foods(conn, cursor, skip=0, limit=50):
-    cursor.execute("""
-        SELECT f.fdc_id, f.food_name,
-               fc.category_name AS food_category,
-               b.brand_name
-        FROM Foods f
-        LEFT JOIN FOOD_CATEGORY fc ON f.category_id = fc.category_id
-        LEFT JOIN Brands b         ON f.brand_id    = b.brand_id
-        ORDER BY f.fdc_id
-        OFFSET %s ROWS FETCH NEXT %s ROWS ONLY
-    """, (skip, limit))
+    cursor.execute(
+        "SELECT f.fdc_id, f.food_name, "
+        "fc.category_name AS food_category, "
+        "b.brand_name "
+        "FROM Foods f "
+        "LEFT JOIN FOOD_CATEGORY fc ON f.category_id = fc.category_id "
+        "LEFT JOIN Brands b ON f.brand_id = b.brand_id "
+        "ORDER BY f.fdc_id "
+        "OFFSET %s ROWS FETCH NEXT %s ROWS ONLY",
+        (skip, limit),
+    )
     return cursor.fetchall()
 
 
 def get_categories(conn, cursor):
-    cursor.execute("""
-        SELECT category_name
-        FROM FOOD_CATEGORY
-        ORDER BY category_name
-    """)
+    cursor.execute(
+        "SELECT category_name FROM FOOD_CATEGORY ORDER BY category_name"
+    )
     return [row["category_name"] for row in cursor.fetchall()]
 
 
 def get_predictions(conn, cursor, limit=100):
-    cursor.execute("""
-        SELECT TOP %s
-            p.prediction_id, p.fdc_id, f.food_name,
-            p.predicted_nutriscore, p.predicted_nova,
-            p.confidence_score, p.prediction_date
-        FROM ML_Predictions p
-        LEFT JOIN Foods f ON p.fdc_id = f.fdc_id
-        ORDER BY p.prediction_date DESC
-    """, (limit,))
+    cursor.execute(
+        "SELECT TOP %s "
+        "p.prediction_id, p.fdc_id, f.food_name, "
+        "p.predicted_nutriscore, p.predicted_nova, "
+        "p.confidence_score, p.prediction_date "
+        "FROM ML_Predictions p "
+        "LEFT JOIN Foods f ON p.fdc_id = f.fdc_id "
+        "ORDER BY p.prediction_date DESC",
+        (limit,),
+    )
     return cursor.fetchall()
 
 

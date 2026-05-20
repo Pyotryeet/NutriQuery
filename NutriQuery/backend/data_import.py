@@ -26,7 +26,7 @@ def _safe_float(val):
         return None
     try:
         f = float(val)
-        return f if abs(f) != float('inf') else None
+        return f if f == f and abs(f) != float('inf') else None
     except (ValueError, TypeError):
         return None
 
@@ -331,6 +331,8 @@ def import_all_data():
         logger.info("All imports complete!")
 
     except Exception as e:
+        # Broad catch: any unexpected error (DB failure, disk full, OOM)
+        # must trigger cleanup — conn.close() and cursor.close() in finally.
         stats["errors"].append(f"Fatal: {str(e)[:200]}")
         try:
             conn.rollback()

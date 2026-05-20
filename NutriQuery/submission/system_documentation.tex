@@ -1,0 +1,1058 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{fancyhdr}
+\setlength{\headheight}{14.5pt}
+\addtolength{\topmargin}{-2.5pt}
+\usepackage{titlesec}
+\usepackage{colortbl}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    citecolor=blue
+}
+
+\lstset{
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny,
+    tabsize=2,
+    captionpos=b,
+    showstringspaces=false,
+    keywordstyle=\color{blue},
+    commentstyle=\color{gray},
+    stringstyle=\color{red},
+}
+
+\title{\Huge\textbf{NutriQuery}\\[0.3cm]
+       \Large Food \& Nutrition Intelligence System\\[0.3cm]
+       \large Complete System Documentation}
+\author{ISE305 — Database Systems Project}
+\date{\today}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{NutriQuery System Documentation}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{ISE305 — Database Systems}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+\vspace{2cm}
+\begin{center}
+\textit{A comprehensive reference covering the complete architecture,\\
+database design, backend API, machine learning pipeline,\\
+frontend interface, and testing infrastructure.}
+\end{center}
+
+\newpage
+\tableofcontents
+\newpage
+
+%==============================================================================
+\section{Project Overview}
+%==============================================================================
+
+\textbf{NutriQuery} is a full-stack food and nutrition intelligence platform built on a Microsoft SQL Server (MSSQL) database with a FastAPI Python backend, a React + Vite frontend, and a PyTorch-based machine learning pipeline. The system ingests USDA FoodData Central and OpenFoodFacts datasets, normalizes them into a Third Normal Form (3NF) schema, exposes a RESTful API for querying and correcting food data, and provides ML-predicted Nutri-Score classifications.
+
+\subsection{Technology Stack}
+\begin{itemize}[nosep]
+    \item \textbf{Database:} Microsoft SQL Server 2022 (Docker container)
+    \item \textbf{Backend:} Python 3.12, FastAPI, pymssql, PyTorch, scikit-learn
+    \item \textbf{Frontend:} React 18, Vite 5, AG Grid Community
+    \item \textbf{ML:} PyTorch feed-forward neural network (5→32→16→5)
+    \item \textbf{Testing:} pytest (48 tests, real database integration)
+    \item \textbf{Data Sources:} USDA comprehensive\_foods\_usda.csv, OpenFoodFacts foods\_health\_scores\_allergens.csv
+\end{itemize}
+
+\subsection{System Capabilities}
+\begin{enumerate}[nosep]
+    \item \textbf{Bulk Data Import} — Ingest $\sim$40,000 food records from CSV into normalized 3NF schema
+    \item \textbf{Record Retrieval} — Fetch complete food profiles with all related data via 7-table JOIN
+    \item \textbf{Data Correction} — Update nutrition metrics, health scores, and allergen profiles
+    \item \textbf{Range Querying} — Filter foods by health score, sodium, and carbohydrate thresholds
+    \item \textbf{Dietary Filtering} — Find gluten-free and dairy-free foods via allergen profiles
+    \item \textbf{Category Aggregation} — Compute average nutritional statistics per food category
+    \item \textbf{Gap Identification} — Surface records with missing or incomplete nutrition data
+    \item \textbf{Metadata Management} — CRUD operations for food brands
+    \item \textbf{ML Inference} — Train a neural network on labeled data; predict Nutri-Score for all foods
+    \item \textbf{Browse \& Search} — Paginated food browser with nutrition-at-a-glance; inline editing
+\end{enumerate}
+
+%==============================================================================
+\section{System Architecture \& Program Flow}
+%==============================================================================
+
+The system follows a layered architecture with clear separation between data, business logic, API, and presentation layers. The program flow, ordered by execution dependency, is:
+
+\begin{enumerate}[nosep]
+    \item \textbf{Database Initialization} — \texttt{db/init.sql} creates all 8 tables with constraints and indexes
+    \item \textbf{Data Import} — \texttt{data\_import.py} reads CSV files and populates the normalized schema
+    \item \textbf{Connection Management} — \texttt{database.py} provides connection pooling and FastAPI dependency injection
+    \item \textbf{Data Schemas} — \texttt{schemas.py} defines Pydantic models for request/response validation
+    \item \textbf{CRUD Operations} — \texttt{crud.py} contains all SQL query logic, exposed as pure functions
+    \item \textbf{API Endpoints} — \texttt{main.py} maps HTTP routes to CRUD functions; includes ML router
+    \item \textbf{ML Pipeline} — \texttt{ml\_service.py} trains and runs inference using PyTorch
+    \item \textbf{Frontend} — React components consume the API via \texttt{api.js}; render with AG Grid
+\end{enumerate}
+
+\begin{figure}[h]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Layer} & \textbf{Technology} & \textbf{Files} \\
+\hline
+Presentation & React + Vite + AG Grid & \texttt{frontend/src/*.jsx} \\
+\hline
+API Gateway & FastAPI + CORS & \texttt{main.py} \\
+\hline
+Business Logic & Python + PyTorch & \texttt{crud.py, ml\_service.py, data\_import.py} \\
+\hline
+Data Access & pymssql & \texttt{database.py} \\
+\hline
+Data Store & MSSQL (Docker) & \texttt{db/init.sql} \\
+\hline
+Validation & Pydantic & \texttt{schemas.py} \\
+\hline
+Testing & pytest (real DB) & \texttt{tests/*.py} \\
+\hline
+\end{tabular}
+\caption{System Architecture Layers}
+\end{figure}
+
+%==============================================================================
+\section{Database Design}
+%==============================================================================
+
+\subsection{Entity-Relationship Model}
+
+The database follows strict Third Normal Form (3NF) with 8 tables. The design uses Chen's notation with the following principles:
+\begin{itemize}[nosep]
+    \item Every table has a single-column primary key (natural or surrogate IDENTITY)
+    \item All non-key attributes are fully functionally dependent on the primary key (2NF)
+    \item No transitive dependencies exist — lookup values are extracted to separate tables (3NF)
+    \item One-to-one relationships use UNIQUE foreign keys
+    \item One-to-many relationships use standard foreign keys
+    \item All foreign keys have referential integrity constraints with CASCADE or SET NULL actions
+\end{itemize}
+
+\begin{figure}[h]
+\centering
+\begin{tabular}{ll}
+\toprule
+\textbf{Relationship} & \textbf{Cardinality} \\
+\midrule
+Brand $\rightarrow$ Food    & 1:N (optional — unbranded foods have NULL brand\_id) \\
+Food\_Category $\rightarrow$ Food & 1:N (required) \\
+Data\_Type $\rightarrow$ Food     & 1:N (required) \\
+Food $\rightarrow$ Nutrition\_Metrics & 1:1 (UNIQUE fdc\_id) \\
+Food $\rightarrow$ Health\_Score      & 1:1 (UNIQUE fdc\_id) \\
+Food $\rightarrow$ Allergen\_Profile  & 1:1 (UNIQUE fdc\_id) \\
+Food $\rightarrow$ ML\_Predictions    & 1:N \\
+\bottomrule
+\end{tabular}
+\caption{Entity Relationships}
+\end{figure}
+
+\subsection{Normalization Process}
+
+The schema was normalized from an earlier design through the following transformations:
+
+\begin{enumerate}
+    \item \textbf{Extracted FOOD\_CATEGORY entity.} The original \texttt{Foods} table stored \texttt{food\_category} as a VARCHAR string (e.g., ``Snacks'', ``Dairy and Egg Products''). This created update anomalies — changing a category name required updating every row. Solution: create a \texttt{FOOD\_CATEGORY} lookup table with \texttt{category\_id} (IDENTITY PK) and \texttt{category\_name} (UNIQUE). The \texttt{Foods} table references it via \texttt{category\_id} FK.
+
+    \item \textbf{Extracted DATA\_TYPE entity.} Same pattern as categories. The \texttt{data\_type} VARCHAR column (``SR Legacy'', ``Survey (FNDDS)'') was extracted to a \texttt{DATA\_TYPE} lookup table with \texttt{type\_id} and \texttt{type\_name}.
+
+    \item \textbf{Removed ecoscore\_grade from Brands.} Eco-score depends on individual food products, not the brand as a whole. Different products from the same brand can have different eco-scores. This was a transitive dependency (\texttt{brand\_id} does not functionally determine \texttt{ecoscore\_grade}), violating 3NF. The column was dropped.
+
+    \item \textbf{Decomposed Health\_and\_Allergens into two entities.} The original combined table mixed scoring metrics (\texttt{health\_score}, \texttt{nutriscore\_grade}, \texttt{nova\_group}) with intrinsic food properties (\texttt{contains\_gluten}, \texttt{contains\_dairy}). These represent independent functional domains. Solution: split into \texttt{HEALTH\_SCORE} (scoring metrics derived from nutrition) and \texttt{ALLERGEN\_PROFILE} (binary food properties independent of scoring).
+\end{enumerate}
+
+\subsection{3NF Compliance Verification}
+\begin{itemize}[nosep]
+    \item \textbf{1NF:} All attributes store atomic values. No multi-valued or composite attributes exist.
+    \item \textbf{2NF:} Every table has a single-column primary key. No partial dependencies can exist.
+    \item \textbf{3NF:} Transitive dependencies eliminated: \texttt{food\_category} and \texttt{data\_type} extracted to lookup tables; \texttt{ecoscore\_grade} removed from Brands; Health/Allergen split into separate entities.
+\end{itemize}
+
+\subsection{Complete Table Definitions}
+
+% --- Table 1: Brands ---
+\subsubsection{Table: Brands}
+\begin{tabularx}{\textwidth}{llllX}
+\toprule
+\textbf{Column} & \textbf{Type} & \textbf{Constraints} & \textbf{Default} & \textbf{Description} \\
+\midrule
+brand\_id & INT & PK, IDENTITY(1,1) & auto & Auto-generated unique brand identifier \\
+brand\_name & VARCHAR(255) & NOT NULL & — & Display name of the brand \\
+brand\_owner & VARCHAR(255) & NULL & — & Parent company or brand owner \\
+\bottomrule
+\end{tabularx}
+
+\vspace{0.3cm}
+\noindent\textbf{Purpose:} Stores food brand metadata. One brand can produce many foods (1:N relationship). Foods without a brand (generic/unbranded items) store NULL in their brand\_id FK.
+
+\vspace{0.2cm}
+\noindent\textbf{Indexes:} None beyond PK (small table, typically $\ll$ 1,000 rows).
+
+% --- Table 2: FOOD\_CATEGORY ---
+\subsubsection{Table: FOOD\_CATEGORY}
+\begin{tabularx}{\textwidth}{llllX}
+\toprule
+\textbf{Column} & \textbf{Type} & \textbf{Constraints} & \textbf{Default} & \textbf{Description} \\
+\midrule
+category\_id & INT & PK, IDENTITY(1,1) & auto & Auto-generated category identifier \\
+category\_name & VARCHAR(255) & NOT NULL, UNIQUE & — & Food category name (e.g., Snacks, Dairy) \\
+\bottomrule
+\end{tabularx}
+
+\vspace{0.3cm}
+\noindent\textbf{Purpose:} Normalized lookup table for food categories. Eliminates VARCHAR duplication in the Foods table. A food's category is referenced by category\_id FK.
+
+\vspace{0.2cm}
+\noindent\textbf{3NF Rationale:} Extracted from \texttt{Foods.food\_category} VARCHAR column. Prevents update anomalies (changing ``Snacks'' to ``Snack Foods'' would require updating every row in the old design; now it's one UPDATE on FOOD\_CATEGORY).
+
+% --- Table 3: DATA\_TYPE ---
+\subsubsection{Table: DATA\_TYPE}
+\begin{tabularx}{\textwidth}{llllX}
+\toprule
+\textbf{Column} & \textbf{Type} & \textbf{Constraints} & \textbf{Default} & \textbf{Description} \\
+\midrule
+type\_id & INT & PK, IDENTITY(1,1) & auto & Auto-generated type identifier \\
+type\_name & VARCHAR(100) & NOT NULL, UNIQUE & — & Data source classification \\
+\bottomrule
+\end{tabularx}
+
+\vspace{0.3cm}
+\noindent\textbf{Purpose:} Normalized lookup for USDA data source types. Values include ``SR Legacy'' (Standard Reference), ``Survey (FNDDS)'', ``Branded Foods'', etc.
+
+\vspace{0.2cm}
+\noindent\textbf{3NF Rationale:} Same pattern as FOOD\_CATEGORY — extract repeating classification strings to prevent update anomalies.
+
+% --- Table 4: Foods ---
+\subsubsection{Table: Foods}
+\begin{tabularx}{\textwidth}{llllX}
+\toprule
+\textbf{Column} & \textbf{Type} & \textbf{Constraints} & \textbf{Default} & \textbf{Description} \\
+\midrule
+fdc\_id & INT & PK & — & USDA FoodData Central identifier (natural key) \\
+brand\_id & INT & FK $\rightarrow$ Brands(brand\_id) ON DELETE SET NULL & NULL & Optional brand association \\
+category\_id & INT & FK $\rightarrow$ FOOD\_CATEGORY(category\_id) & — & Food category reference \\
+type\_id & INT & FK $\rightarrow$ DATA\_TYPE(type\_id) & — & Data source type reference \\
+food\_name & VARCHAR(500) & NOT NULL & — & Descriptive food item name \\
+\bottomrule
+\end{tabularx}
+
+\vspace{0.3cm}
+\noindent\textbf{Purpose:} Core entity. Stores every food item from the USDA database. fdc\_id is a natural key (provided by USDA, not auto-generated). All descriptive attributes (category, type) are normalized into lookup tables via FK references.
+
+\vspace{0.2cm}
+\noindent\textbf{Indexes:}
+\begin{itemize}[nosep]
+    \item \texttt{idx\_foods\_brand\_id} — speeds up brand JOINs
+    \item \texttt{idx\_foods\_category\_id} — speeds up category JOINs and filtering
+    \item \texttt{idx\_foods\_type\_id} — speeds up data type JOINs
+    \item \texttt{idx\_foods\_food\_name} — B-tree on food\_name; helps prefix LIKE queries. Leading-wildcard queries (\texttt{LIKE '\%Apple\%'}) will still table-scan.
+\end{itemize}
+
+% --- Table 5: Nutrition\_Metrics ---
+\subsubsection{Table: Nutrition\_Metrics}
+\begin{tabularx}{\textwidth}{llllX}
+\toprule
+\textbf{Column} & \textbf{Type} & \textbf{Constraints} & \textbf{Default} & \textbf{Description} \\
+\midrule
+nutrition\_id & INT & PK, IDENTITY(1,1) & auto & Auto-generated nutrition record ID \\
+fdc\_id & INT & FK $\rightarrow$ Foods(fdc\_id) ON DELETE CASCADE, UNIQUE & — & One-to-one link to parent food \\
+calories & FLOAT & NULL & — & Energy content in kcal \\
+protein\_g & FLOAT & NULL & — & Protein content in grams \\
+fat\_g & FLOAT & NULL & — & Total fat content in grams \\
+carbs\_g & FLOAT & NULL & — & Carbohydrate content in grams \\
+sodium\_mg & FLOAT & NULL & — & Sodium content in milligrams \\
+\bottomrule
+\end{tabularx}
+
+\vspace{0.3cm}
+\noindent\textbf{Purpose:} Stores quantitative nutritional composition for each food. UNIQUE constraint on fdc\_id enforces a strict 1:1 relationship — each food has exactly zero or one nutrition record. NULL values are permitted for individual nutrients (some foods lack complete data).
+
+\vspace{0.2cm}
+\noindent\textbf{Design Decision:} Nutrition data is separated from the Foods table (rather than being columns on Foods) because: (a) it represents a distinct functional domain, (b) many foods have no nutrition data (sparse), and (c) it keeps the Foods table narrow for fast listing queries.
+
+\vspace{0.2cm}
+\noindent\textbf{Data Quality:} The \texttt{get\_foods\_with\_missing\_data} function identifies foods where any of these five columns are NULL, flagging them for data completion.
+
+% --- Table 6: HEALTH\_SCORE ---
+\subsubsection{Table: HEALTH\_SCORE}
+\begin{tabularx}{\textwidth}{llllX}
+\toprule
+\textbf{Column} & \textbf{Type} & \textbf{Constraints} & \textbf{Default} & \textbf{Description} \\
+\midrule
+score\_id & INT & PK, IDENTITY(1,1) & auto & Auto-generated health score record ID \\
+fdc\_id & INT & FK $\rightarrow$ Foods(fdc\_id) ON DELETE CASCADE, UNIQUE & — & One-to-one link to parent food \\
+health\_score & FLOAT & NULL & — & Computed health score (0–100) \\
+nutriscore\_grade & VARCHAR(50) & NULL & — & Nutri-Score grade (A, B, C, D, E) \\
+nova\_group & INT & NULL & — & NOVA food processing group (1–4) \\
+\bottomrule
+\end{tabularx}
+
+\vspace{0.3cm}
+\noindent\textbf{Purpose:} Stores food quality and classification metrics. Three distinct scoring dimensions:
+\begin{itemize}[nosep]
+    \item \textbf{health\_score:} A numeric composite score (0–100), higher is healthier. Computed from nutritional composition.
+    \item \textbf{nutriscore\_grade:} The European Nutri-Score system (A=best, E=worst). Used as training labels for the ML model.
+    \item \textbf{nova\_group:} The NOVA food processing classification (1=unprocessed, 4=ultra-processed). Populated from OpenFoodFacts enrichment data.
+\end{itemize}
+
+\vspace{0.2cm}
+\noindent\textbf{3NF Rationale:} Split from the original \texttt{Health\_and\_Allergens} table. Health scoring metrics are functionally independent of allergen flags — a food's Nutri-Score doesn't determine whether it contains gluten.
+
+% --- Table 7: ALLERGEN\_PROFILE ---
+\subsubsection{Table: ALLERGEN\_PROFILE}
+\begin{tabularx}{\textwidth}{llllX}
+\toprule
+\textbf{Column} & \textbf{Type} & \textbf{Constraints} & \textbf{Default} & \textbf{Description} \\
+\midrule
+allergen\_id & INT & PK, IDENTITY(1,1) & auto & Auto-generated allergen profile ID \\
+fdc\_id & INT & FK $\rightarrow$ Foods(fdc\_id) ON DELETE CASCADE, UNIQUE & — & One-to-one link to parent food \\
+contains\_gluten & BIT & NOT NULL & 0 & Gluten presence flag (0=no, 1=yes) \\
+contains\_dairy & BIT & NOT NULL & 0 & Dairy presence flag (0=no, 1=yes) \\
+\bottomrule
+\end{tabularx}
+
+\vspace{0.3cm}
+\noindent\textbf{Purpose:} Binary allergen flags for dietary filtering. The \texttt{get\_foods\_by\_diet} function filters on these columns. Foods without allergen data are treated as ``no known allergens'' (NULL-safe WHERE clauses).
+
+\vspace{0.2cm}
+\noindent\textbf{3NF Rationale:} Split from \texttt{Health\_and\_Allergens}. Allergen presence is an intrinsic property of the food, not a derived score. A food's gluten content is independent of its Nutri-Score.
+
+% --- Table 8: ML\_Predictions ---
+\subsubsection{Table: ML\_Predictions}
+\begin{tabularx}{\textwidth}{llllX}
+\toprule
+\textbf{Column} & \textbf{Type} & \textbf{Constraints} & \textbf{Default} & \textbf{Description} \\
+\midrule
+prediction\_id & INT & PK, IDENTITY(1,1) & auto & Auto-generated prediction identifier \\
+fdc\_id & INT & FK $\rightarrow$ Foods(fdc\_id) ON DELETE CASCADE & — & Food item being predicted \\
+predicted\_nutriscore & VARCHAR(50) & NULL & — & ML-predicted Nutri-Score grade (A–E) \\
+predicted\_nova & INT & NULL & — & Always NULL — NOVA cannot be predicted from nutrition data alone \\
+confidence\_score & FLOAT & NULL & — & Model confidence (0–1) from softmax output \\
+prediction\_date & DATETIME & NOT NULL & GETDATE() & Timestamp of prediction generation \\
+\bottomrule
+\end{tabularx}
+
+\vspace{0.3cm}
+\noindent\textbf{Purpose:} Stores the output of the ML inference pipeline. The neural network predicts Nutri-Score grades; NOVA group classification is not attempted (nutrition data alone cannot determine food processing level).
+
+\vspace{0.2cm}
+\noindent\textbf{Important Note:} \texttt{predicted\_nova} is always NULL. NOVA classification measures food processing (Group 1 = unprocessed, Group 4 = ultra-processed), which cannot be determined from the five nutrition features (calories, protein, fat, carbs, sodium). A diet soda (0 calories) is NOVA 4; a raw avocado (high calories) is NOVA 1. Training on nutrition data would produce systematically invalid NOVA predictions.
+
+\vspace{0.2cm}
+\noindent\textbf{Indexes:} \texttt{idx\_ml\_predictions\_fdc\_id} — speeds up JOINs with Foods table.
+
+\subsection{Data Value Creation}
+
+The system creates value from raw data through several transformations:
+
+\begin{enumerate}
+    \item \textbf{Normalization.} Raw CSV data with duplicated VARCHAR strings (categories, types) is transformed into a normalized 3NF schema with lookup tables. This eliminates redundancy, prevents update anomalies, and improves query performance through integer FK joins instead of string comparisons.
+
+    \item \textbf{Data Enrichment.} The USDA CSV provides nutrition data. The OpenFoodFacts CSV provides Nutri-Score grades, NOVA groups, and allergen flags. The \texttt{\_load\_health\_csv} function matches products by name (shortest-match heuristic) and enriches the HEALTH\_SCORE and ALLERGEN\_PROFILE tables. The enrichment data is what makes the ML pipeline possible — it provides the labeled training data.
+
+    \item \textbf{ML-Predicted Nutri-Scores.} The neural network learns the mapping from nutrition features $\rightarrow$ Nutri-Score grade from labeled data. It then predicts grades for all foods (including those without existing grades), creating inferred health classifications at scale.
+
+    \item \textbf{Aggregated Analytics.} The \texttt{get\_category\_aggregation} function computes per-category nutritional averages, enabling comparative analysis (e.g., ``Are Snacks higher in sodium than Vegetables?'').
+
+    \item \textbf{Gap Detection.} The \texttt{get\_foods\_with\_missing\_data} function identifies data quality issues by surfacing records with NULL nutrition fields, enabling targeted data completion.
+
+    \item \textbf{Dietary Intelligence.} The allergen profile enables filtering by dietary restriction (gluten-free, dairy-free), creating immediate practical value for users with food allergies or intolerances.
+\end{enumerate}
+
+%==============================================================================
+\section{Backend Documentation}
+%==============================================================================
+
+\subsection{File: \texttt{database.py} — Connection Management}
+
+\textbf{Purpose:} Provides the database connection layer. All database access flows through this module.
+
+\subsubsection{DB\_CONFIG (Module Constant)}
+\begin{lstlisting}[language=Python, caption=Database configuration dictionary]
+DB_CONFIG = {
+    "server": "127.0.0.1", "port": "1433",
+    "user": "SA", "password": "...",
+    "database": "NutriQuery",
+    "login_timeout": 10, "timeout": 30,
+}
+\end{lstlisting}
+
+\textbf{What it does:} Central configuration dictionary for MSSQL connection parameters. Server, port, credentials, database name, and timeout values are defined once and consumed by \texttt{get\_connection()}.
+
+\textbf{Why:} Single source of truth for database connectivity. Changing the server or credentials requires editing one dictionary, not hunting through multiple files.
+
+\subsubsection{get\_connection()}
+\textbf{What it does:} Creates a pymssql connection to the NutriQuery database with retry logic (3 attempts with exponential backoff: 0.5s, 1.0s delays). Raises the last \texttt{OperationalError} if all attempts fail.
+
+\textbf{Why:} Transient network failures or database restarts should not crash the application. The retry loop with sleep between attempts prevents thundering-herd reconnection storms.
+
+\subsubsection{get\_db()}
+\textbf{What it does:} FastAPI dependency generator. Yields a \texttt{(connection, cursor\_as\_dict)} tuple. The cursor is configured with \texttt{as\_dict=True}, so all query results are dictionaries keyed by column name. The \texttt{finally} block guarantees cursor and connection cleanup.
+
+\textbf{Why:} FastAPI's dependency injection system calls this function for every request that declares \texttt{db: DbDep}. Each request gets a fresh connection and cursor; they are automatically closed when the request completes. The \texttt{as\_dict=True} cursor enables readable code like \texttt{row["food\_name"]} instead of \texttt{row[1]}.
+
+\subsection{File: \texttt{schemas.py} — Pydantic Data Models}
+
+\textbf{Purpose:} Defines all request/response data models using Pydantic. FastAPI uses these for automatic request validation, response serialization, and OpenAPI documentation generation.
+
+\subsubsection{Brand Schemas}
+\begin{itemize}[nosep]
+    \item \texttt{BrandBase} — \texttt{brand\_name: str}, \texttt{brand\_owner: Optional[str]}
+    \item \texttt{BrandCreate(BrandBase)} — used for POST /brands/ request body
+    \item \texttt{Brand(BrandBase)} — adds \texttt{brand\_id: int}; used for API responses
+\end{itemize}
+
+\subsubsection{Nutrition Schemas}
+\begin{itemize}[nosep]
+    \item \texttt{NutritionBase} — \texttt{calories, protein\_g, fat\_g, carbs\_g, sodium\_mg} (all Optional[float])
+    \item \texttt{Nutrition(NutritionBase)} — adds \texttt{nutrition\_id: int, fdc\_id: int}
+\end{itemize}
+
+\subsubsection{Health Score Schemas}
+\begin{itemize}[nosep]
+    \item \texttt{HealthScoreBase} — \texttt{health\_score, nutriscore\_grade, nova\_group} (all Optional)
+    \item \texttt{HealthScore(HealthScoreBase)} — adds \texttt{score\_id: int, fdc\_id: int}
+\end{itemize}
+
+\subsubsection{Allergen Profile Schemas}
+\begin{itemize}[nosep]
+    \item \texttt{AllergenProfileBase} — \texttt{contains\_gluten: bool = False, contains\_dairy: bool = False}
+    \item \texttt{AllergenProfile(AllergenProfileBase)} — adds \texttt{allergen\_id: int, fdc\_id: int}
+\end{itemize}
+
+\subsubsection{ML Prediction Schemas}
+\begin{itemize}[nosep]
+    \item \texttt{MLPredictionBase} — \texttt{predicted\_nutriscore, predicted\_nova, confidence\_score} (all Optional)
+    \item \texttt{MLPrediction(MLPredictionBase)} — adds \texttt{prediction\_id, fdc\_id, prediction\_date}
+\end{itemize}
+
+\subsubsection{Food Schemas}
+\begin{itemize}[nosep]
+    \item \texttt{FoodBase} — \texttt{food\_name: str, food\_category, data\_type} (Optional). Note: \texttt{food\_category} and \texttt{data\_type} come from JOIN lookups, not columns on the Foods table.
+    \item \texttt{Food(FoodBase)} — nested model with \texttt{brand, nutrition, health\_score, allergen} sub-models
+    \item \texttt{FoodSearchResult} — lightweight result: \texttt{fdc\_id, food\_name, food\_category, brand\_name}
+    \item \texttt{FoodBrowseResult} — browse result with nutrition: adds \texttt{calories, protein\_g, fat\_g, carbs\_g, sodium\_mg}
+\end{itemize}
+
+\subsubsection{AggregationResult Schema}
+\texttt{food\_category: str, avg\_calories: float, avg\_protein: float, avg\_fat: float, avg\_carbs: float, item\_count: int}
+
+\textbf{Why Pydantic:} Pydantic provides automatic type coercion, validation, and JSON serialization. Invalid request bodies are rejected with clear error messages before reaching business logic. The response models generate accurate OpenAPI/Swagger documentation automatically.
+
+\subsection{File: \texttt{crud.py} — Data Access Layer}
+
+\textbf{Purpose:} Contains all SQL query logic as pure functions. Each function accepts \texttt{(conn, cursor)} and operates on the database. No FastAPI, HTTP, or Pydantic dependencies — pure database logic.
+
+\subsubsection{Shared Query Infrastructure}
+
+\begin{lstlisting}[language=Python, caption=Shared query constants]
+_FOOD_COLUMNS = (
+    "f.fdc_id, f.food_name, f.brand_id, "
+    "dt.type_name AS data_type, "
+    "fc.category_name AS food_category, "
+    "..."
+)
+
+_FOOD_FROM = (
+    "FROM Foods f "
+    "LEFT JOIN Brands b            ON f.brand_id    = b.brand_id "
+    "LEFT JOIN FOOD_CATEGORY fc    ON f.category_id = fc.category_id "
+    "LEFT JOIN DATA_TYPE dt        ON f.type_id     = dt.type_id "
+    "LEFT JOIN Nutrition_Metrics n ON f.fdc_id      = n.fdc_id "
+    "LEFT JOIN HEALTH_SCORE hs     ON f.fdc_id      = hs.fdc_id "
+    "LEFT JOIN ALLERGEN_PROFILE ap ON f.fdc_id      = ap.fdc_id"
+)
+\end{lstlisting}
+
+\textbf{What:} Module-level string constants defining the complete 7-table food JOIN. The \texttt{\_food\_query(extra, top)} helper function builds a full SELECT statement from these constants plus optional WHERE/ORDER BY clauses and an optional TOP N limit.
+
+\textbf{Why:} DRY (Don't Repeat Yourself). The 21-column SELECT list and 6 LEFT JOINs are defined once. Four functions (\texttt{get\_food}, \texttt{get\_foods\_by\_range}, \texttt{get\_foods\_by\_diet}, \texttt{get\_foods\_with\_missing\_data}) share this query. Adding a column to the food profile requires editing only the constants.
+
+\subsubsection{\_build\_food\_dict(row)}
+\textbf{What it does:} Transforms a flat JOIN result row (single dictionary with all columns) into a nested dictionary matching the \texttt{Food} Pydantic model structure. Conditionally nests \texttt{brand}, \texttt{nutrition}, \texttt{health\_score}, and \texttt{allergen} sub-dictionaries based on whether the corresponding ID fields are non-NULL.
+
+\textbf{Why:} The SQL JOIN returns a flat row (all columns at the same level). The API expects nested JSON (brand, nutrition, health, allergen as sub-objects). This function bridges the gap between the relational and hierarchical representations.
+
+\subsubsection{get\_food(conn, cursor, fdc\_id)}
+\textbf{What:} Retrieves a complete food profile by fdc\_id. Executes the 7-table LEFT JOIN query with \texttt{WHERE f.fdc\_id = \%s}. Returns the nested food dict or None if not found.
+
+\textbf{Used by:} \texttt{GET /foods/\{fdc\_id\}} endpoint; BrowseSection row-click detail panel.
+
+\subsubsection{\_update\_row(conn, cursor, table, columns, fdc\_id, data)}
+\textbf{What:} Generic UPDATE helper. Accepts a table name, a tuple of allowed columns, an fdc\_id, and a data dict. Dynamically builds \texttt{SET col = \%s} clauses only for columns present in the data dict. Executes the UPDATE, commits, and returns the updated row via SELECT.
+
+\textbf{Why:} Eliminates code duplication. The three update functions (\texttt{update\_nutrition}, \texttt{update\_health\_score}, \texttt{update\_allergen}) are thin wrappers that differ only in table name and column list. The generic helper reduces 63 lines of copy-paste to 15 lines + 3 thin wrappers.
+
+\subsubsection{update\_nutrition(conn, cursor, fdc\_id, data)}
+\textbf{What:} Updates \texttt{Nutrition\_Metrics} for a food. Allowed columns: calories, protein\_g, fat\_g, carbs\_g, sodium\_mg.
+
+\subsubsection{update\_health\_score(conn, cursor, fdc\_id, data)}
+\textbf{What:} Updates \texttt{HEALTH\_SCORE} for a food. Allowed columns: health\_score, nutriscore\_grade, nova\_group.
+
+\subsubsection{update\_allergen(conn, cursor, fdc\_id, data)}
+\textbf{What:} Updates \texttt{ALLERGEN\_PROFILE} for a food. Allowed columns: contains\_gluten, contains\_dairy.
+
+\subsubsection{get\_foods\_by\_range(conn, cursor, min\_health\_score, max\_sodium, max\_carbs, limit=100)}
+\textbf{What:} Range query filtering foods by simultaneous constraints on health score ($\ge$), sodium ($\le$), and carbs ($\le$). Uses the shared food query with WHERE clauses on \texttt{hs.health\_score}, \texttt{n.sodium\_mg}, and \texttt{n.carbs\_g}. Results ordered by health score descending.
+
+\textbf{Used by:} \texttt{GET /queries/range} endpoint; AnalyticsSection Range Query.
+
+\subsubsection{get\_foods\_by\_diet(conn, cursor, no\_gluten, no\_dairy, limit=100)}
+\textbf{What:} Dietary filtering using allergen profiles. Constructs WHERE clauses with NULL-safe checks: \texttt{(ap.contains\_gluten IS NULL OR ap.contains\_gluten = 0)}. This ensures foods without allergen profiles are included (treated as ``no known allergens'').
+
+\textbf{Why NULL-safe:} Many foods lack allergen profile data. An INNER JOIN on ALLERGEN\_PROFILE would exclude these foods entirely from dietary filtering. The LEFT JOIN + NULL-safe WHERE ensures they pass the filter.
+
+\subsubsection{get\_category\_aggregation(conn, cursor, category)}
+\textbf{What:} Computes per-category nutritional averages using \texttt{AVG()} aggregation. Joins Foods $\rightarrow$ FOOD\_CATEGORY $\rightarrow$ Nutrition\_Metrics. Returns avg calories, protein, fat, carbs, and item count. Falls back to all-zero result if the category doesn't exist.
+
+\subsubsection{get\_foods\_with\_missing\_data(conn, cursor, limit=100)}
+\textbf{What:} Gap identification. Finds foods where any of the five nutrition columns is NULL. Uses the shared food query with OR-connected IS NULL checks.
+
+\subsubsection{create\_brand(conn, cursor, data)}
+\textbf{What:} Inserts a new brand record. Uses \texttt{@@IDENTITY} to retrieve the auto-generated brand\_id, then SELECTs the complete row to return.
+
+\subsubsection{get\_brands(conn, cursor, skip, limit)}
+\textbf{What:} Paginated brand listing using \texttt{OFFSET/FETCH NEXT} (MSSQL's equivalent of LIMIT/OFFSET).
+
+\subsubsection{search\_foods(conn, cursor, name, limit)}
+\textbf{What:} Substring search on food\_name using \texttt{LIKE '\%name\%'}. Returns lightweight results (fdc\_id, food\_name, category, brand\_name) without nutrition data. Leading and trailing wildcards enable infix matching.
+
+\subsubsection{get\_foods\_browse(conn, cursor, skip, limit, name)}
+\textbf{What:} Paginated food listing WITH nutrition data for the browse view. Supports optional name filtering (switches from \texttt{ORDER BY fdc\_id} to \texttt{ORDER BY food\_name} when filtering). Returns \texttt{FoodBrowseResult} schema (includes calories, protein, fat, carbs, sodium).
+
+\textbf{Why separate from search:} The search endpoint returns lightweight results without nutrition (for fast autocomplete-style queries). The browse endpoint includes nutrition data (for the main grid where users see nutrition at a glance). Both use the same underlying pattern but serve different UX needs.
+
+\subsubsection{get\_all\_foods(conn, cursor, skip, limit)}
+\textbf{What:} Simple paginated listing without nutrition data. Returns \texttt{FoodSearchResult} schema.
+
+\subsubsection{get\_categories(conn, cursor)}
+\textbf{What:} Lists all distinct category names from the FOOD\_CATEGORY table, sorted alphabetically. Used to populate category dropdown menus.
+
+\subsubsection{get\_predictions(conn, cursor, limit)}
+\textbf{What:} Fetches ML predictions joined with food names. Uses LEFT JOIN on Foods so orphaned predictions still appear (with NULL food\_name).
+
+\subsection{File: \texttt{main.py} — API Endpoints}
+
+\textbf{Purpose:} FastAPI application definition. Maps HTTP routes to CRUD functions. Handles request validation, error responses, CORS, and background tasks.
+
+\subsubsection{Application Setup}
+\begin{itemize}[nosep]
+    \item \texttt{app = FastAPI(title="NutriQuery API", version="1.1.0")}
+    \item CORS middleware: allows origins \texttt{localhost:5173} and \texttt{127.0.0.1:5173} (Vite dev server)
+    \item \texttt{DbDep = Annotated[tuple, Depends(get\_db)]} — dependency injection type alias
+    \item ML router included via \texttt{app.include\_router(ml\_service.ml\_router)}
+\end{itemize}
+
+\subsubsection{Endpoint Catalog}
+
+\begin{longtable}{p{4cm}p{3cm}p{8.5cm}}
+\toprule
+\textbf{Endpoint} & \textbf{Method} & \textbf{Description \& Implementation} \\
+\midrule
+\lstinline|/| & GET & Health check. Returns welcome message. \\
+\midrule
+\lstinline|/foods/search| & GET & Food search by name substring. Params: \texttt{name} (min\_length=1), \texttt{limit} (1–200). Calls \texttt{crud.search\_foods()}.\\
+\midrule
+\lstinline|/foods/browse| & GET & Paginated food listing with nutrition. Params: \texttt{skip, limit, name} (optional). Calls \texttt{crud.get\_foods\_browse()}.\\
+\midrule
+\lstinline|/foods/| & GET & Paginated food listing (no nutrition). Params: \texttt{skip, limit}. Calls \texttt{crud.get\_all\_foods()}.\\
+\midrule
+\lstinline|/foods/\{fdc\_id\}| & GET & Single food detail. Returns 404 if not found. Calls \texttt{crud.get\_food()}.\\
+\midrule
+\lstinline|/foods/\{fdc\_id\}/nutrition| & PUT & Update nutrition fields. Validates body has at least one field; returns 400 if empty, 404 if record missing.\\
+\midrule
+\lstinline|/foods/\{fdc\_id\}/health| & PUT & Update health score fields. Same validation pattern as nutrition.\\
+\midrule
+\lstinline|/foods/\{fdc\_id\}/allergen| & PUT & Update allergen flags. Always accepts the body (both fields default to False).\\
+\midrule
+\lstinline|/queries/range| & GET & Range query. Params: \texttt{min\_health\_score, max\_sodium, max\_carbs, limit} (1–500).\\
+\midrule
+\lstinline|/queries/dietary| & GET & Dietary filter. Params: \texttt{no\_gluten, no\_dairy, limit} (1–500).\\
+\midrule
+\lstinline|/queries/aggregation| & GET & Category aggregation. Param: \texttt{category} (auto-selects first available if omitted).\\
+\midrule
+\lstinline|/queries/gaps| & GET & Gap identification. Param: \texttt{limit} (1–500).\\
+\midrule
+\lstinline|/brands/| & POST & Create a new brand. Body: \texttt{\{brand\_name, brand\_owner\}}.\\
+\midrule
+\lstinline|/brands/| & GET & List brands. Params: \texttt{skip, limit}.\\
+\midrule
+\lstinline|/categories/| & GET & List all distinct food categories.\\
+\midrule
+\lstinline|/predictions/| & GET & List ML predictions. Param: \texttt{limit}.\\
+\midrule
+\lstinline|/import| & POST & Trigger CSV data import (runs in background). Returns immediately; check \texttt{/import/status}.\\
+\midrule
+\lstinline|/import/status| & GET & Check background import status. Returns \texttt{\{running, elapsed\_seconds, last\_result\}}.\\
+\midrule
+\lstinline|/ml/predict| & POST & Train model and run inference. Returns 400 if $<$10 labeled samples exist.\\
+\midrule
+\lstinline|/ml/predictions| & DELETE & Delete all prediction records.\\
+\midrule
+\lstinline|/ml/device| & GET & Report ML compute device (cpu/cuda/mps).\\
+\bottomrule
+\caption{Complete API Endpoint Reference}
+\end{longtable}
+
+\subsubsection{Import State Tracking}
+\textbf{What:} Module-level \texttt{\_import\_state} dictionary tracks background import progress. \texttt{\_run\_import()} sets timestamps and captures the result. The \texttt{/import/status} endpoint exposes this state.
+
+\textbf{Why:} The import can run for 10+ minutes. Users need visibility into whether it's running, how long it's been running, and what happened when it finished. The per-process state note warns about multi-worker deployments.
+
+\textbf{Limitation:} State is per-process. Under \texttt{uvicorn --workers N}, each worker has its own copy. Single-worker deployment recommended for accurate status.
+
+\subsection{File: \texttt{ml\_service.py} — Machine Learning Pipeline}
+
+\textbf{Purpose:} PyTorch-based neural network for Nutri-Score classification. Trains on labeled data from the database, runs inference on all foods, and stores predictions.
+
+\subsubsection{Device Selection: \_get\_device()}
+\textbf{What:} Lazily detects and caches the best available compute device. Priority: CUDA $\rightarrow$ MPS (Apple Silicon) $\rightarrow$ CPU. Uses module-level caching so detection runs once.
+
+\textbf{Why:} PyTorch device selection at import time can be unreliable in container/cloud environments where CUDA initializes asynchronously. Lazy evaluation ensures detection happens when the model is actually needed.
+
+\subsubsection{Model Architecture: NutriScorePredictor}
+\textbf{What:} A feed-forward neural network with architecture: \texttt{Linear(5, 32) $\rightarrow$ ReLU $\rightarrow$ Dropout(0.2) $\rightarrow$ Linear(32, 16) $\rightarrow$ ReLU $\rightarrow$ Linear(16, 5)}. Input: 5 nutrition features (calories, protein, fat, carbs, sodium). Output: 5-class logits mapped to Nutri-Score grades A–E.
+
+\textbf{Why this architecture:} Small and fast — appropriate for the dataset size (tens to hundreds of labeled samples). The dropout layer provides basic regularization. The 32→16 bottleneck forces the model to learn compressed representations.
+
+\textbf{Training hyperparameters:} Adam optimizer (lr=0.005), CrossEntropyLoss, StepLR scheduler (step\_size = max(10, epochs/3), gamma=0.5). Epochs scale with data: \texttt{min(200, max(30, samples * 5))}.
+
+\subsubsection{\_compute\_normalization\_stats(cursor)}
+\textbf{What:} Computes per-feature mean and standard deviation from ALL foods with complete nutrition data (not just labeled data). Builds a full tensor in memory. Returns \texttt{(mean, std)} tensors.
+
+\textbf{Why full dataset:} Training only sees labeled data (a subset). If normalization statistics were computed from the labeled subset only, inference on the full dataset would use mismatched statistics. Computing from the full dataset ensures training and inference use the same normalization parameters.
+
+\subsubsection{\_train\_model(cursor)}
+\textbf{What:} Creates a fresh model instance, computes normalization stats, fetches labeled training data (foods with nutriscore\_grade A–E AND complete nutrition), trains for \texttt{epochs} iterations with learning rate scheduling, and returns \texttt{(model, True)}. Returns \texttt{(None, False)} if fewer than 10 labeled samples exist.
+
+\textbf{Why fresh model each call:} Avoids thread-safety issues. If multiple requests hit \texttt{/ml/predict} simultaneously, each gets its own model instance rather than sharing mutable state.
+
+\textbf{Early stopping:} If loss becomes NaN (numerical instability), training breaks immediately.
+
+\subsubsection{run\_inference\_and\_store(conn, cursor)}
+\textbf{What:} Orchestrates the full ML pipeline:
+\begin{enumerate}[nosep]
+    \item Call \texttt{\_train\_model()} — raises HTTPException(400) if training fails
+    \item Fetch all foods with nutrition data for inference
+    \item Count and delete old predictions
+    \item For each food: normalize features, run forward pass, get softmax confidence, extract predicted class
+    \item Insert prediction with NULL nova (NOVA not predicted)
+    \item Batch commit every 500 rows
+\end{enumerate}
+
+\subsubsection{delete\_predictions(conn, cursor)}
+\textbf{What:} Counts and deletes all predictions. Returns the count in the response message.
+
+\subsubsection{ML Router}
+Three endpoints mounted at \texttt{/ml} prefix:
+\begin{itemize}[nosep]
+    \item \texttt{POST /ml/predict} — triggers training + inference
+    \item \texttt{DELETE /ml/predictions} — clears predictions
+    \item \texttt{GET /ml/device} — reports compute device
+\end{itemize}
+
+\subsection{File: \texttt{data\_import.py} — CSV Data Import}
+
+\textbf{Purpose:} Reads USDA and OpenFoodFacts CSV files from \texttt{data/raw/} and populates all 8 tables of the 3NF schema using raw SQL INSERT statements.
+
+\subsubsection{Value Helpers}
+\begin{itemize}[nosep]
+    \item \texttt{\_safe\_float(val)} — coerces to float, returns None on failure. Rejects \texttt{inf} (via \texttt{abs(f) != float('inf')}) and \texttt{NaN} (via \texttt{f == f} — NaN is the only float where \texttt{x != x}).
+    \item \texttt{\_safe\_int(val)} — coerces to int via float intermediate. Rejects \texttt{inf} and handles \texttt{OverflowError} from extreme values.
+\end{itemize}
+
+\textbf{Why:} CSV files contain dirty data — empty strings, non-numeric values, infinity representations. These helpers ensure only valid numbers reach the database, preventing INSERT failures and NaN-corrupted aggregations.
+
+\subsubsection{\_resolve\_or\_create(cursor, cache, table, id\_col, name\_col, name\_value, extra\_cols=None)}
+\textbf{What:} Generic lookup-or-create pattern. Checks an in-memory cache first, then the database, and inserts if not found. Returns the ID. Used for Brands, FOOD\_CATEGORY, and DATA\_TYPE. The \texttt{extra\_cols} parameter handles tables with additional columns beyond the name (e.g., Brands has \texttt{brand\_owner}).
+
+\textbf{Why:} Eliminates three copies of identical lookup-or-create logic. The in-memory cache avoids repeated database lookups for values already seen in the current import batch.
+
+\subsubsection{\_load\_usda\_csv(conn, cursor, stats)}
+\textbf{What:} Reads \texttt{comprehensive\_foods\_usda.csv} row by row using \texttt{csv.DictReader}. For each row:
+\begin{enumerate}[nosep]
+    \item Resolves brand, category, and type via \texttt{\_resolve\_or\_create} (with in-memory caching)
+    \item Checks if the food already exists (SELECT before INSERT for idempotency)
+    \item Inserts into Foods, Nutrition\_Metrics, HEALTH\_SCORE, ALLERGEN\_PROFILE
+    \item Commits every 500 rows
+    \item Tracks stats: foods, brands, categories, data\_types, nutrition, health, allergens
+\end{enumerate}
+
+\textbf{Why SELECT-before-INSERT:} Makes the import idempotent — safe to re-run without creating duplicates. The trade-off is $\sim$240K SELECT statements for 40K rows. A future optimization would use \texttt{MERGE} or \texttt{INSERT WHERE NOT EXISTS}.
+
+\subsubsection{\_load\_health\_csv(conn, cursor)}
+\textbf{What:} Reads \texttt{foods\_health\_scores\_allergens.csv}. Matches products by \texttt{product\_name} $\rightarrow$ \texttt{food\_name} using LIKE prefix search with deterministic ordering (\texttt{ORDER BY LEN(food\_name) ASC, food\_name ASC}). Updates HEALTH\_SCORE (nutriscore\_grade, nova\_group) and ALLERGEN\_PROFILE (contains\_gluten, contains\_dairy). Returns counts of updated records.
+
+\textbf{Why shortest-match:} ``Apple'' should match ``Apple, raw'' (length 10) before ``Apple pie filling'' (length 18). The deterministic ordering ensures the same product always matches the same food across re-imports.
+
+\subsubsection{import\_all\_data()}
+\textbf{What:} Orchestrator. Opens a connection, runs both CSV loaders, captures enrichment counts, commits, and returns a summary dict with all statistics. Wraps everything in try/except with rollback on failure and guaranteed cleanup in finally.
+
+\textbf{Why:} Single entry point. Called by \texttt{POST /import} (background task) and \texttt{python data\_import.py} (CLI).
+
+%==============================================================================
+\section{Frontend Documentation}
+%==============================================================================
+
+\subsection{File: \texttt{api.js} — API Client}
+
+\textbf{Purpose:} Centralized HTTP client for all frontend-to-backend communication.
+
+\subsubsection{fetchAPI(endpoint, options)}
+\textbf{What:} Wraps the Fetch API. Prepends \texttt{http://localhost:8000} to the endpoint path. On HTTP errors, attempts to parse a JSON \texttt{detail} field; falls back to status code. Returns the parsed JSON or \texttt{\{error: message\}} on failure.
+
+\textbf{Why:} Single point for error handling, base URL configuration, and request formatting. All components use this function instead of raw fetch — changing the API base URL requires one edit.
+
+\subsection{File: \texttt{App.jsx} — Application Shell}
+
+\textbf{Purpose:} Root React component. Renders the header, five section components, and footer.
+
+\textbf{Component tree:}
+\begin{verbatim}
+App
+├── Header (NutriQuery logo + subtitle)
+├── BrowseSection   (food browser, search, detail, editing)
+├── AnalyticsSection (range query, dietary filter, aggregation, gaps)
+├── MLEngineSection  (ML training, predictions, device info)
+├── BrandsSection    (brand CRUD)
+├── DataImportSection (CSV import trigger)
+└── Footer
+\end{verbatim}
+
+\subsection{File: \texttt{BrowseSection.jsx} — Food Browser}
+
+\textbf{Purpose:} Primary food interaction component. Combines search, browse, detail view, and inline editing.
+
+\textbf{State variables:}
+\begin{itemize}[nosep]
+    \item \texttt{searchName} — current search text
+    \item \texttt{rowData} — grid data (flattened for AG Grid)
+    \item \texttt{page} — current pagination page number
+    \item \texttt{isBrowsing} — true when browsing all foods (shows pagination)
+    \item \texttt{selectedFood} — the food currently shown in the detail panel
+    \item \texttt{editing} — which section is being edited ('nutrition' | 'health' | 'allergen' | null)
+    \item \texttt{editForm} — form field values during editing
+\end{itemize}
+
+\subsubsection{loadPage(pageNum, searchTerm)}
+\textbf{What:} Fetches a page of food data from \texttt{/foods/browse}. If a search term is provided, appends it as the \texttt{name} parameter. Flattens the API response for AG Grid consumption.
+
+\textbf{Why unified endpoint:} Both browse and search use the same \texttt{/foods/browse} endpoint. The \texttt{name} parameter distinguishes search from browse. This ensures search results include nutrition data (unlike the old \texttt{/foods/search} endpoint which returned lightweight results).
+
+\subsubsection{onRowClicked(event)}
+\textbf{What:} AG Grid row click handler. Fetches the full food detail from \texttt{GET /foods/\{fdc\_id\}} and displays it in the detail panel below the grid.
+
+\textbf{Why:} The browse grid shows summary data (name, category, calories, etc.). Clicking a row reveals the full profile with nutrition breakdown, health scores, allergen flags, and brand metadata.
+
+\subsubsection{openEdit(section) / saveEdit()}
+\textbf{What:} Opens an inline edit form for nutrition, health, or allergens. Pre-populates with current values. On save, sends a PUT request to the appropriate endpoint and refreshes the detail view.
+
+\textbf{Why:} Enables data correction (Requirement 3) directly from the UI. Users don't need to use curl or a separate admin panel to fix incorrect nutrition data.
+
+\subsubsection{AG Grid Configuration}
+\textbf{Columns:} fdc\_id (90px), food\_name (flex:2, word-wrapped), food\_category (flex:1), brand\_name (flex:1), calories (75px), protein\_g (85px), fat\_g (80px), carbs\_g (85px), sodium\_mg (85px).
+
+\textbf{Features:} Auto-height rows for wrapped food names, value formatters for numeric precision, click-to-detail, overlay templates for loading/empty states.
+
+\subsection{File: \texttt{AnalyticsSection.jsx} — Nutrition Analytics}
+
+\textbf{Purpose:} Exposes the four analytical query endpoints (Requirements 4–7) through a structured form-based interface.
+
+\subsubsection{Range Query (Req 4)}
+\textbf{Controls:} Min health score slider (0–100), max sodium input, max carbs input, execute button.
+\textbf{Results grid:} Shows fdc\_id, food\_name, food\_category, health\_score (color-coded: green $\ge$ 60, red $<$ 60), nutriscore\_grade, calories, sodium\_mg, carbs\_g.
+\textbf{Why show values:} Users can verify that the returned foods actually meet their filter criteria. The health score is color-coded for instant visual assessment.
+
+\subsubsection{Dietary Filtering (Req 5)}
+\textbf{Controls:} Gluten-free checkbox, dairy-free checkbox, filter button.
+\textbf{Results grid:} Shows fdc\_id, food\_name, food\_category, gluten status (Yes/No, color-coded), dairy status.
+
+\subsubsection{Category Aggregation (Req 6)}
+\textbf{Controls:} Category dropdown (populated from \texttt{GET /categories/}), aggregate button.
+\textbf{Results:} Five stat cards showing item count, avg calories, avg protein, avg fat, avg carbs.
+
+\subsubsection{Gap Identification (Req 7)}
+\textbf{Controls:} Identify Gaps button.
+\textbf{Results grid:} Shows nutrition columns with NULL values highlighted in red and labeled ``MISSING.''
+
+\subsection{File: \texttt{MLEngineSection.jsx} — ML Engine}
+
+\textbf{Purpose:} Interface for the PyTorch ML pipeline.
+
+\textbf{Features:}
+\begin{itemize}[nosep]
+    \item Device badge showing current compute device (CPU/CUDA/MPS Accelerated)
+    \item Train \& Predict button (calls \texttt{POST /ml/predict})
+    \item Flush Predictions button (calls \texttt{DELETE /ml/predictions})
+    \item View Predictions button (calls \texttt{GET /predictions/})
+    \item Predictions grid: fdc\_id, food\_name, predicted Nutri-Score, confidence (formatted as percentage)
+\end{itemize}
+
+\textbf{Note:} The NOVA column was intentionally removed from the grid because \texttt{predicted\_nova} is always NULL — NOVA classification requires food processing metadata, not nutritional composition.
+
+\subsection{File: \texttt{BrandsSection.jsx} — Brand Management}
+
+\textbf{Purpose:} CRUD interface for food brands (Requirement 8).
+
+\textbf{Features:}
+\begin{itemize}[nosep]
+    \item Create form: brand\_name (required), brand\_owner (optional)
+    \item Brands list: AG Grid with brand\_name and brand\_owner columns, paginated
+    \item Refresh button to reload the brands list
+\end{itemize}
+
+\subsection{File: \texttt{DataImportSection.jsx} — Data Import}
+
+\textbf{Purpose:} Trigger for the CSV data import pipeline.
+
+\textbf{Features:}
+\begin{itemize}[nosep]
+    \item Run Full Import button (calls \texttt{POST /import})
+    \item Loading state with disabled button during import
+    \item Status message display with import results
+\end{itemize}
+
+\subsection{File: \texttt{index.css} — Design System}
+
+\textbf{Purpose:} Global stylesheet implementing a creamy white matte design system with CSS custom properties.
+
+\textbf{Design tokens:} Colors (bg, panel, text-primary/secondary, border, primary, accent, success, warning, danger), typography (Inter for body/headings, JetBrains Mono for monospace), shadows (sm/md/lg), border radius, transitions.
+
+\textbf{Component classes:} \texttt{matte-panel}, \texttt{sub-panel}, \texttt{detail-panel}, \texttt{detail-card}, \texttt{detail-grid}, \texttt{stat-grid}, \texttt{stat-card}, \texttt{form-grid}, \texttt{button-row}, \texttt{checkbox-row}, \texttt{two-col}, \texttt{grid-container}, \texttt{pagination-row}, \texttt{device-badge}, \texttt{status-message}, \texttt{error-message}.
+
+\textbf{Responsive:} \texttt{@media (max-width: 768px)} breakpoint with column-to-stack layout changes, full-width buttons, and single-column grids.
+
+\textbf{Word-wrap fix:} \texttt{.ag-theme-quartz .ag-cell \{ white-space: normal !important; word-break: break-word; \}} ensures long food names don't overflow grid cells.
+
+%==============================================================================
+\section{Testing Infrastructure}
+%==============================================================================
+
+\subsection{File: \texttt{conftest.py} — Test Fixtures}
+
+\textbf{Purpose:} Configures a dedicated \texttt{NutriQuery\_Test} database for isolated integration testing.
+
+\subsubsection{test\_db\_setup (Session Scope)}
+\textbf{What:} Creates the test database, runs \texttt{init.sql} (parsed with regex GO-splitting), seeds known test data, and drops the database at session end. Seed data is committed (visible to all connections, including the API TestClient).
+
+\subsubsection{db\_conn / db\_cursor (Function Scope)}
+\textbf{What:} Provides a connection with explicit transaction isolation (\texttt{BEGIN TRAN} / \texttt{ROLLBACK}). Test modifications are automatically rolled back.
+
+\subsubsection{client (Function Scope)}
+\textbf{What:} FastAPI TestClient pointed at the test database (monkey-patches \texttt{DB\_CONFIG["database"]}).
+
+\subsubsection{seed\_test\_data}
+\textbf{What:} Returns the IDs generated during session setup (brand\_id, cat\_id, cat2\_id, type\_id) so tests can reference them.
+
+\textbf{Test Data:} 5 foods (1001–1005), 1 brand, 2 categories (Snacks, Dairy), 1 data type (SR Legacy). Food 1004 has all-NULL nutrition (gap detection target). Food 1005 has no ALLERGEN\_PROFILE row (LEFT JOIN test target). Health scores A–D provide labeled training data.
+
+\subsection{Test Files}
+
+\begin{itemize}[nosep]
+    \item \texttt{test\_api.py} (9 tests) — All API endpoint structure validation
+    \item \texttt{test\_crud.py} (6 tests) — Direct CRUD function testing
+    \item \texttt{test\_fixes.py} (9 tests) — Regression tests for each bug fix from the forensic audit
+    \item \texttt{test\_integration.py} (10 tests) — End-to-end flows: food retrieval, updates, dietary filtering, ML pipeline
+    \item \texttt{test\_ml.py} (10 tests) — Device detection, model creation, forward pass, untrained rejection, full ML pipeline
+    \item \texttt{test\_import.py} (4 tests) — Value coercion, CSV parsing, module structure
+\end{itemize}
+
+\textbf{Total: 48 tests, all passing. No mocks — every test connects to a real MSSQL instance.}
+
+%==============================================================================
+\section{API Reference Summary}
+%==============================================================================
+
+\begin{longtable}{p{5.5cm}p{2cm}p{7.5cm}}
+\toprule
+\textbf{Endpoint} & \textbf{Method} & \textbf{Key Parameters} \\
+\midrule
+\lstinline|/| & GET & — \\
+\lstinline|/foods/search| & GET & name (str, min\_len=1), limit (1–200) \\
+\lstinline|/foods/browse| & GET & skip (int), limit (1–200), name (str, optional) \\
+\lstinline|/foods/| & GET & skip (int), limit (1–200) \\
+\lstinline|/foods/\{id\}| & GET & fdc\_id (int, path) \\
+\lstinline|/foods/\{id\}/nutrition| & PUT & NutritionBase body \\
+\lstinline|/foods/\{id\}/health| & PUT & HealthScoreBase body \\
+\lstinline|/foods/\{id\}/allergen| & PUT & AllergenProfileBase body \\
+\lstinline|/queries/range| & GET & min\_health\_score, max\_sodium, max\_carbs, limit \\
+\lstinline|/queries/dietary| & GET & no\_gluten, no\_dairy, limit \\
+\lstinline|/queries/aggregation| & GET & category (default: auto-select) \\
+\lstinline|/queries/gaps| & GET & limit (1–500) \\
+\lstinline|/brands/| & POST & BrandCreate body \\
+\lstinline|/brands/| & GET & skip, limit (1–500) \\
+\lstinline|/categories/| & GET & — \\
+\lstinline|/predictions/| & GET & limit (1–500) \\
+\lstinline|/import| & POST & — (runs in background) \\
+\lstinline|/import/status| & GET & — \\
+\lstinline|/ml/predict| & POST & — (returns 400 if $<$10 labeled) \\
+\lstinline|/ml/predictions| & DELETE & — \\
+\lstinline|/ml/device| & GET & — \\
+\bottomrule
+\caption{API Quick Reference}
+\end{longtable}
+
+%==============================================================================
+\section{Data Flow Diagrams}
+%==============================================================================
+
+\subsection{Import Flow}
+\begin{verbatim}
+CSV files (data/raw/)
+    │
+    ▼
+data_import.py
+    ├── _safe_float / _safe_int  (value sanitization)
+    ├── _resolve_or_create       (brand/category/type lookup)
+    ├── _load_usda_csv           (40K foods → 6 tables)
+    └── _load_health_csv         (enrichment → HEALTH_SCORE, ALLERGEN_PROFILE)
+    │
+    ▼
+MSSQL NutriQuery (8 tables, 3NF)
+\end{verbatim}
+
+\subsection{Query Flow}
+\begin{verbatim}
+Browser (React)
+    │  fetchAPI()
+    ▼
+FastAPI (main.py)
+    │  Depends(get_db)
+    ▼
+crud.py
+    │  _food_query() → pymssql
+    ▼
+MSSQL (7-table JOIN)
+    │  flat row dict
+    ▼
+_build_food_dict()
+    │  nested dict
+    ▼
+Pydantic serialization
+    │  JSON
+    ▼
+AG Grid rendering
+\end{verbatim}
+
+\subsection{ML Flow}
+\begin{verbatim}
+POST /ml/predict
+    │
+    ▼
+_train_model()
+    ├── _compute_normalization_stats()  (full dataset mean/std)
+    ├── Fetch labeled data (nutriscore_grade A–E)
+    ├── Train NutriScorePredictor (epochs = f(samples))
+    └── Return (model, True)
+    │
+    ▼
+run_inference_and_store()
+    ├── Fetch all foods with nutrition
+    ├── DELETE old predictions
+    ├── For each food: normalize → forward → softmax → INSERT
+    └── Commit
+\end{verbatim}
+
+\subsection{Edit Flow}
+\begin{verbatim}
+User clicks Edit (BrowseSection)
+    │
+    ▼
+openEdit('nutrition')
+    ├── Pre-fill form with current values
+    │
+    ▼
+User modifies values, clicks Save
+    │
+    ▼
+saveEdit()
+    ├── PUT /foods/{id}/nutrition
+    ├── API validates body, calls crud.update_nutrition()
+    ├── _update_row() → UPDATE Nutrition_Metrics → COMMIT → SELECT
+    └── Response → refresh detail panel
+\end{verbatim}
+
+%==============================================================================
+\section{Index of Functions}
+%==============================================================================
+
+\begin{longtable}{p{4.8cm}p{3.5cm}p{7.2cm}}
+\toprule
+\textbf{Function} & \textbf{File} & \textbf{Purpose} \\
+\midrule
+get\_connection() & database.py & Create pymssql connection with retry \\
+get\_db() & database.py & FastAPI dependency: yield (conn, cursor) \\
+\midrule
+\_safe\_float(val) & data\_import.py & Coerce to float, reject inf/nan \\
+\_safe\_int(val) & data\_import.py & Coerce to int, reject inf \\
+\_resolve\_or\_create(...) & data\_import.py & Generic lookup-or-create with cache \\
+\_load\_usda\_csv(conn, cursor, stats) & data\_import.py & Import USDA CSV into 6 tables \\
+\_load\_health\_csv(conn, cursor) & data\_import.py & Enrich health/allergen from CSV \\
+import\_all\_data() & data\_import.py & Orchestrator: run both imports \\
+\midrule
+\_food\_query(extra, top) & crud.py & Build food SELECT from shared constants \\
+\_build\_food\_dict(row) & crud.py & Transform flat JOIN row to nested dict \\
+\_update\_row(conn, cursor, ...) & crud.py & Generic UPDATE helper \\
+get\_food(conn, cursor, fdc\_id) & crud.py & Full food profile via 7-table JOIN \\
+update\_nutrition(...) & crud.py & Update Nutrition\_Metrics \\
+update\_health\_score(...) & crud.py & Update HEALTH\_SCORE \\
+update\_allergen(...) & crud.py & Update ALLERGEN\_PROFILE \\
+get\_foods\_by\_range(...) & crud.py & Filter by health/sodium/carbs \\
+get\_foods\_by\_diet(...) & crud.py & Filter by allergen restrictions \\
+get\_category\_aggregation(...) & crud.py & Per-category nutritional averages \\
+get\_foods\_with\_missing\_data(...) & crud.py & Find incomplete nutrition records \\
+create\_brand(...) & crud.py & Insert brand with @@IDENTITY \\
+get\_brands(...) & crud.py & Paginated brand listing \\
+search\_foods(...) & crud.py & LIKE search on food\_name \\
+get\_foods\_browse(...) & crud.py & Paginated listing with nutrition \\
+get\_all\_foods(...) & crud.py & Paginated listing (no nutrition) \\
+get\_categories(...) & crud.py & List distinct category names \\
+get\_predictions(...) & crud.py & List ML predictions with food names \\
+\midrule
+\_get\_device() & ml\_service.py & Lazy CUDA/MPS/CPU detection \\
+\_compute\_normalization\_stats(cursor) & ml\_service.py & Full-dataset mean/std \\
+\_train\_model(cursor) & ml\_service.py & Train fresh NutriScorePredictor \\
+run\_inference\_and\_store(conn, cursor) & ml\_service.py & Full ML pipeline \\
+delete\_predictions(conn, cursor) & ml\_service.py & Clear all predictions \\
+\midrule
+loadPage(pageNum, searchTerm) & BrowseSection.jsx & Paginated food fetch \\
+onRowClicked(event) & BrowseSection.jsx & Row click → load detail \\
+openEdit(section) & BrowseSection.jsx & Open inline edit form \\
+saveEdit() & BrowseSection.jsx & PUT update + refresh \\
+runRangeQuery() & AnalyticsSection.jsx & Execute range filter \\
+runDietaryFilter() & AnalyticsSection.jsx & Execute dietary filter \\
+runAggregation() & AnalyticsSection.jsx & Execute category aggregation \\
+loadGaps() & AnalyticsSection.jsx & Load gap data \\
+runInference() & MLEngineSection.jsx & Trigger ML training \\
+clearPredictions() & MLEngineSection.jsx & Delete all predictions \\
+createBrand() & BrandsSection.jsx & POST new brand \\
+importData() & DataImportSection.jsx & Trigger CSV import \\
+fetchAPI(endpoint, options) & api.js & Centralized HTTP client \\
+\bottomrule
+\caption{Complete Function Index}
+\end{longtable}
+
+\end{document}

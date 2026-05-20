@@ -1,10 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException, Query, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
-from typing import Annotated, List, Optional, TYPE_CHECKING
+from typing import Annotated, List, Optional
 import time
-
-if TYPE_CHECKING:
-    import pymssql
 
 import schemas
 import crud
@@ -109,11 +106,10 @@ def update_food_health(fdc_id: int, health: schemas.HealthScoreBase, db: DbDep):
 @app.put("/foods/{fdc_id}/allergen", response_model=schemas.AllergenProfile)
 def update_food_allergen(fdc_id: int, allergen: schemas.AllergenProfileBase, db: DbDep):
     conn, cursor = db
-    # AllergenProfileBase defaults are False, so a user sending {contains_gluten: false}
-    # would have it excluded by exclude_unset. Use model_dump() and check for non-default.
+    # Both fields default to False, so we can't distinguish "user sent {}"
+    # from "user set both to false". Let the CRUD layer handle the update;
+    # it will return the existing row as-is if nothing changes.
     data = allergen.model_dump()
-    if not any(data.values()):
-        raise HTTPException(status_code=400, detail="No fields provided to update")
     result = crud.update_allergen(conn, cursor, fdc_id, data)
     if result is None:
         raise HTTPException(status_code=404, detail="Allergen profile not found")
@@ -139,9 +135,10 @@ def query_dietary(
     db: DbDep,
     no_gluten: Annotated[bool, Query()] = True,
     no_dairy: Annotated[bool, Query()] = True,
+    limit: Annotated[int, Query(ge=1, le=500, description="Max results")] = 100,
 ):
     conn, cursor = db
-    return crud.get_foods_by_diet(conn, cursor, no_gluten, no_dairy)
+    return crud.get_foods_by_diet(conn, cursor, no_gluten, no_dairy, limit=limit)
 
 
 # ── Req 6: Aggregation ──────────────────────────────
@@ -159,9 +156,12 @@ def query_aggregation(db: DbDep, category: Annotated[str, Query(description="Foo
 
 # ── Req 7: Gap Identification ────────────────────────
 @app.get("/queries/gaps", response_model=List[schemas.Food])
-def query_missing_data(db: DbDep):
+def query_missing_data(
+    db: DbDep,
+    limit: Annotated[int, Query(ge=1, le=500, description="Max results")] = 100,
+):
     conn, cursor = db
-    return crud.get_foods_with_missing_data(conn, cursor)
+    return crud.get_foods_with_missing_data(conn, cursor, limit=limit)
 
 
 # ── Req 8: Metadata Management ──────────────────────
