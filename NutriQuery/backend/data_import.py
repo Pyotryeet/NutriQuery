@@ -25,7 +25,8 @@ def _safe_float(val):
     if val is None or val == "":
         return None
     try:
-        return float(val)
+        f = float(val)
+        return f if abs(f) != float('inf') else None
     except (ValueError, TypeError):
         return None
 
@@ -34,8 +35,11 @@ def _safe_int(val):
     if val is None or val == "":
         return None
     try:
-        return int(float(val))
-    except (ValueError, TypeError):
+        f = float(val)
+        if abs(f) == float('inf'):
+            return None
+        return int(f)
+    except (ValueError, TypeError, OverflowError):
         return None
 
 
@@ -84,7 +88,13 @@ def _resolve_or_create(cursor, cache, table, id_col, name_col, name_value, extra
 
 # ── USDA CSV Import ──────────────────────────────────
 def _load_usda_csv(conn, cursor, stats):
-    """Load comprehensive_foods_usda.csv into the 3NF schema."""
+    """
+    Load comprehensive_foods_usda.csv into the 3NF schema.
+
+    Uses SELECT-before-INSERT for idempotency (safe to re-run).
+    For bulk imports on large datasets, consider INSERT WHERE NOT EXISTS
+    or MERGE to reduce round trips (~240K SELECTs for 40K rows).
+    """
     usda_path = os.path.join(DATA_DIR, "comprehensive_foods_usda.csv")
     if not os.path.exists(usda_path):
         logger.warning("USDA CSV not found at %s", usda_path)
@@ -108,41 +118,38 @@ def _load_usda_csv(conn, cursor, stats):
                 bname = (row.get("brand_name") or "").strip()[:255]
                 if bname:
                     brand_owner = (row.get("brand_owner") or "").strip()[:255] or None
-                    if bname not in brand_cache:
-                        brand_id = _resolve_or_create(
-                            cursor, brand_cache,
-                            "Brands", "brand_id", "brand_name", bname,
-                            extra_cols={"brand_owner": brand_owner} if brand_owner else None,
-                        )
-                        if bname not in brand_cache:
-                            stats["brands"] += 1
-                            brand_cache[bname] = brand_id
-                    else:
-                        brand_id = brand_cache[bname]
+                    is_new = bname not in brand_cache
+                    brand_id = _resolve_or_create(
+                        cursor, brand_cache,
+                        "Brands", "brand_id", "brand_name", bname,
+                        extra_cols={"brand_owner": brand_owner} if brand_owner else None,
+                    )
+                    if is_new:
+                        stats["brands"] += 1
 
                 # — Food Category —
                 category_id = None
                 cat_name = (row.get("food_category") or "").strip()[:255]
                 if cat_name:
+                    is_new = cat_name not in category_cache
                     category_id = _resolve_or_create(
                         cursor, category_cache,
                         "FOOD_CATEGORY", "category_id", "category_name", cat_name,
                     )
-                    if cat_name not in category_cache:
+                    if is_new:
                         stats["categories"] += 1
-                        category_cache[cat_name] = category_id
 
                 # — Data Type —
                 type_id = None
                 dt_name = (row.get("data_type") or "").strip()[:100]
                 if dt_name:
+                    is_new = dt_name not in type_cache
                     type_id = _resolve_or_create(
                         cursor, type_cache,
                         "DATA_TYPE", "type_id", "type_name", dt_name,
                     )
-                    if dt_name not in type_cache:
+                    if is_new:
                         stats["data_types"] += 1
-                        type_cache[dt_name] = type_id
 
                 # — Food —
                 cursor.execute(
@@ -311,18 +318,24 @@ def import_all_data():
     stats = {
         "brands": 0, "categories": 0, "data_types": 0,
         "foods": 0, "nutrition": 0, "health": 0, "allergens": 0,
+        "health_enriched": 0, "allergen_enriched": 0,
         "errors": [],
     }
 
     try:
         _load_usda_csv(conn, cursor, stats)
-        _load_health_csv(conn, cursor)
+        enriched_health, enriched_allergens = _load_health_csv(conn, cursor)
+        stats["health_enriched"] = enriched_health
+        stats["allergen_enriched"] = enriched_allergens
         conn.commit()
         logger.info("All imports complete!")
 
     except Exception as e:
         stats["errors"].append(f"Fatal: {str(e)[:200]}")
-        conn.rollback()
+        try:
+            conn.rollback()
+        except Exception:
+            pass  # Connection may already be dead
         logger.error("Import error: %s", e)
 
     finally:
@@ -334,7 +347,9 @@ def import_all_data():
             f"Import complete: {stats['foods']} foods, {stats['brands']} brands, "
             f"{stats['categories']} categories, {stats['data_types']} data types, "
             f"{stats['nutrition']} nutrition, {stats['health']} health scores, "
-            f"{stats['allergens']} allergen profiles"
+            f"{stats['allergens']} allergen profiles, "
+            f"{stats['health_enriched']} health enriched, "
+            f"{stats['allergen_enriched']} allergens enriched"
         ),
         "stats": stats,
     }

@@ -1,25 +1,25 @@
 # ── Shared FOOD_SELECT columns + FROM/JOINs (DRY — single source of truth) ──
-_FOOD_COLUMNS = """
-    f.fdc_id, f.food_name, f.brand_id,
-    dt.type_name AS data_type,
-    fc.category_name AS food_category,
-    b.brand_name, b.brand_owner,
-    n.nutrition_id, n.calories, n.protein_g, n.fat_g, n.carbs_g, n.sodium_mg,
-    hs.score_id,
-    hs.health_score, hs.nutriscore_grade, hs.nova_group,
-    ap.allergen_id,
-    ap.contains_gluten, ap.contains_dairy
-"""
+_FOOD_COLUMNS = (
+    "f.fdc_id, f.food_name, f.brand_id, "
+    "dt.type_name AS data_type, "
+    "fc.category_name AS food_category, "
+    "b.brand_name, b.brand_owner, "
+    "n.nutrition_id, n.calories, n.protein_g, n.fat_g, n.carbs_g, n.sodium_mg, "
+    "hs.score_id, "
+    "hs.health_score, hs.nutriscore_grade, hs.nova_group, "
+    "ap.allergen_id, "
+    "ap.contains_gluten, ap.contains_dairy"
+)
 
-_FOOD_FROM = """
-    FROM Foods f
-    LEFT JOIN Brands b            ON f.brand_id    = b.brand_id
-    LEFT JOIN FOOD_CATEGORY fc    ON f.category_id = fc.category_id
-    LEFT JOIN DATA_TYPE dt        ON f.type_id     = dt.type_id
-    LEFT JOIN Nutrition_Metrics n ON f.fdc_id      = n.fdc_id
-    LEFT JOIN HEALTH_SCORE hs     ON f.fdc_id      = hs.fdc_id
-    LEFT JOIN ALLERGEN_PROFILE ap ON f.fdc_id      = ap.fdc_id
-"""
+_FOOD_FROM = (
+    "FROM Foods f "
+    "LEFT JOIN Brands b            ON f.brand_id    = b.brand_id "
+    "LEFT JOIN FOOD_CATEGORY fc    ON f.category_id = fc.category_id "
+    "LEFT JOIN DATA_TYPE dt        ON f.type_id     = dt.type_id "
+    "LEFT JOIN Nutrition_Metrics n ON f.fdc_id      = n.fdc_id "
+    "LEFT JOIN HEALTH_SCORE hs     ON f.fdc_id      = hs.fdc_id "
+    "LEFT JOIN ALLERGEN_PROFILE ap ON f.fdc_id      = ap.fdc_id"
+)
 
 
 def _food_query(extra="", top=None):
@@ -84,12 +84,13 @@ def update_allergen(conn, cursor, fdc_id: int, data: dict):
 # ── Requirement 4: Range Querying ──────────────────────
 def get_foods_by_range(conn, cursor, min_health_score, max_sodium, max_carbs, limit=100):
     cursor.execute(
-        _food_query("""
-        WHERE hs.health_score >= %s
-          AND n.sodium_mg    <= %s
-          AND n.carbs_g      <= %s
-        ORDER BY hs.health_score DESC
-        """, top=limit),
+        _food_query(
+            "WHERE hs.health_score >= %s "
+            "AND n.sodium_mg <= %s "
+            "AND n.carbs_g <= %s "
+            "ORDER BY hs.health_score DESC",
+            top=limit,
+        ),
         (min_health_score, max_sodium, max_carbs),
     )
     return [_build_food_dict(row) for row in cursor.fetchall()]
@@ -148,13 +149,14 @@ def get_category_aggregation(conn, cursor, category: str):
 # ── Requirement 7: Gap Identification ─────────────────
 def get_foods_with_missing_data(conn, cursor, limit=100):
     cursor.execute(
-        _food_query("""
-        WHERE n.calories   IS NULL
-           OR n.protein_g IS NULL
-           OR n.fat_g     IS NULL
-           OR n.carbs_g   IS NULL
-           OR n.sodium_mg IS NULL
-        """, top=limit),
+        _food_query(
+            "WHERE n.calories IS NULL "
+            "OR n.protein_g IS NULL "
+            "OR n.fat_g IS NULL "
+            "OR n.carbs_g IS NULL "
+            "OR n.sodium_mg IS NULL",
+            top=limit,
+        ),
     )
     return [_build_food_dict(row) for row in cursor.fetchall()]
 
@@ -199,33 +201,28 @@ def search_foods(conn, cursor, name: str, limit=50):
 
 def get_foods_browse(conn, cursor, skip=0, limit=50, name=None):
     """Paginated food listing with nutrition data. Optional name filter."""
+    base_cols = ("f.fdc_id, f.food_name, "
+                 "fc.category_name AS food_category, "
+                 "b.brand_name, "
+                 "n.calories, n.protein_g, n.fat_g, n.carbs_g, n.sodium_mg")
+    base_from = ("Foods f "
+                 "LEFT JOIN FOOD_CATEGORY fc ON f.category_id = fc.category_id "
+                 "LEFT JOIN Brands b         ON f.brand_id    = b.brand_id "
+                 "LEFT JOIN Nutrition_Metrics n ON f.fdc_id   = n.fdc_id")
+
     if name:
-        cursor.execute("""
-            SELECT f.fdc_id, f.food_name,
-                   fc.category_name AS food_category,
-                   b.brand_name,
-                   n.calories, n.protein_g, n.fat_g, n.carbs_g, n.sodium_mg
-            FROM Foods f
-            LEFT JOIN FOOD_CATEGORY fc ON f.category_id = fc.category_id
-            LEFT JOIN Brands b         ON f.brand_id    = b.brand_id
-            LEFT JOIN Nutrition_Metrics n ON f.fdc_id   = n.fdc_id
-            WHERE f.food_name LIKE %s
-            ORDER BY f.food_name
-            OFFSET %s ROWS FETCH NEXT %s ROWS ONLY
-        """, (f"%{name}%", skip, limit))
+        cursor.execute(
+            f"SELECT {base_cols} FROM {base_from} "
+            f"WHERE f.food_name LIKE %s ORDER BY f.food_name "
+            f"OFFSET %s ROWS FETCH NEXT %s ROWS ONLY",
+            (f"%{name}%", skip, limit),
+        )
     else:
-        cursor.execute("""
-            SELECT f.fdc_id, f.food_name,
-                   fc.category_name AS food_category,
-                   b.brand_name,
-                   n.calories, n.protein_g, n.fat_g, n.carbs_g, n.sodium_mg
-            FROM Foods f
-            LEFT JOIN FOOD_CATEGORY fc ON f.category_id = fc.category_id
-            LEFT JOIN Brands b         ON f.brand_id    = b.brand_id
-            LEFT JOIN Nutrition_Metrics n ON f.fdc_id   = n.fdc_id
-            ORDER BY f.fdc_id
-            OFFSET %s ROWS FETCH NEXT %s ROWS ONLY
-        """, (skip, limit))
+        cursor.execute(
+            f"SELECT {base_cols} FROM {base_from} "
+            f"ORDER BY f.fdc_id OFFSET %s ROWS FETCH NEXT %s ROWS ONLY",
+            (skip, limit),
+        )
     return cursor.fetchall()
 
 
@@ -259,7 +256,7 @@ def get_predictions(conn, cursor, limit=100):
             p.predicted_nutriscore, p.predicted_nova,
             p.confidence_score, p.prediction_date
         FROM ML_Predictions p
-        JOIN Foods f ON p.fdc_id = f.fdc_id
+        LEFT JOIN Foods f ON p.fdc_id = f.fdc_id
         ORDER BY p.prediction_date DESC
     """, (limit,))
     return cursor.fetchall()

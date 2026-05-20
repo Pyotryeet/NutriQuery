@@ -57,6 +57,9 @@ class AllergenProfile(AllergenProfileBase):
 # ── ML Predictions ─────────────────────────────────────
 class MLPredictionBase(BaseModel):
     predicted_nutriscore: Optional[str] = None
+    # NOTE: predicted_nova is always NULL — NOVA classification requires
+    # food processing metadata, not nutritional composition. Retained for
+    # backward compatibility; remove in next schema version.
     predicted_nova: Optional[int] = None
     confidence_score: Optional[float] = None
 

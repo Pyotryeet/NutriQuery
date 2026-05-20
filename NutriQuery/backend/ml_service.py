@@ -12,15 +12,14 @@ would produce systematically invalid results.
 import torch
 import torch.nn as nn
 from fastapi import APIRouter, Depends, HTTPException
-from typing import Annotated, Tuple
-import pymssql
+from typing import Annotated
 from database import get_db
 import logging
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-DbDep = Annotated[Tuple[pymssql.Connection, pymssql.Cursor], Depends(get_db)]
+DbDep = Annotated[tuple, Depends(get_db)]
 
 _device = None
 
@@ -68,7 +67,10 @@ def _compute_normalization_stats(cursor):
     """
     Compute mean and std from ALL foods with complete nutrition data.
     Using the full dataset for normalization ensures training and inference
-    use the same statistics (fixes distribution mismatch bug).
+    use the same statistics.
+
+    NOTE: Builds a full tensor in memory. At 40K rows this is ~800 KB;
+    at 10M+ rows consider incremental Welford's algorithm or batch processing.
     """
     cursor.execute("""
         SELECT n.calories, n.protein_g, n.fat_g, n.carbs_g, n.sodium_mg
@@ -153,10 +155,11 @@ def _train_model(cursor):
 
     model.train()
     optimizer = torch.optim.Adam(model.parameters(), lr=0.005)
-    scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=50, gamma=0.5)
     criterion = nn.CrossEntropyLoss()
 
     epochs = min(MAX_EPOCHS, max(30, len(rows) * 5))
+    step_size = max(10, epochs // 3)  # Scale LR decay to dataset size
+    scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=step_size, gamma=0.5)
     for epoch in range(epochs):
         optimizer.zero_grad()
         outputs = model(X)
