@@ -1,30 +1,39 @@
+# ── Shared FOOD_SELECT columns + FROM/JOINs (DRY — single source of truth) ──
+_FOOD_COLUMNS = """
+    f.fdc_id, f.food_name, f.brand_id,
+    dt.type_name AS data_type,
+    fc.category_name AS food_category,
+    b.brand_name, b.brand_owner,
+    n.nutrition_id, n.calories, n.protein_g, n.fat_g, n.carbs_g, n.sodium_mg,
+    hs.score_id,
+    hs.health_score, hs.nutriscore_grade, hs.nova_group,
+    ap.allergen_id,
+    ap.contains_gluten, ap.contains_dairy
+"""
+
+_FOOD_FROM = """
+    FROM Foods f
+    LEFT JOIN Brands b            ON f.brand_id    = b.brand_id
+    LEFT JOIN FOOD_CATEGORY fc    ON f.category_id = fc.category_id
+    LEFT JOIN DATA_TYPE dt        ON f.type_id     = dt.type_id
+    LEFT JOIN Nutrition_Metrics n ON f.fdc_id      = n.fdc_id
+    LEFT JOIN HEALTH_SCORE hs     ON f.fdc_id      = hs.fdc_id
+    LEFT JOIN ALLERGEN_PROFILE ap ON f.fdc_id      = ap.fdc_id
+"""
+
+
+def _food_query(extra="", top=None):
+    """Build a full food SELECT query. Set top=N for TOP N queries."""
+    select = f"SELECT TOP {top} " if top else "SELECT "
+    return f"{select}{_FOOD_COLUMNS} {_FOOD_FROM} {extra}"
+
+
 # ── Requirement 2: Record Retrieval ────────────────────
 def get_food(conn, cursor, fdc_id: int):
-    """
-    Retrieve a full food profile by fdc_id, joining across all 7 related tables
-    of the 3NF schema: Brands, FOOD_CATEGORY, DATA_TYPE, Nutrition_Metrics,
-    HEALTH_SCORE, and ALLERGEN_PROFILE.
-    """
-    cursor.execute("""
-        SELECT
-            f.fdc_id, f.food_name, f.brand_id,
-            dt.type_name AS data_type,
-            fc.category_name AS food_category,
-            b.brand_name, b.brand_owner,
-            n.nutrition_id, n.calories, n.protein_g, n.fat_g, n.carbs_g, n.sodium_mg,
-            hs.score_id,
-            hs.health_score, hs.nutriscore_grade, hs.nova_group,
-            ap.allergen_id,
-            ap.contains_gluten, ap.contains_dairy
-        FROM Foods f
-        LEFT JOIN Brands b            ON f.brand_id    = b.brand_id
-        LEFT JOIN FOOD_CATEGORY fc    ON f.category_id = fc.category_id
-        LEFT JOIN DATA_TYPE dt        ON f.type_id     = dt.type_id
-        LEFT JOIN Nutrition_Metrics n ON f.fdc_id      = n.fdc_id
-        LEFT JOIN HEALTH_SCORE hs     ON f.fdc_id      = hs.fdc_id
-        LEFT JOIN ALLERGEN_PROFILE ap ON f.fdc_id      = ap.fdc_id
-        WHERE f.fdc_id = %s
-    """, (fdc_id,))
+    cursor.execute(
+        _food_query("WHERE f.fdc_id = %s"),
+        (fdc_id,),
+    )
     row = cursor.fetchone()
     if not row:
         return None
@@ -33,7 +42,6 @@ def get_food(conn, cursor, fdc_id: int):
 
 # ── Requirement 3: Data Correction ─────────────────────
 def update_nutrition(conn, cursor, fdc_id: int, data: dict):
-    """Update nutrition metrics for a food item via a dynamic UPDATE statement."""
     set_clauses = []
     values = []
     for col in ("calories", "protein_g", "fat_g", "carbs_g", "sodium_mg"):
@@ -56,7 +64,6 @@ def update_nutrition(conn, cursor, fdc_id: int, data: dict):
 
 
 def update_health_score(conn, cursor, fdc_id: int, data: dict):
-    """Update health score fields in HEALTH_SCORE table."""
     set_clauses = []
     values = []
     for col in ("health_score", "nutriscore_grade", "nova_group"):
@@ -79,7 +86,6 @@ def update_health_score(conn, cursor, fdc_id: int, data: dict):
 
 
 def update_allergen(conn, cursor, fdc_id: int, data: dict):
-    """Update allergen flags in ALLERGEN_PROFILE table."""
     set_clauses = []
     values = []
     for col in ("contains_gluten", "contains_dairy"):
@@ -102,76 +108,38 @@ def update_allergen(conn, cursor, fdc_id: int, data: dict):
 
 
 # ── Requirement 4: Range Querying ──────────────────────
-def get_foods_by_range(conn, cursor, min_health_score: float, max_sodium: float, max_carbs: float, limit: int = 100):
-    """
-    Complex cross-table range query: find foods that satisfy simultaneous constraints
-    on health score, sodium, and carb levels using a 5-table JOIN.
-    """
-    cursor.execute("""
-        SELECT TOP %s
-            f.fdc_id, f.food_name, f.brand_id,
-            fc.category_name AS food_category,
-            b.brand_name, b.brand_owner,
-            n.nutrition_id, n.calories, n.protein_g, n.fat_g, n.carbs_g, n.sodium_mg,
-            hs.score_id,
-            hs.health_score, hs.nutriscore_grade, hs.nova_group,
-            ap.allergen_id,
-            ap.contains_gluten, ap.contains_dairy
-        FROM Foods f
-        JOIN FOOD_CATEGORY fc        ON f.category_id = fc.category_id
-        JOIN Nutrition_Metrics n     ON f.fdc_id      = n.fdc_id
-        JOIN HEALTH_SCORE hs         ON f.fdc_id      = hs.fdc_id
-        LEFT JOIN ALLERGEN_PROFILE ap ON f.fdc_id     = ap.fdc_id
-        LEFT JOIN Brands b           ON f.brand_id    = b.brand_id
+def get_foods_by_range(conn, cursor, min_health_score, max_sodium, max_carbs, limit=100):
+    cursor.execute(
+        _food_query("""
         WHERE hs.health_score >= %s
           AND n.sodium_mg    <= %s
           AND n.carbs_g      <= %s
         ORDER BY hs.health_score DESC
-    """, (limit, min_health_score, max_sodium, max_carbs))
+        """, top=limit),
+        (min_health_score, max_sodium, max_carbs),
+    )
     return [_build_food_dict(row) for row in cursor.fetchall()]
 
 
 # ── Requirement 5: Dietary Filtering ──────────────────
-def get_foods_by_diet(conn, cursor, no_gluten: bool = False, no_dairy: bool = False, limit: int = 100):
-    """Filter foods by allergen/dietary restrictions using the ALLERGEN_PROFILE table."""
+def get_foods_by_diet(conn, cursor, no_gluten=False, no_dairy=False, limit=100):
     where_clauses = []
-    values = []
 
     if no_gluten:
-        where_clauses.append("ap.contains_gluten = 0")
+        where_clauses.append("(ap.contains_gluten IS NULL OR ap.contains_gluten = 0)")
     if no_dairy:
-        where_clauses.append("ap.contains_dairy = 0")
+        where_clauses.append("(ap.contains_dairy IS NULL OR ap.contains_dairy = 0)")
 
     where_sql = ("WHERE " + " AND ".join(where_clauses)) if where_clauses else ""
 
-    cursor.execute(f"""
-        SELECT TOP %s
-            f.fdc_id, f.food_name, f.brand_id,
-            fc.category_name AS food_category,
-            b.brand_name, b.brand_owner,
-            n.nutrition_id, n.calories, n.protein_g, n.fat_g, n.carbs_g, n.sodium_mg,
-            hs.score_id,
-            hs.health_score, hs.nutriscore_grade, hs.nova_group,
-            ap.allergen_id,
-            ap.contains_gluten, ap.contains_dairy
-        FROM Foods f
-        JOIN FOOD_CATEGORY fc       ON f.category_id = fc.category_id
-        JOIN ALLERGEN_PROFILE ap    ON f.fdc_id      = ap.fdc_id
-        LEFT JOIN HEALTH_SCORE hs   ON f.fdc_id      = hs.fdc_id
-        LEFT JOIN Nutrition_Metrics n ON f.fdc_id    = n.fdc_id
-        LEFT JOIN Brands b          ON f.brand_id    = b.brand_id
-        {where_sql}
-        ORDER BY f.food_name
-    """, (limit,))
+    cursor.execute(
+        _food_query(f"{where_sql} ORDER BY f.food_name", top=limit),
+    )
     return [_build_food_dict(row) for row in cursor.fetchall()]
 
 
 # ── Requirement 6: Aggregation ─────────────────────────
 def get_category_aggregation(conn, cursor, category: str):
-    """
-    Aggregate nutritional statistics for a given food category.
-    Uses the normalized FOOD_CATEGORY lookup table.
-    """
     cursor.execute("""
         SELECT
             fc.category_name AS food_category,
@@ -204,41 +172,21 @@ def get_category_aggregation(conn, cursor, category: str):
 
 
 # ── Requirement 7: Gap Identification ─────────────────
-def get_foods_with_missing_data(conn, cursor, limit: int = 100):
-    """
-    Identify records with incomplete nutritional data (NULL values)
-    to surface data quality issues.
-    """
-    cursor.execute("""
-        SELECT TOP %s
-            f.fdc_id, f.food_name, f.brand_id,
-            fc.category_name AS food_category,
-            dt.type_name     AS data_type,
-            b.brand_name, b.brand_owner,
-            n.nutrition_id, n.calories, n.protein_g, n.fat_g, n.carbs_g, n.sodium_mg,
-            hs.score_id,
-            hs.health_score, hs.nutriscore_grade, hs.nova_group,
-            ap.allergen_id,
-            ap.contains_gluten, ap.contains_dairy
-        FROM Foods f
-        JOIN Nutrition_Metrics n     ON f.fdc_id      = n.fdc_id
-        LEFT JOIN FOOD_CATEGORY fc   ON f.category_id = fc.category_id
-        LEFT JOIN DATA_TYPE dt       ON f.type_id     = dt.type_id
-        LEFT JOIN HEALTH_SCORE hs    ON f.fdc_id      = hs.fdc_id
-        LEFT JOIN ALLERGEN_PROFILE ap ON f.fdc_id     = ap.fdc_id
-        LEFT JOIN Brands b           ON f.brand_id    = b.brand_id
+def get_foods_with_missing_data(conn, cursor, limit=100):
+    cursor.execute(
+        _food_query("""
         WHERE n.calories   IS NULL
            OR n.protein_g IS NULL
            OR n.fat_g     IS NULL
            OR n.carbs_g   IS NULL
            OR n.sodium_mg IS NULL
-    """, (limit,))
+        """, top=limit),
+    )
     return [_build_food_dict(row) for row in cursor.fetchall()]
 
 
 # ── Requirement 8: Metadata Management ────────────────
 def create_brand(conn, cursor, data: dict):
-    """Insert a new brand record and return it with the generated brand_id."""
     cursor.execute(
         "INSERT INTO Brands (brand_name, brand_owner) VALUES (%s, %s)",
         (data["brand_name"], data.get("brand_owner")),
@@ -250,8 +198,7 @@ def create_brand(conn, cursor, data: dict):
     return cursor.fetchone()
 
 
-def get_brands(conn, cursor, skip: int = 0, limit: int = 100):
-    """Retrieve a paginated list of brands using OFFSET/FETCH."""
+def get_brands(conn, cursor, skip=0, limit=100):
     cursor.execute("""
         SELECT * FROM Brands
         ORDER BY brand_id
@@ -260,9 +207,8 @@ def get_brands(conn, cursor, skip: int = 0, limit: int = 100):
     return cursor.fetchall()
 
 
-# ── NEW: Food Search by Name ──────────────────────────
-def search_foods(conn, cursor, name: str, limit: int = 50):
-    """Substring search on food_name using LIKE, resolving category through the lookup table."""
+# ── Search & Listing ──────────────────────────────────
+def search_foods(conn, cursor, name: str, limit=50):
     cursor.execute("""
         SELECT TOP %s
             f.fdc_id, f.food_name,
@@ -277,9 +223,39 @@ def search_foods(conn, cursor, name: str, limit: int = 50):
     return cursor.fetchall()
 
 
-# ── NEW: Paginated Food Listing ───────────────────────
-def get_all_foods(conn, cursor, skip: int = 0, limit: int = 50):
-    """Retrieve a page of food records with resolved category and brand names."""
+def get_foods_browse(conn, cursor, skip=0, limit=50, name=None):
+    """Paginated food listing with nutrition data. Optional name filter."""
+    if name:
+        cursor.execute("""
+            SELECT f.fdc_id, f.food_name,
+                   fc.category_name AS food_category,
+                   b.brand_name,
+                   n.calories, n.protein_g, n.fat_g, n.carbs_g, n.sodium_mg
+            FROM Foods f
+            LEFT JOIN FOOD_CATEGORY fc ON f.category_id = fc.category_id
+            LEFT JOIN Brands b         ON f.brand_id    = b.brand_id
+            LEFT JOIN Nutrition_Metrics n ON f.fdc_id   = n.fdc_id
+            WHERE f.food_name LIKE %s
+            ORDER BY f.food_name
+            OFFSET %s ROWS FETCH NEXT %s ROWS ONLY
+        """, (f"%{name}%", skip, limit))
+    else:
+        cursor.execute("""
+            SELECT f.fdc_id, f.food_name,
+                   fc.category_name AS food_category,
+                   b.brand_name,
+                   n.calories, n.protein_g, n.fat_g, n.carbs_g, n.sodium_mg
+            FROM Foods f
+            LEFT JOIN FOOD_CATEGORY fc ON f.category_id = fc.category_id
+            LEFT JOIN Brands b         ON f.brand_id    = b.brand_id
+            LEFT JOIN Nutrition_Metrics n ON f.fdc_id   = n.fdc_id
+            ORDER BY f.fdc_id
+            OFFSET %s ROWS FETCH NEXT %s ROWS ONLY
+        """, (skip, limit))
+    return cursor.fetchall()
+
+
+def get_all_foods(conn, cursor, skip=0, limit=50):
     cursor.execute("""
         SELECT f.fdc_id, f.food_name,
                fc.category_name AS food_category,
@@ -293,9 +269,7 @@ def get_all_foods(conn, cursor, skip: int = 0, limit: int = 50):
     return cursor.fetchall()
 
 
-# ── NEW: Distinct Food Categories ─────────────────────
 def get_categories(conn, cursor):
-    """List all distinct food categories from the normalized FOOD_CATEGORY table."""
     cursor.execute("""
         SELECT category_name
         FROM FOOD_CATEGORY
@@ -304,9 +278,7 @@ def get_categories(conn, cursor):
     return [row["category_name"] for row in cursor.fetchall()]
 
 
-# ── NEW: Retrieve ML Predictions ─────────────────────
-def get_predictions(conn, cursor, limit: int = 100):
-    """Fetch ML predictions joined with food names."""
+def get_predictions(conn, cursor, limit=100):
     cursor.execute("""
         SELECT TOP %s
             p.prediction_id, p.fdc_id, f.food_name,
@@ -321,11 +293,6 @@ def get_predictions(conn, cursor, limit: int = 100):
 
 # ── Helper ────────────────────────────────────────────
 def _build_food_dict(row):
-    """
-    Transform a flat JOIN result row into a nested Food dict
-    matching the schemas.Food model structure with separate
-    health_score and allergen profiles.
-    """
     food = {
         "fdc_id": row["fdc_id"],
         "food_name": row["food_name"],
@@ -336,7 +303,6 @@ def _build_food_dict(row):
         "nutrition": None,
         "health_score": None,
         "allergen": None,
-        "predictions": [],
     }
 
     if row.get("brand_name"):

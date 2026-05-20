@@ -1,5 +1,5 @@
 import React from 'react'
-import SearchSection from './components/SearchSection'
+import BrowseSection from './components/BrowseSection'
 import AnalyticsSection from './components/AnalyticsSection'
 import MLEngineSection from './components/MLEngineSection'
 import BrandsSection from './components/BrandsSection'
@@ -16,14 +16,14 @@ function App() {
       </header>
 
       <main className="main-content">
-        <SearchSection />
+        <BrowseSection />
         <AnalyticsSection />
         <MLEngineSection />
         <BrandsSection />
         <DataImportSection />
       </main>
 
-      <footer style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-secondary)', borderTop: '1px solid var(--border-color)', marginTop: '2rem' }}>
+      <footer className="app-footer">
         <p>NutriQuery — ISE305 Database Systems Project</p>
       </footer>
     </div>

@@ -27,7 +27,6 @@ export default function SearchSection() {
             setError(data.error);
             setRowData([]);
         } else {
-            // Flatten brand for grid
             const row = {
                 fdc_id: data.fdc_id,
                 food_name: data.food_name,
@@ -56,15 +55,15 @@ export default function SearchSection() {
     return (
         <section className="matte-panel">
             <div className="section-header">
-                <h2>🔍 Product Registry</h2>
+                <h2>Product Registry</h2>
             </div>
             <div className="controls-row">
                 <div className="input-group">
                     <label htmlFor="fdc-search">Lookup by FDC ID</label>
                     <div className="input-action">
-                        <input 
-                            type="number" 
-                            id="fdc-search" 
+                        <input
+                            type="number"
+                            id="fdc-search"
                             placeholder="e.g. 167782"
                             value={fdcId}
                             onChange={e => setFdcId(e.target.value)}
@@ -75,9 +74,9 @@ export default function SearchSection() {
                 <div className="input-group">
                     <label htmlFor="name-search">Search by Name</label>
                     <div className="input-action">
-                        <input 
-                            type="text" 
-                            id="name-search" 
+                        <input
+                            type="text"
+                            id="name-search"
                             placeholder="e.g. Apple, Chicken..."
                             value={name}
                             onChange={e => setName(e.target.value)}
@@ -87,9 +86,9 @@ export default function SearchSection() {
                 </div>
             </div>
 
-            {error && <div className="error-message">❌ {error}</div>}
+            {error && <div className="error-message">{error}</div>}
 
-            <div className="ag-theme-quartz" style={{ height: 400, width: '100%', marginTop: '1rem', border: '1px solid var(--border-color)', borderRadius: '8px', overflow: 'hidden' }}>
+            <div className="ag-theme-quartz grid-container">
                 <AgGridReact
                     rowData={rowData}
                     columnDefs={colDefs}

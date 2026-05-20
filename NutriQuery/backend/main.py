@@ -1,10 +1,14 @@
-from fastapi import FastAPI, Depends, HTTPException, Query
+from fastapi import FastAPI, Depends, HTTPException, Query, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
-from typing import Annotated, List
+from typing import Annotated, List, Optional, Tuple, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import pymssql
 
 import schemas
 import crud
 import ml_service
+import data_import
 from database import get_db
 
 # ── FastAPI Application ───────────────────────────────
@@ -12,14 +16,14 @@ app = FastAPI(title="NutriQuery API", version="1.1.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Type alias for the database dependency (Annotated style)
-DbDep = Annotated[tuple, Depends(get_db)]
+# Type alias for the database dependency
+DbDep = Annotated["Tuple[pymssql.Connection, pymssql.Cursor]", Depends(get_db)]
 
 # Include the ML router
 app.include_router(ml_service.ml_router)
@@ -39,6 +43,18 @@ def search_foods(
 ):
     conn, cursor = db
     return crud.search_foods(conn, cursor, name, limit)
+
+
+# ── NEW: Browse Foods with Nutrition ───────────────
+@app.get("/foods/browse", response_model=List[schemas.FoodBrowseResult])
+def browse_foods(
+    db: DbDep,
+    skip: Annotated[int, Query(ge=0)] = 0,
+    limit: Annotated[int, Query(ge=1, le=200)] = 20,
+    name: Annotated[Optional[str], Query()] = None,
+):
+    conn, cursor = db
+    return crud.get_foods_browse(conn, cursor, skip=skip, limit=limit, name=name)
 
 
 # ── NEW: Paginated Food Listing ─────────────────────
@@ -160,7 +176,8 @@ def list_predictions(db: DbDep, limit: Annotated[int, Query(ge=1, le=500)] = 100
 
 # ── NEW: Data Import Trigger ────────────────────────
 @app.post("/import")
-def trigger_import():
-    import data_import
-    result = data_import.import_all_data()
-    return result
+def trigger_import(background_tasks: BackgroundTasks):
+    # Run import in background to avoid blocking the event loop
+    # for potentially 10+ minutes on large CSV files
+    background_tasks.add_task(data_import.import_all_data)
+    return {"message": "Import started in background. Check server logs for progress."}

@@ -81,7 +81,6 @@ class Food(FoodBase):
     nutrition: Optional[Nutrition] = None
     health_score: Optional[HealthScore] = None
     allergen: Optional[AllergenProfile] = None
-    predictions: List[MLPrediction] = []
 
 
 class FoodSearchResult(BaseModel):
@@ -89,6 +88,18 @@ class FoodSearchResult(BaseModel):
     food_name: str
     food_category: Optional[str] = None
     brand_name: Optional[str] = None
+
+
+class FoodBrowseResult(BaseModel):
+    fdc_id: int
+    food_name: str
+    food_category: Optional[str] = None
+    brand_name: Optional[str] = None
+    calories: Optional[float] = None
+    protein_g: Optional[float] = None
+    fat_g: Optional[float] = None
+    carbs_g: Optional[float] = None
+    sodium_mg: Optional[float] = None
 
 
 # ── Aggregation ────────────────────────────────────────

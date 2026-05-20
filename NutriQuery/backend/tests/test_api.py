@@ -23,6 +23,14 @@ def test_list_foods(client):
     assert isinstance(data, list)
     assert len(data) <= 10
 
+
+def test_browse_foods(client):
+    response = client.get("/foods/browse?skip=0&limit=10")
+    assert response.status_code == 200
+    data = response.json()
+    assert isinstance(data, list)
+    assert len(data) <= 10
+
 def test_queries_range(client):
     response = client.get("/queries/range?min_health_score=50&max_sodium=200&max_carbs=30")
     assert response.status_code == 200

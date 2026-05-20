@@ -28,7 +28,7 @@ GO
 
 -- 4. Foods Table
 CREATE TABLE Foods (
-    fdc_id INT PRIMARY KEY, -- USDA identifier
+    fdc_id INT PRIMARY KEY,
     brand_id INT,
     category_id INT,
     type_id INT,
@@ -37,6 +37,15 @@ CREATE TABLE Foods (
     CONSTRAINT fk_foods_category FOREIGN KEY (category_id) REFERENCES FOOD_CATEGORY(category_id),
     CONSTRAINT fk_foods_type FOREIGN KEY (type_id) REFERENCES DATA_TYPE(type_id)
 );
+GO
+
+-- FK indexes on Foods (improves JOIN performance)
+CREATE INDEX idx_foods_brand_id ON Foods(brand_id);
+CREATE INDEX idx_foods_category_id ON Foods(category_id);
+CREATE INDEX idx_foods_type_id ON Foods(type_id);
+-- B-tree index on food_name; helps prefix searches (LIKE 'Apple%').
+-- NOTE: leading-wildcard queries (LIKE '%Apple%') will still table-scan.
+CREATE INDEX idx_foods_food_name ON Foods(food_name);
 GO
 
 -- 5. Nutrition_Metrics Table
@@ -83,4 +92,8 @@ CREATE TABLE ML_Predictions (
     prediction_date DATETIME DEFAULT GETDATE(),
     CONSTRAINT fk_predictions_foods FOREIGN KEY (fdc_id) REFERENCES Foods(fdc_id) ON DELETE CASCADE
 );
+GO
+
+-- FK index on ML_Predictions
+CREATE INDEX idx_ml_predictions_fdc_id ON ML_Predictions(fdc_id);
 GO

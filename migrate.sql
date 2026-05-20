@@ -59,17 +59,17 @@ JOIN DATA_TYPE d ON f.data_type = d.type_name
 WHERE f.type_id IS NULL;
 GO
 
-IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE name = 'FK_Foods_Category')
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE name = 'fk_foods_category')
 BEGIN
-    ALTER TABLE Foods ADD CONSTRAINT FK_Foods_Category FOREIGN KEY (category_id) REFERENCES FOOD_CATEGORY(category_id);
+    ALTER TABLE Foods ADD CONSTRAINT fk_foods_category FOREIGN KEY (category_id) REFERENCES FOOD_CATEGORY(category_id);
 END
-IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE name = 'FK_Foods_DataType')
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE name = 'fk_foods_type')
 BEGIN
-    ALTER TABLE Foods ADD CONSTRAINT FK_Foods_DataType FOREIGN KEY (type_id) REFERENCES DATA_TYPE(type_id);
+    ALTER TABLE Foods ADD CONSTRAINT fk_foods_type FOREIGN KEY (type_id) REFERENCES DATA_TYPE(type_id);
 END
 GO
 
-PRINT 'Dropping old columns from Foods';
+PRINT '5. Dropping old columns from Foods';
 IF COL_LENGTH('Foods', 'food_category') IS NOT NULL
 BEGIN
     ALTER TABLE Foods DROP COLUMN food_category;
@@ -80,7 +80,7 @@ BEGIN
 END
 GO
 
-PRINT '5. Creating HEALTH_SCORE and ALLERGEN_PROFILE tables';
+PRINT '6. Creating HEALTH_SCORE and ALLERGEN_PROFILE tables';
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name='HEALTH_SCORE')
 CREATE TABLE HEALTH_SCORE (
     score_id INT IDENTITY(1,1) PRIMARY KEY,
@@ -88,7 +88,7 @@ CREATE TABLE HEALTH_SCORE (
     health_score FLOAT NULL,
     nutriscore_grade VARCHAR(50) NULL,
     nova_group INT NULL,
-    CONSTRAINT FK_HealthScore_Food FOREIGN KEY (fdc_id) REFERENCES Foods(fdc_id) ON DELETE CASCADE
+    CONSTRAINT fk_healthscore_foods FOREIGN KEY (fdc_id) REFERENCES Foods(fdc_id) ON DELETE CASCADE
 );
 GO
 
@@ -98,11 +98,11 @@ CREATE TABLE ALLERGEN_PROFILE (
     fdc_id INT NOT NULL UNIQUE,
     contains_gluten BIT DEFAULT 0,
     contains_dairy BIT DEFAULT 0,
-    CONSTRAINT FK_Allergen_Food FOREIGN KEY (fdc_id) REFERENCES Foods(fdc_id) ON DELETE CASCADE
+    CONSTRAINT fk_allergen_foods FOREIGN KEY (fdc_id) REFERENCES Foods(fdc_id) ON DELETE CASCADE
 );
 GO
 
-PRINT '6. Migrating data from Health_and_Allergens';
+PRINT '7. Migrating data from Health_and_Allergens';
 IF EXISTS (SELECT * FROM sys.tables WHERE name='Health_and_Allergens')
 BEGIN
     INSERT INTO HEALTH_SCORE (fdc_id, health_score, nutriscore_grade, nova_group)
@@ -114,10 +114,23 @@ BEGIN
     SELECT fdc_id, contains_gluten, contains_dairy
     FROM Health_and_Allergens
     WHERE fdc_id NOT IN (SELECT fdc_id FROM ALLERGEN_PROFILE);
-    
-    PRINT '7. Dropping Health_and_Allergens';
+
+    PRINT '8. Dropping Health_and_Allergens';
     DROP TABLE Health_and_Allergens;
 END
+GO
+
+PRINT '9. Adding performance indexes';
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'idx_foods_brand_id')
+    CREATE INDEX idx_foods_brand_id ON Foods(brand_id);
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'idx_foods_category_id')
+    CREATE INDEX idx_foods_category_id ON Foods(category_id);
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'idx_foods_type_id')
+    CREATE INDEX idx_foods_type_id ON Foods(type_id);
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'idx_foods_food_name')
+    CREATE INDEX idx_foods_food_name ON Foods(food_name);
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'idx_ml_predictions_fdc_id')
+    CREATE INDEX idx_ml_predictions_fdc_id ON ML_Predictions(fdc_id);
 GO
 
 PRINT 'Migration complete.';

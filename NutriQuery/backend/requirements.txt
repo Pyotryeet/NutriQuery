@@ -1,7 +1,6 @@
 fastapi
 uvicorn[standard]
 pymssql
-pandas
 torch
 pydantic
 scikit-learn
