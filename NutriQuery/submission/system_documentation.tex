@@ -195,7 +195,7 @@ The schema was normalized from an earlier design through the following transform
 
 % --- Table 1: Brands ---
 \subsubsection{Table: Brands}
-\begin{tabularx}{\textwidth}{llllX}
+\begin{tabularx}{\textwidth}{lp{2cm}p{5.5cm}p{1.3cm}X}
 \toprule
 \textbf{Column} & \textbf{Type} & \textbf{Constraints} & \textbf{Default} & \textbf{Description} \\
 \midrule
@@ -213,7 +213,7 @@ brand\_owner & VARCHAR(255) & NULL & — & Parent company or brand owner \\
 
 % --- Table 2: FOOD\_CATEGORY ---
 \subsubsection{Table: FOOD\_CATEGORY}
-\begin{tabularx}{\textwidth}{llllX}
+\\begin{tabularx}{\\textwidth}{lp{2cm}p{5.5cm}p{1.3cm}X}
 \toprule
 \textbf{Column} & \textbf{Type} & \textbf{Constraints} & \textbf{Default} & \textbf{Description} \\
 \midrule
@@ -230,7 +230,7 @@ category\_name & VARCHAR(255) & NOT NULL, UNIQUE & — & Food category name (e.g
 
 % --- Table 3: DATA\_TYPE ---
 \subsubsection{Table: DATA\_TYPE}
-\begin{tabularx}{\textwidth}{llllX}
+\\begin{tabularx}{\\textwidth}{lp{2cm}p{5.5cm}p{1.3cm}X}
 \toprule
 \textbf{Column} & \textbf{Type} & \textbf{Constraints} & \textbf{Default} & \textbf{Description} \\
 \midrule
@@ -247,7 +247,7 @@ type\_name & VARCHAR(100) & NOT NULL, UNIQUE & — & Data source classification 
 
 % --- Table 4: Foods ---
 \subsubsection{Table: Foods}
-\begin{tabularx}{\textwidth}{llllX}
+\\begin{tabularx}{\\textwidth}{lp{2cm}p{5.5cm}p{1.3cm}X}
 \toprule
 \textbf{Column} & \textbf{Type} & \textbf{Constraints} & \textbf{Default} & \textbf{Description} \\
 \midrule
@@ -273,7 +273,7 @@ food\_name & VARCHAR(500) & NOT NULL & — & Descriptive food item name \\
 
 % --- Table 5: Nutrition\_Metrics ---
 \subsubsection{Table: Nutrition\_Metrics}
-\begin{tabularx}{\textwidth}{llllX}
+\\begin{tabularx}{\\textwidth}{lp{2cm}p{5.5cm}p{1.3cm}X}
 \toprule
 \textbf{Column} & \textbf{Type} & \textbf{Constraints} & \textbf{Default} & \textbf{Description} \\
 \midrule
@@ -298,7 +298,7 @@ sodium\_mg & FLOAT & NULL & — & Sodium content in milligrams \\
 
 % --- Table 6: HEALTH\_SCORE ---
 \subsubsection{Table: HEALTH\_SCORE}
-\begin{tabularx}{\textwidth}{llllX}
+\\begin{tabularx}{\\textwidth}{lp{2cm}p{5.5cm}p{1.3cm}X}
 \toprule
 \textbf{Column} & \textbf{Type} & \textbf{Constraints} & \textbf{Default} & \textbf{Description} \\
 \midrule
@@ -323,7 +323,7 @@ nova\_group & INT & NULL & — & NOVA food processing group (1–4) \\
 
 % --- Table 7: ALLERGEN\_PROFILE ---
 \subsubsection{Table: ALLERGEN\_PROFILE}
-\begin{tabularx}{\textwidth}{llllX}
+\\begin{tabularx}{\\textwidth}{lp{2cm}p{5.5cm}p{1.3cm}X}
 \toprule
 \textbf{Column} & \textbf{Type} & \textbf{Constraints} & \textbf{Default} & \textbf{Description} \\
 \midrule
@@ -342,7 +342,7 @@ contains\_dairy & BIT & NOT NULL & 0 & Dairy presence flag (0=no, 1=yes) \\
 
 % --- Table 8: ML\_Predictions ---
 \subsubsection{Table: ML\_Predictions}
-\begin{tabularx}{\textwidth}{llllX}
+\\begin{tabularx}{\\textwidth}{lp{2cm}p{5.5cm}p{1.3cm}X}
 \toprule
 \textbf{Column} & \textbf{Type} & \textbf{Constraints} & \textbf{Default} & \textbf{Description} \\
 \midrule

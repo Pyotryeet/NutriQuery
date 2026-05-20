@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.18)  21 MAY 2026 02:19
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.18)  21 MAY 2026 02:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -511,1101 +511,2045 @@ Overfull \hbox (3.9149pt too wide) in paragraph at lines 191--192
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 206--206
-[]|\T1/cmr/m/n/12 Auto-generated
+Overfull \hbox (6.69508pt too wide) in paragraph at lines 206--206
+[]|\T1/cmr/bx/n/12 Default| 
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 206--206
-\T1/cmr/m/n/12 unique brand
- []
-
-[7]
-Overfull \hbox (2.21458pt too wide) in paragraph at lines 223--223
-[]|\T1/cmr/bx/n/12 Description| 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 223--223
 []|\T1/cmr/m/n/12 Auto-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 223--223
+Underfull \hbox (badness 10000) in paragraph at lines 206--206
 \T1/cmr/m/n/12 generated
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 223--223
-\T1/cmr/m/n/12 cat-e-gory
+Underfull \hbox (badness 1546) in paragraph at lines 206--206
+\T1/cmr/m/n/12 unique brand
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 223--223
-[]|\T1/cmr/m/n/12 Food
+Overfull \hbox (29.21927pt too wide) in paragraph at lines 206--206
+[]|\T1/cmr/m/n/12 VARCHAR(255)| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 223--223
-\T1/cmr/m/n/12 cat-e-gory
+Overfull \hbox (29.21927pt too wide) in paragraph at lines 206--206
+[]|\T1/cmr/m/n/12 VARCHAR(255)| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 223--223
-\T1/cmr/m/n/12 name (e.g.,
+Underfull \hbox (badness 10000) in paragraph at lines 206--206
+[]|\T1/cmr/m/n/12 Parent com-
+ []
+
+[7]
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.216 \\b
+         egin{tabularx}{\\textwidth}{lp{2cm}p{5.5cm}p{1.3cm}X}
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Misplaced \noalign.
+\toprule ->\noalign 
+                    {\ifnum 0=`}\fi \@aboverulesep =\abovetopsep \global \@b...
+l.217 \toprule
+              
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+! Misplaced alignment tab character &.
+l.218 \textbf{Column} &
+                        \textbf{Type} & \textbf{Constraints} & \textbf{Defau...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.218 \textbf{Column} & \textbf{Type} &
+                                        \textbf{Constraints} & \textbf{Defau...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.218 ... & \textbf{Type} & \textbf{Constraints} &
+                                                   \textbf{Default} & \textb...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.218 ...\textbf{Constraints} & \textbf{Default} &
+                                                   \textbf{Description} \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced \noalign.
+\midrule ->\noalign 
+                    {\ifnum 0=`}\fi \@aboverulesep =\aboverulesep \global \@...
+l.219 \midrule
+              
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 218--220
+
+ []
+
+! Misplaced alignment tab character &.
+l.220 category\_id &
+                     INT & PK, IDENTITY(1,1) & auto & Auto-generated categor...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.220 category\_id & INT &
+                           PK, IDENTITY(1,1) & auto & Auto-generated categor...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.220 category\_id & INT & PK, IDENTITY(1,1) &
+                                               auto & Auto-generated categor...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.220 ...ry\_id & INT & PK, IDENTITY(1,1) & auto &
+                                                   Auto-generated category i...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.221 category\_name &
+                       VARCHAR(255) & NOT NULL, UNIQUE & — & Food category...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.221 category\_name & VARCHAR(255) &
+                                      NOT NULL, UNIQUE & — & Food category...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.221 ..._name & VARCHAR(255) & NOT NULL, UNIQUE &
+                                                   — & Food category name ...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.221 ...& VARCHAR(255) & NOT NULL, UNIQUE & — &
+                                                   Food category name (e.g.,...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced \noalign.
+\bottomrule ->\noalign 
+                       {\ifnum 0=`}\fi \@aboverulesep =\aboverulesep \global...
+l.222 \bottomrule
+                 
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 220--223
+
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 223--223
-\T1/cmr/m/n/12 Snacks,
+! LaTeX Error: \begin{document} ended by \end{tabularx}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.223 \end{tabularx}
+                    
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Extra \endgroup.
+\end  ...end#1\endcsname \@checkend {#1}\endgroup 
+                                                  \UseHook {env/#1/after}\if...
+l.223 \end{tabularx}
+                    
+Things are pretty mixed up, but I think the worst is over.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.233 \\b
+         egin{tabularx}{\\textwidth}{lp{2cm}p{5.5cm}p{1.3cm}X}
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Misplaced \noalign.
+\toprule ->\noalign 
+                    {\ifnum 0=`}\fi \@aboverulesep =\abovetopsep \global \@b...
+l.234 \toprule
+              
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+! Misplaced alignment tab character &.
+l.235 \textbf{Column} &
+                        \textbf{Type} & \textbf{Constraints} & \textbf{Defau...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.235 \textbf{Column} & \textbf{Type} &
+                                        \textbf{Constraints} & \textbf{Defau...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.235 ... & \textbf{Type} & \textbf{Constraints} &
+                                                   \textbf{Default} & \textb...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.235 ...\textbf{Constraints} & \textbf{Default} &
+                                                   \textbf{Description} \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced \noalign.
+\midrule ->\noalign 
+                    {\ifnum 0=`}\fi \@aboverulesep =\aboverulesep \global \@...
+l.236 \midrule
+              
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 235--237
+
+ []
+
+! Misplaced alignment tab character &.
+l.237 type\_id &
+                 INT & PK, IDENTITY(1,1) & auto & Auto-generated type identi...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.237 type\_id & INT &
+                       PK, IDENTITY(1,1) & auto & Auto-generated type identi...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.237 type\_id & INT & PK, IDENTITY(1,1) &
+                                           auto & Auto-generated type identi...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.237 type\_id & INT & PK, IDENTITY(1,1) & auto &
+                                                  Auto-generated type identi...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.238 type\_name &
+                   VARCHAR(100) & NOT NULL, UNIQUE & — & Data source class...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.238 type\_name & VARCHAR(100) &
+                                  NOT NULL, UNIQUE & — & Data source class...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.238 ..._name & VARCHAR(100) & NOT NULL, UNIQUE &
+                                                   — & Data source classif...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.238 ...& VARCHAR(100) & NOT NULL, UNIQUE & — &
+                                                   Data source classificatio...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced \noalign.
+\bottomrule ->\noalign 
+                       {\ifnum 0=`}\fi \@aboverulesep =\aboverulesep \global...
+l.239 \bottomrule
+                 
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 237--240
+
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 240--240
-[]|\T1/cmr/m/n/12 Auto-generated
- []
+! LaTeX Error: \begin{document} ended by \end{tabularx}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.240 \end{tabularx}
+                    
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Extra \endgroup.
+\end  ...end#1\endcsname \@checkend {#1}\endgroup 
+                                                  \UseHook {env/#1/after}\if...
+l.240 \end{tabularx}
+                    
+Things are pretty mixed up, but I think the worst is over.
 
 [8]
 
-Package tabularx Warning: X Columns too narrow (table too wide)
-(tabularx)                 on input line 260.
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.250 \\b
+         egin{tabularx}{\\textwidth}{lp{2cm}p{5.5cm}p{1.3cm}X}
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Misplaced \noalign.
+\toprule ->\noalign 
+                    {\ifnum 0=`}\fi \@aboverulesep =\abovetopsep \global \@b...
+l.251 \toprule
+              
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+! Misplaced alignment tab character &.
+l.252 \textbf{Column} &
+                        \textbf{Type} & \textbf{Constraints} & \textbf{Defau...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.252 \textbf{Column} & \textbf{Type} &
+                                        \textbf{Constraints} & \textbf{Defau...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.252 ... & \textbf{Type} & \textbf{Constraints} &
+                                                   \textbf{Default} & \textb...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.252 ...\textbf{Constraints} & \textbf{Default} &
+                                                   \textbf{Description} \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced \noalign.
+\midrule ->\noalign 
+                    {\ifnum 0=`}\fi \@aboverulesep =\aboverulesep \global \@...
+l.253 \midrule
+              
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
 
 
-Overfull \hbox (56.08209pt too wide) in paragraph at lines 260--260
-[]|\T1/cmr/bx/n/12 Description| 
+Underfull \hbox (badness 10000) in paragraph at lines 252--254
+
+ []
+
+! Misplaced alignment tab character &.
+l.254 fdc\_id &
+                INT & PK & — & USDA FoodData Central identifier (natural k...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.254 fdc\_id & INT &
+                      PK & — & USDA FoodData Central identifier (natural k...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.254 fdc\_id & INT & PK &
+                           — & USDA FoodData Central identifier (natural k...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.254 fdc\_id & INT & PK & — &
+                                 USDA FoodData Central identifier (natural k...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.255 brand\_id &
+                  INT & FK $\rightarrow$ Brands(brand\_id) ON DELETE SET NUL...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.255 brand\_id & INT &
+                        FK $\rightarrow$ Brands(brand\_id) ON DELETE SET NUL...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.255 ...w$ Brands(brand\_id) ON DELETE SET NULL &
+                                                   NULL & Optional brand ass...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.255 ...ds(brand\_id) ON DELETE SET NULL & NULL &
+                                                   Optional brand associatio...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.256 category\_id &
+                     INT & FK $\rightarrow$ FOOD\_CATEGORY(category\_id) & �...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.256 category\_id & INT &
+                           FK $\rightarrow$ FOOD\_CATEGORY(category\_id) & �...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.256 ...ightarrow$ FOOD\_CATEGORY(category\_id) &
+                                                   — & Food category refer...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.256 ...row$ FOOD\_CATEGORY(category\_id) & — &
+                                                   Food category reference \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.257 type\_id &
+                 INT & FK $\rightarrow$ DATA\_TYPE(type\_id) & — & Data so...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.257 type\_id & INT &
+                       FK $\rightarrow$ DATA\_TYPE(type\_id) & — & Data so...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.257 ...& FK $\rightarrow$ DATA\_TYPE(type\_id) &
+                                                   — & Data source type re...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.257 ...\rightarrow$ DATA\_TYPE(type\_id) & — &
+                                                   Data source type referenc...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.258 food\_name &
+                   VARCHAR(500) & NOT NULL & — & Descriptive food item nam...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.258 food\_name & VARCHAR(500) &
+                                  NOT NULL & — & Descriptive food item nam...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.258 food\_name & VARCHAR(500) & NOT NULL &
+                                             — & Descriptive food item nam...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.258 food\_name & VARCHAR(500) & NOT NULL & — &
+                                                   Descriptive food item nam...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced \noalign.
+\bottomrule ->\noalign 
+                       {\ifnum 0=`}\fi \@aboverulesep =\aboverulesep \global...
+l.259 \bottomrule
+                 
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 254--260
+
  []
 
 
-Overfull \hbox (21.03653pt too wide) in paragraph at lines 260--260
-[]|\T1/cmr/m/n/12 USDA
- []
+! LaTeX Error: \begin{document} ended by \end{tabularx}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.260 \end{tabularx}
+                    
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Extra \endgroup.
+\end  ...end#1\endcsname \@checkend {#1}\endgroup 
+                                                  \UseHook {env/#1/after}\if...
+l.260 \end{tabularx}
+                    
+Things are pretty mixed up, but I think the worst is over.
 
 
-Overfull \hbox (17.78172pt too wide) in paragraph at lines 260--260
-\T1/cmr/m/n/12 Food-
- []
-
-
-Overfull \hbox (13.53975pt too wide) in paragraph at lines 260--260
-\T1/cmr/m/n/12 Data
- []
-
-
-Overfull \hbox (12.39977pt too wide) in paragraph at lines 260--260
-\T1/cmr/m/n/12 Cen-
- []
-
-
-Overfull \hbox (6.52617pt too wide) in paragraph at lines 260--260
-\T1/cmr/m/n/12 tral
- []
-
-
-Overfull \hbox (13.70499pt too wide) in paragraph at lines 260--260
-\T1/cmr/m/n/12 iden-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 260--260
-\T1/cmr/m/n/12 ti-
- []
-
-
-Overfull \hbox (4.56834pt too wide) in paragraph at lines 260--260
-\T1/cmr/m/n/12 fier
- []
-
-
-Overfull \hbox (13.70499pt too wide) in paragraph at lines 260--260
-\T1/cmr/m/n/12 (nat-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 260--260
-\T1/cmr/m/n/12 u-
- []
-
-
-Overfull \hbox (1.95784pt too wide) in paragraph at lines 260--260
-\T1/cmr/m/n/12 ral
- []
-
-
-Overfull \hbox (10.11557pt too wide) in paragraph at lines 260--260
-\T1/cmr/m/n/12 key)| 
- []
-
-
-Overfull \hbox (33.2835pt too wide) in paragraph at lines 260--260
-[]|\T1/cmr/m/n/12 Optional
- []
-
-
-Overfull \hbox (18.27332pt too wide) in paragraph at lines 260--260
-\T1/cmr/m/n/12 brand
- []
-
-
-Overfull \hbox (2.67572pt too wide) in paragraph at lines 260--260
-\T1/cmr/m/n/12 as-
- []
-
-
-Overfull \hbox (2.67572pt too wide) in paragraph at lines 260--260
-\T1/cmr/m/n/12 so-
- []
-
-
-Overfull \hbox (0.65259pt too wide) in paragraph at lines 260--260
-\T1/cmr/m/n/12 ci-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 260--260
-\T1/cmr/m/n/12 a-
- []
-
-
-Overfull \hbox (8.48402pt too wide) in paragraph at lines 260--260
-\T1/cmr/m/n/12 tion| 
- []
-
-
-Overfull \hbox (13.86601pt too wide) in paragraph at lines 260--260
-[]|\T1/cmr/m/n/12 Food
- []
-
-
-Overfull \hbox (7.8314pt too wide) in paragraph at lines 260--260
-\T1/cmr/m/n/12 cat-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 260--260
-\T1/cmr/m/n/12 e-
- []
-
-
-Overfull \hbox (10.76819pt too wide) in paragraph at lines 260--260
-\T1/cmr/m/n/12 gory
- []
-
-
-Overfull \hbox (5.54727pt too wide) in paragraph at lines 260--260
-\T1/cmr/m/n/12 ref-
- []
-
-
-Overfull \hbox (1.95787pt too wide) in paragraph at lines 260--260
-\T1/cmr/m/n/12 er-
- []
-
-
-Overfull \hbox (10.44191pt too wide) in paragraph at lines 260--260
-\T1/cmr/m/n/12 ence| 
- []
-
-
-Overfull \hbox (13.53975pt too wide) in paragraph at lines 260--260
-[]|\T1/cmr/m/n/12 Data
- []
-
-
-Overfull \hbox (20.29642pt too wide) in paragraph at lines 260--260
-\T1/cmr/m/n/12 source
- []
-
-
-Overfull \hbox (10.76819pt too wide) in paragraph at lines 260--260
-\T1/cmr/m/n/12 type
- []
-
-
-Overfull \hbox (5.54727pt too wide) in paragraph at lines 260--260
-\T1/cmr/m/n/12 ref-
- []
-
-
-Overfull \hbox (1.95787pt too wide) in paragraph at lines 260--260
-\T1/cmr/m/n/12 er-
- []
-
-
-Overfull \hbox (10.44191pt too wide) in paragraph at lines 260--260
-\T1/cmr/m/n/12 ence| 
- []
-
-
-Overfull \hbox (45.58327pt too wide) in paragraph at lines 260--260
-[]|\T1/cmr/m/n/12 Descriptive
- []
-
-
-Overfull \hbox (10.76817pt too wide) in paragraph at lines 260--260
-\T1/cmr/m/n/12 food
- []
-
-
-Overfull \hbox (11.09451pt too wide) in paragraph at lines 260--260
-\T1/cmr/m/n/12 item
- []
-
-
-Overfull \hbox (15.66286pt too wide) in paragraph at lines 260--260
-\T1/cmr/m/n/12 name| 
- []
-
-
-Overfull \hbox (79.74582pt too wide) in alignment at lines 260--260
-[][][][][] 
- []
-
-[9]
 Overfull \hbox (5.44102pt too wide) in paragraph at lines 271--272
 []\T1/cmtt/m/n/12 idx_foods_food_name \T1/cmr/m/n/12 ^^V B-tree on food_name; h
 elps pre-fix LIKE queries. Leading-
  []
 
 
-Package tabularx Warning: X Columns too narrow (table too wide)
-(tabularx)                 on input line 288.
-
-
-Overfull \hbox (56.08209pt too wide) in paragraph at lines 288--288
-[]|\T1/cmr/bx/n/12 Description| 
- []
-
-
-Overfull \hbox (17.94284pt too wide) in paragraph at lines 288--288
-[]|\T1/cmr/m/n/12 Auto-
- []
-
-
-Overfull \hbox (37.85191pt too wide) in paragraph at lines 288--288
-\T1/cmr/m/n/12 generated
- []
-
-
-Overfull \hbox (4.89464pt too wide) in paragraph at lines 288--288
-\T1/cmr/m/n/12 nu-
- []
-
-
-Overfull \hbox (4.56831pt too wide) in paragraph at lines 288--288
-\T1/cmr/m/n/12 tri-
- []
-
-
-Overfull \hbox (8.48402pt too wide) in paragraph at lines 288--288
-\T1/cmr/m/n/12 tion
- []
-
-
-Overfull \hbox (20.23117pt too wide) in paragraph at lines 288--288
-\T1/cmr/m/n/12 record
- []
-
-
-Overfull \hbox (1.46213pt too wide) in paragraph at lines 288--288
-\T1/cmr/m/n/12 ID| 
- []
-
-
-Overfull \hbox (13.05237pt too wide) in paragraph at lines 288--288
-[]|\T1/cmr/m/n/12 One-
- []
-
-
-Overfull \hbox (2.61047pt too wide) in paragraph at lines 288--288
-\T1/cmr/m/n/12 to-
- []
-
-
-Overfull \hbox (5.87358pt too wide) in paragraph at lines 288--288
-\T1/cmr/m/n/12 one
- []
-
-
-Overfull \hbox (7.50507pt too wide) in paragraph at lines 288--288
-\T1/cmr/m/n/12 link
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 288--288
-\T1/cmr/m/n/12 to
- []
-
-
-Overfull \hbox (9.13666pt too wide) in paragraph at lines 288--288
-\T1/cmr/m/n/12 par-
- []
-
-
-Overfull \hbox (4.24203pt too wide) in paragraph at lines 288--288
-\T1/cmr/m/n/12 ent
- []
-
-
-Overfull \hbox (10.76817pt too wide) in paragraph at lines 288--288
-\T1/cmr/m/n/12 food| 
- []
-
-
-Overfull \hbox (24.63426pt too wide) in paragraph at lines 288--288
-[]|\T1/cmr/m/n/12 Energy
- []
-
-
-Overfull \hbox (9.78926pt too wide) in paragraph at lines 288--288
-\T1/cmr/m/n/12 con-
- []
-
-
-Overfull \hbox (8.81036pt too wide) in paragraph at lines 288--288
-\T1/cmr/m/n/12 tent
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 288--288
-\T1/cmr/m/n/12 in
- []
-
-
-Overfull \hbox (8.484pt too wide) in paragraph at lines 288--288
-\T1/cmr/m/n/12 kcal| 
- []
-
-
-Overfull \hbox (26.26581pt too wide) in paragraph at lines 288--288
-[]|\T1/cmr/m/n/12 Protein
- []
-
-
-Overfull \hbox (9.78926pt too wide) in paragraph at lines 288--288
-\T1/cmr/m/n/12 con-
- []
-
-
-Overfull \hbox (8.81036pt too wide) in paragraph at lines 288--288
-\T1/cmr/m/n/12 tent
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 288--288
-\T1/cmr/m/n/12 in
- []
-
-
-Overfull \hbox (18.99118pt too wide) in paragraph at lines 288--288
-\T1/cmr/m/n/12 grams| 
- []
-
-
-Overfull \hbox (15.33652pt too wide) in paragraph at lines 288--288
-[]|\T1/cmr/m/n/12 Total
- []
-
-
-Overfull \hbox (2.28416pt too wide) in paragraph at lines 288--288
-\T1/cmr/m/n/12 fat
- []
-
-
-Overfull \hbox (9.78926pt too wide) in paragraph at lines 288--288
-\T1/cmr/m/n/12 con-
- []
-
-
-Overfull \hbox (8.81036pt too wide) in paragraph at lines 288--288
-\T1/cmr/m/n/12 tent
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 288--288
-\T1/cmr/m/n/12 in
- []
-
-
-Overfull \hbox (18.99118pt too wide) in paragraph at lines 288--288
-\T1/cmr/m/n/12 grams| 
- []
-
-
-Overfull \hbox (59.06195pt too wide) in paragraph at lines 288--288
-[]|\T1/cmr/m/n/12 Carbohydrate
- []
-
-
-Overfull \hbox (9.78926pt too wide) in paragraph at lines 288--288
-\T1/cmr/m/n/12 con-
- []
-
-
-Overfull \hbox (8.81036pt too wide) in paragraph at lines 288--288
-\T1/cmr/m/n/12 tent
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 288--288
-\T1/cmr/m/n/12 in
- []
-
-
-Overfull \hbox (18.99118pt too wide) in paragraph at lines 288--288
-\T1/cmr/m/n/12 grams| 
- []
-
-
-Overfull \hbox (27.08363pt too wide) in paragraph at lines 288--288
-[]|\T1/cmr/m/n/12 Sodium
- []
-
-
-Overfull \hbox (9.78926pt too wide) in paragraph at lines 288--288
-\T1/cmr/m/n/12 con-
- []
-
-
-Overfull \hbox (8.81036pt too wide) in paragraph at lines 288--288
-\T1/cmr/m/n/12 tent
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 288--288
-\T1/cmr/m/n/12 in
- []
-
-
-Overfull \hbox (8.48401pt too wide) in paragraph at lines 288--288
-\T1/cmr/m/n/12 mil-
- []
-
-
-Overfull \hbox (25.51733pt too wide) in paragraph at lines 288--288
-\T1/cmr/m/n/12 ligrams| 
- []
-
-
-Overfull \hbox (68.64702pt too wide) in alignment at lines 288--288
-[][][][][] 
- []
-
-[10] [11]
-
-Package tabularx Warning: X Columns too narrow (table too wide)
-(tabularx)                 on input line 311.
-
-
-Overfull \hbox (56.08209pt too wide) in paragraph at lines 311--311
-[]|\T1/cmr/bx/n/12 Description| 
- []
-
-
-Overfull \hbox (17.94284pt too wide) in paragraph at lines 311--311
-[]|\T1/cmr/m/n/12 Auto-
- []
-
-
-Overfull \hbox (37.85191pt too wide) in paragraph at lines 311--311
-\T1/cmr/m/n/12 generated
- []
-
-
-Overfull \hbox (20.23117pt too wide) in paragraph at lines 311--311
-\T1/cmr/m/n/12 health
- []
-
-
-Overfull \hbox (13.77023pt too wide) in paragraph at lines 311--311
-\T1/cmr/m/n/12 score
- []
-
-
-Overfull \hbox (20.23117pt too wide) in paragraph at lines 311--311
-\T1/cmr/m/n/12 record
- []
-
-
-Overfull \hbox (1.46213pt too wide) in paragraph at lines 311--311
-\T1/cmr/m/n/12 ID| 
- []
-
-
-Overfull \hbox (13.05237pt too wide) in paragraph at lines 311--311
-[]|\T1/cmr/m/n/12 One-
- []
-
-
-Overfull \hbox (2.61047pt too wide) in paragraph at lines 311--311
-\T1/cmr/m/n/12 to-
- []
-
-
-Overfull \hbox (5.87358pt too wide) in paragraph at lines 311--311
-\T1/cmr/m/n/12 one
- []
-
-
-Overfull \hbox (7.50507pt too wide) in paragraph at lines 311--311
-\T1/cmr/m/n/12 link
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 311--311
-\T1/cmr/m/n/12 to
- []
-
-
-Overfull \hbox (9.13666pt too wide) in paragraph at lines 311--311
-\T1/cmr/m/n/12 par-
- []
-
-
-Overfull \hbox (4.24203pt too wide) in paragraph at lines 311--311
-\T1/cmr/m/n/12 ent
- []
-
-
-Overfull \hbox (10.76817pt too wide) in paragraph at lines 311--311
-\T1/cmr/m/n/12 food| 
- []
-
-
-Overfull \hbox (41.7676pt too wide) in paragraph at lines 311--311
-[]|\T1/cmr/m/n/12 Computed
- []
-
-
-Overfull \hbox (20.23117pt too wide) in paragraph at lines 311--311
-\T1/cmr/m/n/12 health
- []
-
-
-Overfull \hbox (13.77023pt too wide) in paragraph at lines 311--311
-\T1/cmr/m/n/12 score
- []
-
-
-Overfull \hbox (26.75735pt too wide) in paragraph at lines 311--311
-\T1/cmr/m/n/12 (0^^U100)| 
- []
-
-
-Overfull \hbox (19.90068pt too wide) in paragraph at lines 311--311
-[]|\T1/cmr/m/n/12 Nutri-
- []
-
-
-Overfull \hbox (15.66284pt too wide) in paragraph at lines 311--311
-\T1/cmr/m/n/12 Score
- []
-
-
-Overfull \hbox (16.31548pt too wide) in paragraph at lines 311--311
-\T1/cmr/m/n/12 grade
- []
-
-
-Overfull \hbox (4.89046pt too wide) in paragraph at lines 311--311
-\T1/cmr/m/n/12 (A,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 311--311
-\T1/cmr/m/n/12 B,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 311--311
-\T1/cmr/m/n/12 C,
- []
-
-
-Overfull \hbox (0.81369pt too wide) in paragraph at lines 311--311
-\T1/cmr/m/n/12 E)| 
- []
-
-
-Overfull \hbox (22.17651pt too wide) in paragraph at lines 311--311
-[]|\T1/cmr/m/n/12 NOVA
- []
-
-
-Overfull \hbox (10.76817pt too wide) in paragraph at lines 311--311
-\T1/cmr/m/n/12 food
- []
-
-
-Overfull \hbox (9.13666pt too wide) in paragraph at lines 311--311
-\T1/cmr/m/n/12 pro-
- []
-
-
-Overfull \hbox (11.87762pt too wide) in paragraph at lines 311--311
-\T1/cmr/m/n/12 cess-
- []
-
-
-Overfull \hbox (3.9157pt too wide) in paragraph at lines 311--311
-\T1/cmr/m/n/12 ing
- []
-
-
-Overfull \hbox (17.6207pt too wide) in paragraph at lines 311--311
-\T1/cmr/m/n/12 group
- []
-
-
-Overfull \hbox (15.01022pt too wide) in paragraph at lines 311--311
-\T1/cmr/m/n/12 (1^^U4)| 
- []
-
-
-Overfull \hbox (132.33011pt too wide) in alignment at lines 311--311
-[][][][][] 
- []
-
-[12]
-
-Package tabularx Warning: X Columns too narrow (table too wide)
-(tabularx)                 on input line 335.
-
-
-Overfull \hbox (56.08209pt too wide) in paragraph at lines 335--335
-[]|\T1/cmr/bx/n/12 Description| 
- []
-
-
-Overfull \hbox (17.94284pt too wide) in paragraph at lines 335--335
-[]|\T1/cmr/m/n/12 Auto-
- []
-
-
-Overfull \hbox (37.85191pt too wide) in paragraph at lines 335--335
-\T1/cmr/m/n/12 generated
- []
-
-
-Overfull \hbox (1.30522pt too wide) in paragraph at lines 335--335
-\T1/cmr/m/n/12 al-
- []
-
-
-Overfull \hbox (5.22095pt too wide) in paragraph at lines 335--335
-\T1/cmr/m/n/12 ler-
- []
-
-
-Overfull \hbox (5.87358pt too wide) in paragraph at lines 335--335
-\T1/cmr/m/n/12 gen
- []
-
-
-Overfull \hbox (9.13666pt too wide) in paragraph at lines 335--335
-\T1/cmr/m/n/12 pro-
- []
-
-
-Overfull \hbox (3.26309pt too wide) in paragraph at lines 335--335
-\T1/cmr/m/n/12 file
- []
-
-
-Overfull \hbox (1.46213pt too wide) in paragraph at lines 335--335
-\T1/cmr/m/n/12 ID| 
- []
-
-
-Overfull \hbox (13.05237pt too wide) in paragraph at lines 335--335
-[]|\T1/cmr/m/n/12 One-
- []
-
-
-Overfull \hbox (2.61047pt too wide) in paragraph at lines 335--335
-\T1/cmr/m/n/12 to-
- []
-
-
-Overfull \hbox (5.87358pt too wide) in paragraph at lines 335--335
-\T1/cmr/m/n/12 one
- []
-
-
-Overfull \hbox (7.50507pt too wide) in paragraph at lines 335--335
-\T1/cmr/m/n/12 link
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 335--335
-\T1/cmr/m/n/12 to
- []
-
-
-Overfull \hbox (9.13666pt too wide) in paragraph at lines 335--335
-\T1/cmr/m/n/12 par-
- []
-
-
-Overfull \hbox (4.24203pt too wide) in paragraph at lines 335--335
-\T1/cmr/m/n/12 ent
- []
-
-
-Overfull \hbox (10.76817pt too wide) in paragraph at lines 335--335
-\T1/cmr/m/n/12 food| 
- []
-
-
-Overfull \hbox (23.5748pt too wide) in paragraph at lines 335--335
-[]|\T1/cmr/m/n/12 Gluten
- []
-
-
-Overfull \hbox (13.11763pt too wide) in paragraph at lines 335--335
-\T1/cmr/m/n/12 pres-
- []
-
-
-Overfull \hbox (10.44191pt too wide) in paragraph at lines 335--335
-\T1/cmr/m/n/12 ence
- []
-
-
-Overfull \hbox (6.52618pt too wide) in paragraph at lines 335--335
-\T1/cmr/m/n/12 flag
- []
-
-
-Overfull \hbox (23.49423pt too wide) in paragraph at lines 335--335
-\T1/cmr/m/n/12 (0=no,
- []
-
-
-Overfull \hbox (23.5595pt too wide) in paragraph at lines 335--335
-\T1/cmr/m/n/12 1=yes)| 
- []
-
-
-Overfull \hbox (17.12912pt too wide) in paragraph at lines 335--335
-[]|\T1/cmr/m/n/12 Dairy
- []
-
-
-Overfull \hbox (13.11763pt too wide) in paragraph at lines 335--335
-\T1/cmr/m/n/12 pres-
- []
-
-
-Overfull \hbox (10.44191pt too wide) in paragraph at lines 335--335
-\T1/cmr/m/n/12 ence
- []
-
-
-Overfull \hbox (6.52618pt too wide) in paragraph at lines 335--335
-\T1/cmr/m/n/12 flag
- []
-
-
-Overfull \hbox (23.49423pt too wide) in paragraph at lines 335--335
-\T1/cmr/m/n/12 (0=no,
- []
-
-
-Overfull \hbox (23.5595pt too wide) in paragraph at lines 335--335
-\T1/cmr/m/n/12 1=yes)| 
- []
-
-
-Overfull \hbox (77.67676pt too wide) in alignment at lines 335--335
-[][][][][] 
- []
-
-[13]
-
-Package tabularx Warning: X Columns too narrow (table too wide)
-(tabularx)                 on input line 356.
-
-
-Overfull \hbox (56.08209pt too wide) in paragraph at lines 356--356
-[]|\T1/cmr/bx/n/12 Description| 
- []
-
-
-Overfull \hbox (17.94284pt too wide) in paragraph at lines 356--356
-[]|\T1/cmr/m/n/12 Auto-
- []
-
-
-Overfull \hbox (37.85191pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 generated
- []
-
-
-Overfull \hbox (8.48405pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 pre-
- []
-
-
-Overfull \hbox (7.17877pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 dic-
- []
-
-
-Overfull \hbox (8.48402pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 tion
- []
-
-
-Overfull \hbox (13.70499pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 iden-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 356--356
-\T1/cmr/m/n/12 ti-
- []
-
-
-Overfull \hbox (4.56834pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 fier| 
- []
-
-
-Overfull \hbox (13.86601pt too wide) in paragraph at lines 356--356
-[]|\T1/cmr/m/n/12 Food
- []
-
-
-Overfull \hbox (11.09451pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 item
- []
-
-
-Overfull \hbox (4.24202pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 be-
- []
-
-
-Overfull \hbox (3.9157pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 ing
- []
-
-
-Overfull \hbox (8.48405pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 pre-
- []
-
-
-Overfull \hbox (19.57854pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 dicted| 
- []
-
-
-Overfull \hbox (10.27249pt too wide) in paragraph at lines 356--356
-[]|\T1/cmr/m/n/12 ML-
- []
-
-
-Overfull \hbox (35.89401pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 predicted
- []
-
-
-Overfull \hbox (19.90068pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 Nutri-
- []
-
-
-Overfull \hbox (15.66284pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 Score
- []
-
-
-Overfull \hbox (16.31548pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 grade
- []
-
-
-Overfull \hbox (20.06177pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 (A^^UE)| 
- []
-
-
-Overfull \hbox (24.86055pt too wide) in paragraph at lines 356--356
-[]|\T1/cmr/m/n/12 Always
- []
-
-
-Overfull \hbox (20.54498pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 NULL
- []
-
-
-Overfull \hbox (22.17651pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 NOVA
- []
-
-
-Overfull \hbox (9.78926pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 can-
- []
-
-
-Overfull \hbox (5.22095pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 not
- []
-
-
-Overfull \hbox (8.48405pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 pre-
- []
-
-
-Overfull \hbox (19.57854pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 dicted
- []
-
-
-Overfull \hbox (12.07344pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 from
- []
-
-
-Overfull \hbox (4.89464pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 nu-
- []
-
-
-Overfull \hbox (4.56831pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 tri-
- []
-
-
-Overfull \hbox (8.48402pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 tion
- []
-
-
-Overfull \hbox (11.09451pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 data
- []
-
-
-Overfull \hbox (15.01022pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 alone| 
- []
-
-
-Overfull \hbox (20.22699pt too wide) in paragraph at lines 356--356
-[]|\T1/cmr/m/n/12 Model
- []
-
-
-Overfull \hbox (9.78926pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 con-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 356--356
-\T1/cmr/m/n/12 fi-
- []
-
-
-Overfull \hbox (16.9681pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 dence
- []
-
-
-Overfull \hbox (15.01022pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 (0^^U1)
- []
-
-
-Overfull \hbox (12.07344pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 from
- []
-
-
-Overfull \hbox (10.83345pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 soft-
- []
-
-
-Overfull \hbox (10.11557pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 max
- []
-
-
-Overfull \hbox (9.13666pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 out-
- []
-
-
-Overfull \hbox (5.87357pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 put| 
- []
-
-
-Overfull \hbox (46.40115pt too wide) in paragraph at lines 356--356
-[]|\T1/cmr/m/n/12 Timestamp
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 356--356
-\T1/cmr/m/n/12 of
- []
-
-
-Overfull \hbox (8.48405pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 pre-
- []
-
-
-Overfull \hbox (7.17877pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 dic-
- []
-
-
-Overfull \hbox (8.48402pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 tion
- []
-
-
-Overfull \hbox (9.78929pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 gen-
- []
-
-
-Overfull \hbox (1.95787pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 er-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 356--356
-\T1/cmr/m/n/12 a-
- []
-
-
-Overfull \hbox (8.48402pt too wide) in paragraph at lines 356--356
-\T1/cmr/m/n/12 tion| 
- []
-
-
-Overfull \hbox (121.03987pt too wide) in alignment at lines 356--356
-[][][][][] 
- []
-
-[14]
-Overfull \vbox (129.4053pt too high) has occurred while \output is active []
-
-
-[15]
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.276 \\b
+         egin{tabularx}{\\textwidth}{lp{2cm}p{5.5cm}p{1.3cm}X}
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Misplaced \noalign.
+\toprule ->\noalign 
+                    {\ifnum 0=`}\fi \@aboverulesep =\abovetopsep \global \@b...
+l.277 \toprule
+              
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+! Misplaced alignment tab character &.
+l.278 \textbf{Column} &
+                        \textbf{Type} & \textbf{Constraints} & \textbf{Defau...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.278 \textbf{Column} & \textbf{Type} &
+                                        \textbf{Constraints} & \textbf{Defau...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.278 ... & \textbf{Type} & \textbf{Constraints} &
+                                                   \textbf{Default} & \textb...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.278 ...\textbf{Constraints} & \textbf{Default} &
+                                                   \textbf{Description} \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced \noalign.
+\midrule ->\noalign 
+                    {\ifnum 0=`}\fi \@aboverulesep =\aboverulesep \global \@...
+l.279 \midrule
+              
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 278--280
+
+ []
+
+! Misplaced alignment tab character &.
+l.280 nutrition\_id &
+                      INT & PK, IDENTITY(1,1) & auto & Auto-generated nutrit...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.280 nutrition\_id & INT &
+                            PK, IDENTITY(1,1) & auto & Auto-generated nutrit...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.280 nutrition\_id & INT & PK, IDENTITY(1,1) &
+                                                auto & Auto-generated nutrit...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.280 ...on\_id & INT & PK, IDENTITY(1,1) & auto &
+                                                   Auto-generated nutrition ...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.281 fdc\_id &
+                INT & FK $\rightarrow$ Foods(fdc\_id) ON DELETE CASCADE, UNI...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.281 fdc\_id & INT &
+                      FK $\rightarrow$ Foods(fdc\_id) ON DELETE CASCADE, UNI...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.281 ...oods(fdc\_id) ON DELETE CASCADE, UNIQUE &
+                                                   — & One-to-one link to ...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.281 ...dc\_id) ON DELETE CASCADE, UNIQUE & — &
+                                                   One-to-one link to parent...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.282 calories &
+                 FLOAT & NULL & — & Energy content in kcal \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.282 calories & FLOAT &
+                         NULL & — & Energy content in kcal \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.282 calories & FLOAT & NULL &
+                                — & Energy content in kcal \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.282 calories & FLOAT & NULL & — &
+                                      Energy content in kcal \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.283 protein\_g &
+                   FLOAT & NULL & — & Protein content in grams \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.283 protein\_g & FLOAT &
+                           NULL & — & Protein content in grams \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.283 protein\_g & FLOAT & NULL &
+                                  — & Protein content in grams \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.283 protein\_g & FLOAT & NULL & — &
+                                        Protein content in grams \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.284 fat\_g &
+               FLOAT & NULL & — & Total fat content in grams \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.284 fat\_g & FLOAT &
+                       NULL & — & Total fat content in grams \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.284 fat\_g & FLOAT & NULL &
+                              — & Total fat content in grams \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.284 fat\_g & FLOAT & NULL & — &
+                                    Total fat content in grams \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.285 carbs\_g &
+                 FLOAT & NULL & — & Carbohydrate content in grams \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.285 carbs\_g & FLOAT &
+                         NULL & — & Carbohydrate content in grams \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.285 carbs\_g & FLOAT & NULL &
+                                — & Carbohydrate content in grams \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.285 carbs\_g & FLOAT & NULL & — &
+                                      Carbohydrate content in grams \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.286 sodium\_mg &
+                   FLOAT & NULL & — & Sodium content in milligrams \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.286 sodium\_mg & FLOAT &
+                           NULL & — & Sodium content in milligrams \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.286 sodium\_mg & FLOAT & NULL &
+                                  — & Sodium content in milligrams \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.286 sodium\_mg & FLOAT & NULL & — &
+                                        Sodium content in milligrams \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced \noalign.
+\bottomrule ->\noalign 
+                       {\ifnum 0=`}\fi \@aboverulesep =\aboverulesep \global...
+l.287 \bottomrule
+                 
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 280--288
+
+ []
+
+
+! LaTeX Error: \begin{document} ended by \end{tabularx}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.288 \end{tabularx}
+                    
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Extra \endgroup.
+\end  ...end#1\endcsname \@checkend {#1}\endgroup 
+                                                  \UseHook {env/#1/after}\if...
+l.288 \end{tabularx}
+                    
+Things are pretty mixed up, but I think the worst is over.
+
+[9]
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.301 \\b
+         egin{tabularx}{\\textwidth}{lp{2cm}p{5.5cm}p{1.3cm}X}
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Misplaced \noalign.
+\toprule ->\noalign 
+                    {\ifnum 0=`}\fi \@aboverulesep =\abovetopsep \global \@b...
+l.302 \toprule
+              
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+! Misplaced alignment tab character &.
+l.303 \textbf{Column} &
+                        \textbf{Type} & \textbf{Constraints} & \textbf{Defau...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.303 \textbf{Column} & \textbf{Type} &
+                                        \textbf{Constraints} & \textbf{Defau...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.303 ... & \textbf{Type} & \textbf{Constraints} &
+                                                   \textbf{Default} & \textb...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.303 ...\textbf{Constraints} & \textbf{Default} &
+                                                   \textbf{Description} \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced \noalign.
+\midrule ->\noalign 
+                    {\ifnum 0=`}\fi \@aboverulesep =\aboverulesep \global \@...
+l.304 \midrule
+              
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 303--305
+
+ []
+
+! Misplaced alignment tab character &.
+l.305 score\_id &
+                  INT & PK, IDENTITY(1,1) & auto & Auto-generated health sco...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.305 score\_id & INT &
+                        PK, IDENTITY(1,1) & auto & Auto-generated health sco...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.305 score\_id & INT & PK, IDENTITY(1,1) &
+                                            auto & Auto-generated health sco...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.305 score\_id & INT & PK, IDENTITY(1,1) & auto &
+                                                   Auto-generated health sco...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.306 fdc\_id &
+                INT & FK $\rightarrow$ Foods(fdc\_id) ON DELETE CASCADE, UNI...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.306 fdc\_id & INT &
+                      FK $\rightarrow$ Foods(fdc\_id) ON DELETE CASCADE, UNI...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.306 ...oods(fdc\_id) ON DELETE CASCADE, UNIQUE &
+                                                   — & One-to-one link to ...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.306 ...dc\_id) ON DELETE CASCADE, UNIQUE & — &
+                                                   One-to-one link to parent...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.307 health\_score &
+                      FLOAT & NULL & — & Computed health score (0–100) \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.307 health\_score & FLOAT &
+                              NULL & — & Computed health score (0–100) \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.307 health\_score & FLOAT & NULL &
+                                     — & Computed health score (0–100) \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.307 health\_score & FLOAT & NULL & — &
+                                           Computed health score (0–100) \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.308 nutriscore\_grade &
+                          VARCHAR(50) & NULL & — & Nutri-Score grade (A, B...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.308 nutriscore\_grade & VARCHAR(50) &
+                                        NULL & — & Nutri-Score grade (A, B...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.308 nutriscore\_grade & VARCHAR(50) & NULL &
+                                               — & Nutri-Score grade (A, B...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.308 ...score\_grade & VARCHAR(50) & NULL & — &
+                                                   Nutri-Score grade (A, B, ...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.309 nova\_group &
+                    INT & NULL & — & NOVA food processing group (1–4) \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.309 nova\_group & INT &
+                          NULL & — & NOVA food processing group (1–4) \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.309 nova\_group & INT & NULL &
+                                 — & NOVA food processing group (1–4) \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.309 nova\_group & INT & NULL & — &
+                                       NOVA food processing group (1–4) \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced \noalign.
+\bottomrule ->\noalign 
+                       {\ifnum 0=`}\fi \@aboverulesep =\aboverulesep \global...
+l.310 \bottomrule
+                 
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 305--311
+
+ []
+
+
+! LaTeX Error: \begin{document} ended by \end{tabularx}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.311 \end{tabularx}
+                    
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Extra \endgroup.
+\end  ...end#1\endcsname \@checkend {#1}\endgroup 
+                                                  \UseHook {env/#1/after}\if...
+l.311 \end{tabularx}
+                    
+Things are pretty mixed up, but I think the worst is over.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.326 \\b
+         egin{tabularx}{\\textwidth}{lp{2cm}p{5.5cm}p{1.3cm}X}
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Misplaced \noalign.
+\toprule ->\noalign 
+                    {\ifnum 0=`}\fi \@aboverulesep =\abovetopsep \global \@b...
+l.327 \toprule
+              
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+! Misplaced alignment tab character &.
+l.328 \textbf{Column} &
+                        \textbf{Type} & \textbf{Constraints} & \textbf{Defau...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.328 \textbf{Column} & \textbf{Type} &
+                                        \textbf{Constraints} & \textbf{Defau...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.328 ... & \textbf{Type} & \textbf{Constraints} &
+                                                   \textbf{Default} & \textb...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.328 ...\textbf{Constraints} & \textbf{Default} &
+                                                   \textbf{Description} \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced \noalign.
+\midrule ->\noalign 
+                    {\ifnum 0=`}\fi \@aboverulesep =\aboverulesep \global \@...
+l.329 \midrule
+              
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 328--330
+
+ []
+
+! Misplaced alignment tab character &.
+l.330 allergen\_id &
+                     INT & PK, IDENTITY(1,1) & auto & Auto-generated allerge...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.330 allergen\_id & INT &
+                           PK, IDENTITY(1,1) & auto & Auto-generated allerge...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.330 allergen\_id & INT & PK, IDENTITY(1,1) &
+                                               auto & Auto-generated allerge...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.330 ...en\_id & INT & PK, IDENTITY(1,1) & auto &
+                                                   Auto-generated allergen p...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.331 fdc\_id &
+                INT & FK $\rightarrow$ Foods(fdc\_id) ON DELETE CASCADE, UNI...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.331 fdc\_id & INT &
+                      FK $\rightarrow$ Foods(fdc\_id) ON DELETE CASCADE, UNI...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.331 ...oods(fdc\_id) ON DELETE CASCADE, UNIQUE &
+                                                   — & One-to-one link to ...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.331 ...dc\_id) ON DELETE CASCADE, UNIQUE & — &
+                                                   One-to-one link to parent...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.332 contains\_gluten &
+                         BIT & NOT NULL & 0 & Gluten presence flag (0=no, 1=...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.332 contains\_gluten & BIT &
+                               NOT NULL & 0 & Gluten presence flag (0=no, 1=...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.332 contains\_gluten & BIT & NOT NULL &
+                                          0 & Gluten presence flag (0=no, 1=...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.332 contains\_gluten & BIT & NOT NULL & 0 &
+                                              Gluten presence flag (0=no, 1=...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.333 contains\_dairy &
+                        BIT & NOT NULL & 0 & Dairy presence flag (0=no, 1=ye...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.333 contains\_dairy & BIT &
+                              NOT NULL & 0 & Dairy presence flag (0=no, 1=ye...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.333 contains\_dairy & BIT & NOT NULL &
+                                         0 & Dairy presence flag (0=no, 1=ye...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.333 contains\_dairy & BIT & NOT NULL & 0 &
+                                             Dairy presence flag (0=no, 1=ye...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced \noalign.
+\bottomrule ->\noalign 
+                       {\ifnum 0=`}\fi \@aboverulesep =\aboverulesep \global...
+l.334 \bottomrule
+                 
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 330--335
+
+ []
+
+
+! LaTeX Error: \begin{document} ended by \end{tabularx}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.335 \end{tabularx}
+                    
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Extra \endgroup.
+\end  ...end#1\endcsname \@checkend {#1}\endgroup 
+                                                  \UseHook {env/#1/after}\if...
+l.335 \end{tabularx}
+                    
+Things are pretty mixed up, but I think the worst is over.
+
+[10]
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.345 \\b
+         egin{tabularx}{\\textwidth}{lp{2cm}p{5.5cm}p{1.3cm}X}
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Misplaced \noalign.
+\toprule ->\noalign 
+                    {\ifnum 0=`}\fi \@aboverulesep =\abovetopsep \global \@b...
+l.346 \toprule
+              
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+! Misplaced alignment tab character &.
+l.347 \textbf{Column} &
+                        \textbf{Type} & \textbf{Constraints} & \textbf{Defau...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.347 \textbf{Column} & \textbf{Type} &
+                                        \textbf{Constraints} & \textbf{Defau...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.347 ... & \textbf{Type} & \textbf{Constraints} &
+                                                   \textbf{Default} & \textb...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.347 ...\textbf{Constraints} & \textbf{Default} &
+                                                   \textbf{Description} \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced \noalign.
+\midrule ->\noalign 
+                    {\ifnum 0=`}\fi \@aboverulesep =\aboverulesep \global \@...
+l.348 \midrule
+              
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 347--349
+
+ []
+
+! Misplaced alignment tab character &.
+l.349 prediction\_id &
+                       INT & PK, IDENTITY(1,1) & auto & Auto-generated predi...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.349 prediction\_id & INT &
+                             PK, IDENTITY(1,1) & auto & Auto-generated predi...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.349 prediction\_id & INT & PK, IDENTITY(1,1) &
+                                                 auto & Auto-generated predi...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.349 ...on\_id & INT & PK, IDENTITY(1,1) & auto &
+                                                   Auto-generated prediction...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.350 fdc\_id &
+                INT & FK $\rightarrow$ Foods(fdc\_id) ON DELETE CASCADE & �...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.350 fdc\_id & INT &
+                      FK $\rightarrow$ Foods(fdc\_id) ON DELETE CASCADE & �...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.350 ...arrow$ Foods(fdc\_id) ON DELETE CASCADE &
+                                                   — & Food item being pre...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.350 ... Foods(fdc\_id) ON DELETE CASCADE & — &
+                                                   Food item being predicted \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.351 predicted\_nutriscore &
+                              VARCHAR(50) & NULL & — & ML-predicted Nutri-...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.351 predicted\_nutriscore & VARCHAR(50) &
+                                            NULL & — & ML-predicted Nutri-...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.351 predicted\_nutriscore & VARCHAR(50) & NULL &
+                                                   — & ML-predicted Nutri-...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.351 ...\_nutriscore & VARCHAR(50) & NULL & — &
+                                                   ML-predicted Nutri-Score ...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.352 predicted\_nova &
+                        INT & NULL & — & Always NULL — NOVA cannot be pr...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.352 predicted\_nova & INT &
+                              NULL & — & Always NULL — NOVA cannot be pr...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.352 predicted\_nova & INT & NULL &
+                                     — & Always NULL — NOVA cannot be pr...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.352 predicted\_nova & INT & NULL & — &
+                                           Always NULL — NOVA cannot be pr...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.353 confidence\_score &
+                          FLOAT & NULL & — & Model confidence (0–1) from...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.353 confidence\_score & FLOAT &
+                                  NULL & — & Model confidence (0–1) from...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.353 confidence\_score & FLOAT & NULL &
+                                         — & Model confidence (0–1) from...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.353 confidence\_score & FLOAT & NULL & — &
+                                               Model confidence (0–1) from...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.354 prediction\_date &
+                         DATETIME & NOT NULL & GETDATE() & Timestamp of pred...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.354 prediction\_date & DATETIME &
+                                    NOT NULL & GETDATE() & Timestamp of pred...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.354 prediction\_date & DATETIME & NOT NULL &
+                                               GETDATE() & Timestamp of pred...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.354 ..._date & DATETIME & NOT NULL & GETDATE() &
+                                                   Timestamp of prediction g...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced \noalign.
+\bottomrule ->\noalign 
+                       {\ifnum 0=`}\fi \@aboverulesep =\aboverulesep \global...
+l.355 \bottomrule
+                 
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 349--356
+
+ []
+
+
+! LaTeX Error: \begin{document} ended by \end{tabularx}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.356 \end{tabularx}
+                    
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Extra \endgroup.
+\end  ...end#1\endcsname \@checkend {#1}\endgroup 
+                                                  \UseHook {env/#1/after}\if...
+l.356 \end{tabularx}
+                    
+Things are pretty mixed up, but I think the worst is over.
+
+[11]
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <14.4> not available
 (Font)              Font shape `T1/cmtt/m/n' tried instead on input line 389.
  (/usr/local/texlive/2026/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2025/11/14 1.11b listings language file
 )
-[16]
 Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
 nput line 394.
 
@@ -1620,7 +2564,7 @@ Overfull \hbox (9.76593pt too wide) in paragraph at lines 413--414
  Yields a \T1/cmtt/m/n/12 (connection, cursor_as_dict)
  []
 
-[17]
+[12]
 Overfull \hbox (1.1517pt too wide) in paragraph at lines 442--443
 []\T1/cmtt/m/n/12 AllergenProfileBase \T1/cmr/m/n/12 ^^V \T1/cmtt/m/n/12 contai
 ns_gluten: bool = False, contains_dairy:
@@ -1644,7 +2588,7 @@ Overfull \hbox (39.34239pt too wide) in paragraph at lines 449--450
 tt/m/n/12 prediction_id, fdc_id, prediction_date 
  []
 
-
+[13]
 Overfull \hbox (21.11215pt too wide) in paragraph at lines 455--456
 []\T1/cmtt/m/n/12 Food(FoodBase) \T1/cmr/m/n/12 ^^V nested model with \T1/cmtt/
 m/n/12 brand, nutrition, health_score, allergen
@@ -1656,27 +2600,27 @@ Overfull \hbox (40.9115pt too wide) in paragraph at lines 461--462
 g_fat: float,
  []
 
-[18]
+
 Overfull \hbox (31.97708pt too wide) in paragraph at lines 492--493
 \T1/cmr/m/n/12 JOINs are de-fined once. Four func-tions (\T1/cmtt/m/n/12 get_fo
 od\T1/cmr/m/n/12 , \T1/cmtt/m/n/12 get_foods_by_range\T1/cmr/m/n/12 , \T1/cmtt/
 m/n/12 get_foods_by_diet\T1/cmr/m/n/12 ,
  []
 
-[19]
+[14]
 Overfull \hbox (23.00285pt too wide) in paragraph at lines 513--514
 \T1/cmr/bx/n/12 What: \T1/cmr/m/n/12 Up-dates \T1/cmtt/m/n/12 HEALTH_SCORE \T1/
 cmr/m/n/12 for a food. Al-lowed columns: health_score, nu-triscore_grade,
  []
 
-
+[15]
 Overfull \hbox (64.5633pt too wide) in paragraph at lines 538--539
 \T1/cmr/bx/n/12 What: \T1/cmr/m/n/12 Pag-i-nated brand list-ing us-ing \T1/cmtt
 /m/n/12 OFFSET/FETCH NEXT \T1/cmr/m/n/12 (MSSQL's equiv-a-lent of LIMIT/OFFSET)
 . 
  []
 
-[20]
+[16]
 Overfull \hbox (3.83435pt too wide) in paragraph at lines 565--566
 []\T1/cmtt/m/n/12 DbDep = Annotated[tuple, Depends(get_db)] \T1/cmr/m/n/12 ^^V 
 de-pen-dency in-jec-tion type alias 
@@ -1733,8 +2677,8 @@ Overfull \hbox (24.0498pt too wide) in alignment at lines 571--618
  [] [] [] 
  []
 
-[21]
-ignored: Infinite glue shrinkage found in box being split [22]
+
+ignored: Infinite glue shrinkage found in box being split [17] [18]
 Overfull \hbox (5.54068pt too wide) in paragraph at lines 641--642
 []\T1/cmr/bx/n/12 Training hy-per-pa-ram-e-ters: \T1/cmr/m/n/12 Adam op-ti-mize
 r (lr=0.005), CrossEn-tropy-Loss, StepLR
@@ -1746,7 +2690,7 @@ Overfull \hbox (11.47217pt too wide) in paragraph at lines 641--642
 ale with data: \T1/cmtt/m/n/12 min(200,
  []
 
-[23] [24]
+[19]
 Overfull \hbox (18.9486pt too wide) in paragraph at lines 689--689
 |[]\T1/cmr/bx/n/12 _resolve_or_create(cursor, cache, ta-ble, id_col, name_col, 
 name_value,
@@ -1764,7 +2708,7 @@ Overfull \hbox (6.46121pt too wide) in paragraph at lines 699--700
 GEN_PROFILE 
  []
 
-
+[20]
 Overfull \hbox (15.60951pt too wide) in paragraph at lines 707--708
 \T1/cmr/bx/n/12 What: \T1/cmr/m/n/12 Reads \T1/cmtt/m/n/12 foods_health_scores_
 allergens.csv\T1/cmr/m/n/12 . Matches prod-ucts by \T1/cmtt/m/n/12 product_name
@@ -1784,7 +2728,6 @@ Overfull \hbox (2.12375pt too wide) in paragraph at lines 707--708
 riscore_grade, nova_group) and
  []
 
-[25]
 
 ! LaTeX Error: Unicode character ├ (U+251C)
                not set up for use with LaTeX.
@@ -1902,6 +2845,7 @@ l.743 \end{verbatim}
 You may provide a definition with
 \DeclareUnicodeCharacter 
 
+[21]
 
 ! LaTeX Error: Unicode character ├ (U+251C)
                not set up for use with LaTeX.
@@ -2058,19 +3002,19 @@ l.743 \end{verbatim}
 You may provide a definition with
 \DeclareUnicodeCharacter 
 
-[26]
+
 Overfull \hbox (7.02492pt too wide) in paragraph at lines 766--767
 \T1/cmr/bx/n/12 What: \T1/cmr/m/n/12 AG Grid row click han-dler. Fetches the fu
 ll food de-tail from \T1/cmtt/m/n/12 GET /foods/{fdc_id}
  []
 
-[27]
+[22]
 Overfull \hbox (31.17921pt too wide) in paragraph at lines 814--815
 []\T1/cmr/bx/n/12 Note: \T1/cmr/m/n/12 The NOVA col-umn was in-ten-tion-ally re
 -moved from the grid be-cause \T1/cmtt/m/n/12 predicted_nova
  []
 
-
+[23]
 Overfull \hbox (43.97455pt too wide) in paragraph at lines 844--845
 []\T1/cmr/bx/n/12 Component classes: \T1/cmtt/m/n/12 matte-panel\T1/cmr/m/n/12 
 , \T1/cmtt/m/n/12 sub-panel\T1/cmr/m/n/12 , \T1/cmtt/m/n/12 detail-panel\T1/cmr
@@ -2086,7 +3030,7 @@ r/m/n/12 , \T1/cmtt/m/n/12 checkbox-row\T1/cmr/m/n/12 , \T1/cmtt/m/n/12 two-col
 \T1/cmr/m/n/12 , \T1/cmtt/m/n/12 grid-container\T1/cmr/m/n/12 ,
  []
 
-[28]
+
 Overfull \hbox (27.39806pt too wide) in paragraph at lines 848--849
 []\T1/cmr/bx/n/12 Word-wrap fix: \T1/cmtt/m/n/12 .ag-theme-quartz .ag-cell { wh
 ite-space: normal !important;
@@ -2105,7 +3049,7 @@ Overfull \hbox (58.2421pt too wide) in paragraph at lines 865--866
 tabase (monkey-patches \T1/cmtt/m/n/12 DB_CONFIG["database"]\T1/cmr/m/n/12 ). 
  []
 
-[29]
+[24]
 Underfull \hbox (badness 10000) in paragraph at lines 901--902
 []|\T1/cmr/m/n/12 min_health_score, max_sodium,
  []
@@ -2115,6 +3059,8 @@ Overfull \hbox (9.82341pt too wide) in alignment at lines 889--916
  [] [] [] 
  []
 
+
+ignored: Infinite glue shrinkage found in box being split [25]
 
 ! LaTeX Error: Unicode character │ (U+2502)
                not set up for use with LaTeX.
@@ -2329,7 +3275,6 @@ l.935 \end{verbatim}
 You may provide a definition with
 \DeclareUnicodeCharacter 
 
-[30]
 
 ! LaTeX Error: Unicode character │ (U+2502)
                not set up for use with LaTeX.
@@ -2482,6 +3427,189 @@ Type  H <return>  for immediate help.
  ...                                              
                                                   
 l.958 \end{verbatim}
+                    
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+[26]
+
+! LaTeX Error: Unicode character │ (U+2502)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.977 \end{verbatim}
+                    
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+! LaTeX Error: Unicode character ▼ (U+25BC)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.977 \end{verbatim}
+                    
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+! LaTeX Error: Unicode character ├ (U+251C)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.977 \end{verbatim}
+                    
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+! LaTeX Error: Unicode character ─ (U+2500)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.977 \end{verbatim}
+                    
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+! LaTeX Error: Unicode character ─ (U+2500)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.977 \end{verbatim}
+                    
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+! LaTeX Error: Unicode character ├ (U+251C)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.977 \end{verbatim}
+                    
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+! LaTeX Error: Unicode character ─ (U+2500)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.977 \end{verbatim}
+                    
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+! LaTeX Error: Unicode character ─ (U+2500)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.977 \end{verbatim}
+                    
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+! LaTeX Error: Unicode character ├ (U+251C)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.977 \end{verbatim}
+                    
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+! LaTeX Error: Unicode character ─ (U+2500)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.977 \end{verbatim}
+                    
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+! LaTeX Error: Unicode character ─ (U+2500)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.977 \end{verbatim}
+                    
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+! LaTeX Error: Unicode character └ (U+2514)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.977 \end{verbatim}
+                    
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+! LaTeX Error: Unicode character ─ (U+2500)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.977 \end{verbatim}
+                    
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+
+! LaTeX Error: Unicode character ─ (U+2500)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.977 \end{verbatim}
                     
 You may provide a definition with
 \DeclareUnicodeCharacter 
@@ -2676,188 +3804,6 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.977 \end{verbatim}
-                    
-You may provide a definition with
-\DeclareUnicodeCharacter 
-
-
-! LaTeX Error: Unicode character ▼ (U+25BC)
-               not set up for use with LaTeX.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.977 \end{verbatim}
-                    
-You may provide a definition with
-\DeclareUnicodeCharacter 
-
-
-! LaTeX Error: Unicode character ├ (U+251C)
-               not set up for use with LaTeX.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.977 \end{verbatim}
-                    
-You may provide a definition with
-\DeclareUnicodeCharacter 
-
-
-! LaTeX Error: Unicode character ─ (U+2500)
-               not set up for use with LaTeX.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.977 \end{verbatim}
-                    
-You may provide a definition with
-\DeclareUnicodeCharacter 
-
-
-! LaTeX Error: Unicode character ─ (U+2500)
-               not set up for use with LaTeX.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.977 \end{verbatim}
-                    
-You may provide a definition with
-\DeclareUnicodeCharacter 
-
-
-! LaTeX Error: Unicode character ├ (U+251C)
-               not set up for use with LaTeX.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.977 \end{verbatim}
-                    
-You may provide a definition with
-\DeclareUnicodeCharacter 
-
-
-! LaTeX Error: Unicode character ─ (U+2500)
-               not set up for use with LaTeX.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.977 \end{verbatim}
-                    
-You may provide a definition with
-\DeclareUnicodeCharacter 
-
-
-! LaTeX Error: Unicode character ─ (U+2500)
-               not set up for use with LaTeX.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.977 \end{verbatim}
-                    
-You may provide a definition with
-\DeclareUnicodeCharacter 
-
-
-! LaTeX Error: Unicode character ├ (U+251C)
-               not set up for use with LaTeX.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.977 \end{verbatim}
-                    
-You may provide a definition with
-\DeclareUnicodeCharacter 
-
-
-! LaTeX Error: Unicode character ─ (U+2500)
-               not set up for use with LaTeX.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.977 \end{verbatim}
-                    
-You may provide a definition with
-\DeclareUnicodeCharacter 
-
-
-! LaTeX Error: Unicode character ─ (U+2500)
-               not set up for use with LaTeX.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.977 \end{verbatim}
-                    
-You may provide a definition with
-\DeclareUnicodeCharacter 
-
-
-! LaTeX Error: Unicode character └ (U+2514)
-               not set up for use with LaTeX.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.977 \end{verbatim}
-                    
-You may provide a definition with
-\DeclareUnicodeCharacter 
-
-
-! LaTeX Error: Unicode character ─ (U+2500)
-               not set up for use with LaTeX.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.977 \end{verbatim}
-                    
-You may provide a definition with
-\DeclareUnicodeCharacter 
-
-
-! LaTeX Error: Unicode character ─ (U+2500)
-               not set up for use with LaTeX.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.977 \end{verbatim}
-                    
-You may provide a definition with
-\DeclareUnicodeCharacter 
-
-
-! LaTeX Error: Unicode character │ (U+2502)
-               not set up for use with LaTeX.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
 l.996 \end{verbatim}
                     
 You may provide a definition with
@@ -2915,7 +3861,6 @@ l.996 \end{verbatim}
 You may provide a definition with
 \DeclareUnicodeCharacter 
 
-[31]
 
 ! LaTeX Error: Unicode character │ (U+2502)
                not set up for use with LaTeX.
@@ -3220,8 +4165,9 @@ Overfull \hbox (24.04979pt too wide) in alignment at lines 1002--1056
  []
 
 
-ignored: Infinite glue shrinkage found in box being split [32] [33] (./system_documentat
-ion.aux)
+ignored: Infinite glue shrinkage found in box being split [27]
+ignored: Infinite glue shrinkage fo
+und in box being split [28] [29] (./system_documentation.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
@@ -3230,13 +4176,13 @@ Package rerunfilecheck Info: File `system_documentation.out' has not changed.
 (rerunfilecheck)             Checksum: 4B0842CE23C82D8A58898963A5A35938;21559.
  ) 
 Here is how much of TeX's memory you used:
- 12702 strings out of 467525
- 191195 string characters out of 5418982
- 937663 words of memory out of 5000000
+ 12698 strings out of 467525
+ 191167 string characters out of 5418982
+ 937041 words of memory out of 5000000
  41286 multiletter control sequences out of 15000+600000
  642102 words of font info for 69 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,12n,79p,613b,2031s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,12n,79p,613b,1324s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb
 ></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></
@@ -3251,10 +4197,10 @@ ive/2026/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb></usr/local/texliv
 e/2026/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></usr/local/texlive/
 2026/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb></usr/local/texlive/20
 26/texmf-dist/fonts/type1/public/cm-super/sftt1440.pfb>
-Output written on system_documentation.pdf (33 pages, 382069 bytes).
+Output written on system_documentation.pdf (29 pages, 380083 bytes).
 PDF statistics:
- 843 PDF objects out of 1000 (max. 8388607)
- 770 compressed objects within 8 object streams
- 202 named destinations out of 1000 (max. 500000)
+ 825 PDF objects out of 1000 (max. 8388607)
+ 756 compressed objects within 8 object streams
+ 198 named destinations out of 1000 (max. 500000)
  801 words of extra memory for PDF output out of 10000 (max. 10000000)
 
